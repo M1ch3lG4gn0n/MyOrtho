@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyOrthoClient.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,12 @@ namespace MyOrthoClient
     {
         public MainWindow()
         {
+            
             InitializeComponent();
+
+            ListVM activityListInstance = new ListVM();
+            this.DataContext = activityListInstance;
+            
         }
     }
 }
