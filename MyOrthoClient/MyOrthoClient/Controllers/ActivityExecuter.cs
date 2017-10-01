@@ -31,5 +31,12 @@ namespace MyOrthoClient.Controllers
         {
             Player.StopRecord();
         }
+
+        public async void AnalyseSample()
+        {
+            
+        }
+
+        
     }
 }
