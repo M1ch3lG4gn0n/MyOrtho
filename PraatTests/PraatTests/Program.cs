@@ -18,19 +18,14 @@ namespace PraatTests
             si.WindowStyle = ProcessWindowStyle.Hidden;
             si.UseShellExecute = false;
 
-            si.Arguments = @"--run C:\Users\Michel\Downloads\script.praat";
+            si.Arguments = @"--run C:\Users\Michel\Downloads\script3.praat";
 
             Process p = new Process();
             p.StartInfo = si;
             p.Start();
-            string s = p.StandardOutput.ReadToEnd();
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Michel\Downloads\example.txt"))
-            {
-                file.WriteLine(s);
-            }
+            p.WaitForExit();
 
-            Console.WriteLine(s);
             Console.Read();
         }
     }
