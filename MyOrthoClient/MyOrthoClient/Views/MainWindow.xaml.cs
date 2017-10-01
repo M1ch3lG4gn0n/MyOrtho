@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -28,7 +29,14 @@ namespace MyOrthoClient
 
             ListVM activityListInstance = new ListVM();
             this.DataContext = activityListInstance;
-            
+
+
+            ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
+            new KeyValuePair<DateTime, int>(DateTime.Now, 100),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(1), 130),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(2), 150),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(3), 125),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(4),155) };
         }
     }
 }
