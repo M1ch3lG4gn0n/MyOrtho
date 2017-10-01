@@ -18,5 +18,7 @@ namespace MyOrthoClient.Models
         private int Duree_exacte { get; set; }
         private int Jitter { get; set; }
         private string Name { get; set; }
+
+        public ActivityVM() { }
     }
 }
