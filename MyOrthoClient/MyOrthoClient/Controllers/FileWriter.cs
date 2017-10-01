@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyOrthoClient.Controllers
 {
-    class PraatConnector
+    class FileWriter
     {
     }
 }
