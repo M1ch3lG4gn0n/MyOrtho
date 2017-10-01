@@ -8,15 +8,25 @@ namespace MyOrthoClient.Models
 {
     class ActivityVM
     {
-        private int Pitch { get; set; }
-        private int Intensity { get; set; }
-        private string Example_wav_path { get; set; }
-        private int F0_exact { get; set; }
-        private int F0_stable { get; set; }
-        private int Intensite_stable { get; set; }
-        private int Courbe_f0_exacte { get; set; }
-        private int Duree_exacte { get; set; }
-        private int Jitter { get; set; }
-        private string Name { get; set; }
+        public string Name { get; set; }
+        public string Example_wav_path { get; set; }
+        public int Pitch { get; set; }
+        public bool PitchEvaluated { get; set; }
+        public int Intensity { get; set; }
+        public bool IntensityEvaluated { get; set; }
+        public int F0_exact { get; set; }
+        public bool F0_exactEvaluated { get; set; }
+        public int F0_stable { get; set; }
+        public bool F0_stableEvaluated { get; set; }
+        public int Intensite_stable { get; set; }
+        public bool Intensite_stableEvaluated { get; set; }
+        public int Courbe_f0_exacte { get; set; }
+        public bool Courbe_f0_exacteEvaluated { get; set; }
+        public int Duree_exacte { get; set; }
+        public bool Duree_exacteEvaluated { get; set; }
+        public int Jitter { get; set; }
+        public bool JitterEvaluated { get; set; }        
+
+        public ActivityVM() { }
     }
 }

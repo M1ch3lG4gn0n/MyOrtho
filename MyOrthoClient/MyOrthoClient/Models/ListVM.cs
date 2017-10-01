@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace MyOrthoClient.Models
 {
     class ListVM
     {
-        List<ActivityVM> activityList;
-
+        public ObservableCollection<ActivityVM> ActivityList { get; set; }
         public ListVM()
         {
-            activityList = new List<ActivityVM>();
+            ActivityList = new ObservableCollection<ActivityVM>();
         }
 
-        private void PopulateActivityList()
+        public void Add()
         {
-           
+                       
         }
+
     }
 }
