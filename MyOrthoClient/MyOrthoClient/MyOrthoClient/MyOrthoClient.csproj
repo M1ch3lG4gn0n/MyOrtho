@@ -64,7 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ActivityExecuter.cs" />
-    <Compile Include="Controllers\FileWriter.cs" />
+    <Compile Include="Controllers\FileHelper.cs" />
     <Compile Include="Controllers\GraphicModule.cs" />
     <Compile Include="Controllers\PraatConnector.cs" />
     <Compile Include="Controllers\PraatScripting.cs" />
