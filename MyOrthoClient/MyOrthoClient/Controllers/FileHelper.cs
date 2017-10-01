@@ -27,7 +27,7 @@ namespace MyOrthoClient.Controllers
             {
                 
 
-                return xmlDoc;
+                return string.Empty;
             }
         }
     }

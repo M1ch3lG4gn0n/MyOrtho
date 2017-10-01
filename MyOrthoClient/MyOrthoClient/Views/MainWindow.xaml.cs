@@ -28,10 +28,6 @@ namespace MyOrthoClient
             InitializeComponent();
 
             ListVM activityListInstance = new ListVM();
-            //activityListInstance.populate;
-
-
-
             this.DataContext = activityListInstance;
 
 
