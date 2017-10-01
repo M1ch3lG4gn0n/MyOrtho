@@ -10,14 +10,24 @@ namespace MyOrthoClient.Controllers
     {
         public class FileWriter
         {
+            public FileWriter()
+            {
 
+            }
         }
 
         public class FileReader
         {
-            private void ReadFile()
+            public FileReader()
             {
+                
+            }
 
+            public string ReadFile()
+            {
+                
+
+                return xmlDoc;
             }
         }
     }

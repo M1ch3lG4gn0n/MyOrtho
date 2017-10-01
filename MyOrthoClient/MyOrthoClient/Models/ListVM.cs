@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+
 
 namespace MyOrthoClient.Models
 {
@@ -16,12 +15,11 @@ namespace MyOrthoClient.Models
         {
             activityList = new List<ActivityVM>();
         }
-
-        private async void PopulateActivityList(string xmlDoc)
+        
+        public void Add(ActivityVM activity)
         {
-            var docParsed = XDocument.Load(xmlDoc);
-            
-
+            activityList.Add(activity);
         }
+
     }
 }
