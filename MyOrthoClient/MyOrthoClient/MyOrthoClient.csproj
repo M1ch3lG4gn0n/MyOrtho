@@ -37,9 +37,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
-      <HintPath>..\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -52,9 +49,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFToolkit">
-      <HintPath>..\WPFToolkit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -70,6 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ActivityExecuter.cs" />
+    <Compile Include="Controllers\ActivityHelper.cs" />
     <Compile Include="Controllers\FileHelper.cs" />
     <Compile Include="Controllers\GraphicModule.cs" />
     <Compile Include="Controllers\PraatConnector.cs" />
