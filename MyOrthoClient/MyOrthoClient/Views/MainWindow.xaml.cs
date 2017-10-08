@@ -35,7 +35,7 @@ namespace MyOrthoClient
             this.DataContext = activityListInstance;
 
 
-            ((LineSeries)activityChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
+            ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
             new KeyValuePair<DateTime, int>(DateTime.Now, 100),
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(1), 130),
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(2), 150),

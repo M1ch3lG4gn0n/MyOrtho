@@ -25,6 +25,14 @@
                                                 ItemsSource="{Binding [1]}"
                                                 IsSelectionEnabled="True" />
         </my:Chart>
+        <Button x:Name="BtnImporter" Content="Importer" HorizontalAlignment="left" Margin="269,35,0,0" VerticalAlignment="Top" Width="100" Height="50"
+                Click="BtnImporter_Click"/>
+        <Button x:Name="BtnLire" Content="Lire" HorizontalAlignment="left" Margin="269,149,0,0" VerticalAlignment="Top" Width="100" Height="50"
+                Click="BtnLire_Click"/>
+        <Button x:Name="BtnArreter" Content="Arrêter" HorizontalAlignment="left" Margin="269,235,0,0" VerticalAlignment="Top" Width="100" Height="50"
+                Click="BtnArreter_Click"/>
+        <Button x:Name="BtnDemarrer" Content="Démarrer" HorizontalAlignment="left" Margin="433,35,0,0" VerticalAlignment="Top" Width="100" Height="50"
+                Click="BtnDemarrer_Click"/>
         <ListView HorizontalAlignment="Left" Height="592" Margin="0,27,0,0" VerticalAlignment="Top" Width="218" ItemsSource="{Binding ActivityList}">
             <ListView.View>
                 <GridView>
