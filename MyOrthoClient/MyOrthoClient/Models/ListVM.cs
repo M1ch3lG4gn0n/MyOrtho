@@ -21,5 +21,10 @@ namespace MyOrthoClient.Models
             activityList.Add(activity);
         }
 
+        public ActivityVM GetActivity(int index)
+        {
+            return activityList[index];
+        }
+
     }
 }
