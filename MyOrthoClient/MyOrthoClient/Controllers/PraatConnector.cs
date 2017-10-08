@@ -23,7 +23,7 @@ namespace MyOrthoClient.Controllers
             return instance;
         }
 
-        public async void GetResult(string script)
+        public void GetResult(string script)
         {
             if (!File.Exists(script))
             {
@@ -43,7 +43,7 @@ namespace MyOrthoClient.Controllers
             p.StartInfo = si;
             p.Start();
 
-            await Task.Run(() => p.WaitForExit());
+            p.WaitForExit();
         }
     }
 }

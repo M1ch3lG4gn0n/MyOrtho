@@ -45,10 +45,10 @@ namespace MyOrthoClient.Controllers
 
         public async void StopRecord()
         {
-            if (!Player.IsRecording)
+            /*if (!Player.IsRecording)
             {
                 return;
-            }
+            }*/
 
             var wavPath = await Player.StopRecord();
 
@@ -67,7 +67,7 @@ namespace MyOrthoClient.Controllers
             var resultPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + Guid.NewGuid().ToString("N") + ".txt";
             if (!File.Exists(resultPath))
             {
-                File.Create(resultPath);
+                File.Create(resultPath).Close();
             }
             else
             {

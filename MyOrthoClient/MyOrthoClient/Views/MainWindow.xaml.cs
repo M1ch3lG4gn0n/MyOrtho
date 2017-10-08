@@ -1,5 +1,6 @@
 ﻿using MyOrthoClient.Models;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,24 +46,26 @@ namespace MyOrthoClient
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
-        //TODO: Activities dummies import 
+            string currentDir = Environment.CurrentDirectory;
+
+            //TODO: Activities dummies import 
             ActivityVM activityEx1 = new ActivityVM
             {
-                Example_wav_path = @"..\..\Ressources\ex1.wav",
+                Example_wav_path = currentDir + @"\Ressources\ex1.wav",
                 Name = "Exercice 1",
                 Pitch = 600,
                 Intensity = 75
             };
             ActivityVM activityEx2 = new ActivityVM
             {
-                Example_wav_path = @"..\..\Ressources\ex2.wav",
+                Example_wav_path = currentDir + @"\Ressources\ex2.wav",
                 Name = "Exercice 2",
                 Pitch = 600,
                 Intensity = 75
             };
             ActivityVM activityEx3 = new ActivityVM
             {
-                Example_wav_path = @"..\..\Ressources\ex3.wav",
+                Example_wav_path = currentDir + @"\Ressources\ex3.wav",
                 Name = "Exercice 3",
                 Pitch = 600,
                 Intensity = 75
