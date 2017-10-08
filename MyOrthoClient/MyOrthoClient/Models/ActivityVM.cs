@@ -26,6 +26,7 @@ namespace MyOrthoClient.Models
         public bool Duree_exacteEvaluated { get; set; }
         public int Jitter { get; set; }
         public bool JitterEvaluated { get; set; }
+        public IEnumerable<DataLineItem> Exercice { get; set; }
         public IEnumerable<DataLineItem> Results { get; set; }      
 
         public ActivityVM() { }

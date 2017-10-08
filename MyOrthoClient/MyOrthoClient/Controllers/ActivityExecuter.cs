@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,8 @@ namespace MyOrthoClient.Controllers
             this.scripting = new PraatScripting(currentActivity.Name);
             this.connector = PraatConnector.GetConnector();
             this.analyser = new SoundAnalyser();
+
+            Task.Run(() => this.CurrentActivity.Exercice = GetNumericValue(this.CurrentActivity.Example_wav_path).Result);
         }
 
         public async void StartPlayback()
@@ -49,21 +52,32 @@ namespace MyOrthoClient.Controllers
 
             var wavPath = await Player.StopRecord();
 
-            var resultPath = string.Empty;
-            var scriptPath = await this.scripting.WriteScript(wavPath, this.CurrentActivity.Pitch, this.CurrentActivity.Intensity, resultPath);
+            this.CurrentActivity.Results = await GetNumericValue(wavPath);
 
-            this.connector.GetResult(scriptPath);
-
-            var resultValues = DataExtractor.GetInstance().GetFileValues(resultPath);
-
-            this.CurrentActivity.Results = resultValues;
-
-            this.AnalyzeSample(resultValues);
+            this.AnalyzeSample(this.CurrentActivity.Results);
         }
 
         private async void AnalyzeSample(IEnumerable<DataLineItem> values)
         {
             
+        }
+
+        private async Task<IEnumerable<DataLineItem>> GetNumericValue(string wavPath)
+        {
+            var resultPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + Guid.NewGuid().ToString("N") + ".txt";
+            if (!File.Exists(resultPath))
+            {
+                File.Create(resultPath);
+            }
+            else
+            {
+                File.WriteAllText(resultPath, string.Empty);
+            }
+            var scriptPath = await this.scripting.WriteScript(wavPath, this.CurrentActivity.Pitch, this.CurrentActivity.Intensity, resultPath);
+
+            this.connector.GetResult(scriptPath);
+
+            return DataExtractor.GetInstance().GetFileValues(resultPath);
         }
         
     }

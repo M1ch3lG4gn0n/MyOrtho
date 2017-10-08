@@ -12,7 +12,7 @@ namespace PraatTests
         static void Main(string[] args)
         {
             ProcessStartInfo si = new ProcessStartInfo();
-            si.FileName = @"C:\Users\Michel\Source\Repos\MyOrtho\MyOrthoClient\praat.exe";
+            si.FileName = @"C:\Users\Michel\Source\Repos\MyOrtho\MyOrthoClient\MyOrthoClient\praat.exe";
 
             si.RedirectStandardOutput = true;
             si.WindowStyle = ProcessWindowStyle.Hidden;
