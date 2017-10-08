@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyOrthoClient.Controllers
 {
-    class WANPlayerRecorder
+    class WAVPlayerRecorder
     {
         static string RECORD_FORLDER = "~\\Results\\";
 

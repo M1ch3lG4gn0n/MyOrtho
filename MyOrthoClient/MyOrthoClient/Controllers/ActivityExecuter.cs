@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyOrthoClient.Models;
 
 namespace MyOrthoClient.Controllers
 {
     class ActivityExecuter
     {
-        private WANPlayerRecorder Player = new WANPlayerRecorder();
+        private WAVPlayerRecorder Player;
+        private ActivityVM CurrentActivity;
 
-        public async void StartPlayback(string wavPath)
+        public ActivityExecuter(ActivityVM currentActivity)
         {
-            Player.StartPlayback(wavPath);
-        
+            this.Player = new WAVPlayerRecorder();
+            this.CurrentActivity = currentActivity;
+        }
+
+        public async void StartPlayback()
+        {
+            Player.StartPlayback(this.CurrentActivity.Example_wav_path);
         }
 
         public async void StopPlayback()
         {
             Player.StopPlayback();
-
         }
 
         public async void StartRecord()
@@ -29,14 +35,18 @@ namespace MyOrthoClient.Controllers
 
         public async void StopRecord()
         {
-            Player.StopRecord();
+            if (!Player.IsRecording)
+            {
+                return;
+            }
+
+            var result path = Player.StopRecord();
         }
 
         public async void AnalyseSample()
         {
             
         }
-
         
     }
 }
