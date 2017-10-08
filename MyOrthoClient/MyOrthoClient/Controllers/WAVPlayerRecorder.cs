@@ -70,6 +70,9 @@ namespace MyOrthoClient.Controllers
             isRecording = true;
             fileName = filename;
 
+            mciSendString("open new Type waveaudio Alias recsound", null, 0, IntPtr.Zero);
+            mciSendString("record recsound", null, 0, IntPtr.Zero);
+
             //Microphone mic = Microphone.Default;
         }
 
@@ -79,6 +82,9 @@ namespace MyOrthoClient.Controllers
         {
             isRecording = false;
             string completePath = RECORD_FORLDER + exerciseFolder + fileName + DateTime.Now.ToLongDateString() + ".wav";
+            int length = 0;
+            StringBuilder outs = new StringBuilder();
+            long i = mciSendString(@"save recsound C:\test\recordtest.wav", outs, length, IntPtr.Zero);
 
             //return Task.FromResult<string>(RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
             return (completePath);
