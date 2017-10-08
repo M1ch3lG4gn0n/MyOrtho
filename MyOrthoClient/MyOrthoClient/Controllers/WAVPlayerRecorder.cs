@@ -12,16 +12,28 @@ namespace MyOrthoClient.Controllers
     {
         static string RECORD_FORLDER = "~\\Results\\";
         static bool isRecording = false;
-        static string FILENAME = string.Empty;
+        static bool isPlaying = false;
+        static string FILENAME = "";
+        static string EXERCISE_FOLDER = "";
 
-        public WAVPlayerRecorder(string filename)
+        [DllImport("winmm.dll")]
+        private static extern long mciSendString(
+            string command,
+            StringBuilder returnValue,
+            int returnLength,
+            IntPtr winHandle);
+        
+
+    public WAVPlayerRecorder(string folderName)
         {
-            FILENAME = filename;
+            EXERCISE_FOLDER = folderName;
         }
 
         public async void StartPlayback(string wavPath)
         {
-            
+            isPlaying = true;
+            string playCommand = "Play " + wavPath + " notify";
+            //mciSendString(playCommand, null, 0, notifyForm.Handle);
 
         }
 
@@ -31,10 +43,11 @@ namespace MyOrthoClient.Controllers
 
         }
 
-        public async void StartRecord()
+        public async void StartRecord(string filename)
         {
             //Record into RECORD_FOLDER
             isRecording = true;
+            FILENAME = filename;
 
             //Microphone mic = Microphone.Default;
         }
@@ -49,6 +62,9 @@ namespace MyOrthoClient.Controllers
             return (RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
         }
 
-        public bool IsRecording => isRecording;
+        public bool IsRecording()
+        {
+            return isRecording;
+        }
     }
 }
