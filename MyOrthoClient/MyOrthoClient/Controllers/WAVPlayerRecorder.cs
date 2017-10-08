@@ -7,6 +7,7 @@ using Microsoft.VisualBasic;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using System.IO;
 
 namespace MyOrthoClient.Controllers
 {
@@ -18,7 +19,7 @@ namespace MyOrthoClient.Controllers
         private string fileName = "";
         private string exerciseFolder = "";
         private string currentWav = "";
-
+        private System.Media.SoundPlayer player;
         [DllImport("winmm.dll")]
         private static extern long mciSendString(
             string command,
@@ -38,12 +39,15 @@ namespace MyOrthoClient.Controllers
 
             isPlaying = true;
             currentWav = wavPath;
+            string currentDir = Environment.CurrentDirectory;
+            player = new System.Media.SoundPlayer(currentDir + wavPath);
+            player.Play();
 
-            string playCommand = "Open \"" + currentWav + "\" type waveaudio alias example1";
+           /* string playCommand = "Open \"" + currentWav + "\" type waveaudio alias example1";
             mciSendString(playCommand, null, 0, IntPtr.Zero);
 
             playCommand = "Play " + currentWav + " notify";
-            mciSendString(playCommand, null, 0, new WindowInteropHelper(Application.Current.MainWindow).Handle);
+            mciSendString(playCommand, null, 0, new WindowInteropHelper(Application.Current.MainWindow).Handle);*/
 
         }
         
@@ -52,8 +56,8 @@ namespace MyOrthoClient.Controllers
         {
             if (isPlaying)
             {
-                String playCommand = "Close " + currentWav;
-                mciSendString(playCommand, null, 0, IntPtr.Zero);
+                player.Stop();
+                
                 isPlaying = false;
             }
             
@@ -80,6 +84,10 @@ namespace MyOrthoClient.Controllers
             return (completePath);
         }
 
+
+
         public bool IsRecording => isRecording;
     }
+
+   
 }
