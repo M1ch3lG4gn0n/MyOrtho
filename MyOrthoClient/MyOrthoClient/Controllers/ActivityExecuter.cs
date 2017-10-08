@@ -56,7 +56,7 @@ namespace MyOrthoClient.Controllers
 
             var resultValues = DataExtractor.GetInstance().GetFileValues(resultPath);
 
-            this.CurrentActivity.
+            //this.CurrentActivity.
 
             this.AnalyzeSample(resultValues);
         }

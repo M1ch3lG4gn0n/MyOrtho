@@ -28,7 +28,6 @@ namespace MyOrthoClient
 
         public MainWindow()
         {
-            
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
@@ -37,9 +36,9 @@ namespace MyOrthoClient
             ActivityVM activity = new ActivityVM();
             activity.Example_wav_path = "./Ressources/truc.wav";
             activity.Name = "Test";
+
             activityListInstance.Add(activity);
 
-            //this.DataContext = activityListInstance;
             ac = new ActivityExecuter(activityListInstance.GetActivity(0));
 
             ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
@@ -49,12 +48,12 @@ namespace MyOrthoClient
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(3), 125),
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(4),155) };
 
-
+            DataContext = activityListInstance;
         }
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
-           
+            
         }
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)

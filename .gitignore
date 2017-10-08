@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 MyOrthoClient/MyOrthoClient/MyOrthoClient.sln
 MyOrthoClient/MyOrthoClient/Ressources/170508_Bug longueur exercice 1.wav
+*.wav
