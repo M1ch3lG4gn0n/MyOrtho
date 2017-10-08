@@ -25,8 +25,14 @@ namespace MyOrthoClient.Models
         public int Duree_exacte { get; set; }
         public bool Duree_exacteEvaluated { get; set; }
         public int Jitter { get; set; }
-        public bool JitterEvaluated { get; set; }        
+        public bool JitterEvaluated { get; set; }
+        public IEnumerable<DataLineItem> Results { get; set; }      
 
         public ActivityVM() { }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

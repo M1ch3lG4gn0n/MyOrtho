@@ -54,13 +54,14 @@ namespace MyOrthoClient.Controllers
 
             this.connector.GetResult(scriptPath);
 
-            //read file and put in list
+            var resultValues = DataExtractor.GetInstance().GetFileValues(resultPath);
 
+            this.CurrentActivity.
 
-            this.AnalyseSample();
+            this.AnalyzeSample(resultValues);
         }
 
-        private async void AnalyseSample()
+        private async void AnalyzeSample(IEnumerable<DataLineItem> values)
         {
             
         }
