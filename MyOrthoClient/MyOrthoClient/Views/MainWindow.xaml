@@ -6,15 +6,24 @@
       VerticalScrollBarVisibility="Auto" Margin="0,-28,0,28">
 
         <Grid Height="921">
-            <my:Chart Canvas.Top="80" Canvas.Left="10" Name="mcChart"
-           Width="400" Height="250"
-           Background="LightSteelBlue">
-                <my:Chart.Series>
-                    <my:LineSeries Title=" Monthly Count"
-            IndependentValueBinding="{Binding Path=Key}"
-            DependentValueBinding="{Binding Path=Value}">
-                    </my:LineSeries>
-                </my:Chart.Series>
+            <my:Chart Name="mcChart"
+                                       Title="mcChart" 
+                                       VerticalAlignment="Top" 
+                                       Margin="0,58,58,0" 
+                                       Height="382"
+                                       Grid.Column="1">
+                <my:LineSeries Name="Intensité"
+                                                Title="Intensité"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [0]}"
+                                                IsSelectionEnabled="True"/>
+                <my:LineSeries Name="Fréquence" 
+                                                Title="Fréquence"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [1]}"
+                                                IsSelectionEnabled="True" />
             </my:Chart>
         </Grid>
     </ScrollViewer>

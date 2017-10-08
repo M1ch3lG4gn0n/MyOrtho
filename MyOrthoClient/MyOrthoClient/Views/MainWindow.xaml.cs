@@ -30,13 +30,18 @@ namespace MyOrthoClient
             ListVM activityListInstance = new ListVM();
             this.DataContext = activityListInstance;
 
+            List<KeyValuePair<int, int>> intensityData = new List<KeyValuePair<int, int>>();
+            List<KeyValuePair<int, int>> frequencyData = new List<KeyValuePair<int, int>>();
 
-            ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
-            new KeyValuePair<DateTime, int>(DateTime.Now, 100),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(1), 130),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(2), 150),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(3), 125),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(4),155) };
+            intensityData.Add(new KeyValuePair<int, int>(100, 110));
+            
+            frequencyData.Add(new KeyValuePair<int, int>(100, 100));
+
+            var dataSourceList = new List<List<KeyValuePair<int, int>>>();
+            dataSourceList.Add(intensityData);
+            dataSourceList.Add(frequencyData);
+
+            mcChart.DataContext = dataSourceList;
         }
     }
 }
