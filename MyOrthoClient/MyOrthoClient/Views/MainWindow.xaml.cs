@@ -48,18 +48,24 @@ namespace MyOrthoClient
         //TODO: Activities dummies import 
             ActivityVM activityEx1 = new ActivityVM
             {
-                Example_wav_path = @"\Ressources\ex1.wav",
-                Name = "Exercice 1"
+                Example_wav_path = @"..\..\Ressources\ex1.wav",
+                Name = "Exercice 1",
+                Pitch = 600,
+                Intensity = 75
             };
             ActivityVM activityEx2 = new ActivityVM
             {
-                Example_wav_path = @"\Ressources\ex2.wav",
-                Name = "Exercice 2"
+                Example_wav_path = @"..\..\Ressources\ex2.wav",
+                Name = "Exercice 2",
+                Pitch = 600,
+                Intensity = 75
             };
             ActivityVM activityEx3 = new ActivityVM
             {
-                Example_wav_path = @"\Ressources\ex3.wav",
-                Name = "Exercice 3"
+                Example_wav_path = @"..\..\Ressources\ex3.wav",
+                Name = "Exercice 3",
+                Pitch = 600,
+                Intensity = 75
             };
             //
 

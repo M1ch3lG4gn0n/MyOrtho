@@ -40,7 +40,8 @@ namespace MyOrthoClient.Controllers
             isPlaying = true;
             currentWav = wavPath;
             string currentDir = Environment.CurrentDirectory;
-            player = new System.Media.SoundPlayer(currentDir + wavPath);
+            string path = Path.Combine(currentDir, wavPath);
+            player = new System.Media.SoundPlayer(path);
             player.Play();
 
            /* string playCommand = "Open \"" + currentWav + "\" type waveaudio alias example1";
