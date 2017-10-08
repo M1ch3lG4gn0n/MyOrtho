@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MyOrthoClient.Controllers;
 
 namespace MyOrthoClient
 {
@@ -26,22 +27,38 @@ namespace MyOrthoClient
         {
             
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.ResizeMode = ResizeMode.NoResize;
+            this.WindowState = WindowState.Normal;
 
             ListVM activityListInstance = new ListVM();
             this.DataContext = activityListInstance;
 
-            List<KeyValuePair<int, int>> intensityData = new List<KeyValuePair<int, int>>();
-            List<KeyValuePair<int, int>> frequencyData = new List<KeyValuePair<int, int>>();
 
-            intensityData.Add(new KeyValuePair<int, int>(100, 110));
+            ((LineSeries)activityChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
+            new KeyValuePair<DateTime, int>(DateTime.Now, 100),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(1), 130),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(2), 150),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(3), 125),
+            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(4),155) };
+        }
+
+        private void BtnImporter_Click(object sender, RoutedEventArgs e)
+        {
             
-            frequencyData.Add(new KeyValuePair<int, int>(100, 100));
+        }
 
-            var dataSourceList = new List<List<KeyValuePair<int, int>>>();
-            dataSourceList.Add(intensityData);
-            dataSourceList.Add(frequencyData);
+        private void BtnLire_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private void BtnArreter_Click(object sender, RoutedEventArgs e)
+        {
 
-            mcChart.DataContext = dataSourceList;
+        }
+        private void BtnDemarrer_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
