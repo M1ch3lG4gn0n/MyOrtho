@@ -30,15 +30,17 @@
                 Click="BtnArreter_Click"/>
         <Button x:Name="BtnDemarrer" Content="Démarrer" HorizontalAlignment="left" Margin="433,35,0,0" VerticalAlignment="Top" Width="100" Height="50"
                 Click="BtnDemarrer_Click"/>
+        <Button x:Name="BtnTerminer" Content="Terminer" HorizontalAlignment="left" Margin="433,119,0,0" VerticalAlignment="Top" Width="100" Height="50"
+                Click="BtnTerminer_Click"/>
         <ListBox HorizontalAlignment="Left" Height="370" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Vertical">
-                    <Label>Name</Label>
-                    <TextBlock Text="{Binding Name}"/>
-                </StackPanel>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <Label>Name</Label>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
 </Window>

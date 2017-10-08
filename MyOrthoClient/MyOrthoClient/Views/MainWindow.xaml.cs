@@ -34,7 +34,7 @@ namespace MyOrthoClient
             this.WindowState = WindowState.Normal;
 
             ActivityVM activity = new ActivityVM();
-            activity.Example_wav_path = "./Ressources/truc.wav";
+            activity.Example_wav_path = @"\Ressources\test.wav";
             activity.Name = "Test";
 
             activityListInstance.Add(activity);
@@ -67,7 +67,11 @@ namespace MyOrthoClient
         }
         private void BtnDemarrer_Click(object sender, RoutedEventArgs e)
         {
-
+            ac.StartRecord();
+        }
+        private void BtnTerminer_Click(object sender, RoutedEventArgs e)
+        {
+            ac.StopRecord();
         }
     }
 }
