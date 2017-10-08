@@ -8,8 +8,8 @@ namespace MyOrthoClient.Models
 {
     class DataLineItem
     {
-        public int time { get; set; }
-        public int frequency { get; set; }
-        public int pitch { get; set; }
+        public double time { get; set; }
+        public double frequency { get; set; }
+        public double pitch { get; set; }
     }
 }

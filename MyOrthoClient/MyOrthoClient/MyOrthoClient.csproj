@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ActivityExecuter.cs" />
+    <Compile Include="Controllers\DataExtractor.cs" />
     <Compile Include="Controllers\FileHelper.cs" />
     <Compile Include="Controllers\GraphicModule.cs" />
     <Compile Include="Controllers\PraatConnector.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Controllers\SoundAnalyser.cs" />
     <Compile Include="Controllers\WAVPlayerRecorder.cs" />
     <Compile Include="Models\ActivityVM.cs" />
+    <Compile Include="Models\DataLineItem.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
