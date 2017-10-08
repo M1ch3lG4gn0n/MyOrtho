@@ -11,11 +11,16 @@ namespace MyOrthoClient.Controllers
     {
         private WAVPlayerRecorder Player;
         private ActivityVM CurrentActivity;
+        private PraatScripting scripting;
+        private PraatConnector connector;
+        private SoundAnalyser analyser;
 
         public ActivityExecuter(ActivityVM currentActivity)
         {
-            this.Player = new WAVPlayerRecorder();
+            this.Player = new WAVPlayerRecorder(currentActivity.Name);
             this.CurrentActivity = currentActivity;
+            this.scripting = new PraatScripting(currentActivity.Name);
+            this.connector = new PraatConnector();
         }
 
         public async void StartPlayback()
@@ -30,7 +35,8 @@ namespace MyOrthoClient.Controllers
 
         public async void StartRecord()
         {
-            Player.StartRecord();
+            var fileName = this.CurrentActivity.Name + DateTime.Now.ToString("yyyyMMddHHmmss");
+            Player.StartRecord(fileName);
         }
 
         public async void StopRecord()
@@ -41,6 +47,8 @@ namespace MyOrthoClient.Controllers
             }
 
             var path = await Player.StopRecord();
+
+            
         }
 
         public async void AnalyseSample()

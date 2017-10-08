@@ -7,11 +7,20 @@ namespace MyOrthoClient.Controllers
     class PraatConnector
     {
         private string praatExeLocation;
-
-
-        public PraatConnector()
+        private static PraatConnector instance;
+        
+        private PraatConnector()
         {
             praatExeLocation = Directory.GetCurrentDirectory() + "\\praat.exe";
+        }
+
+        public static PraatConnector GetConnector()
+        {
+            if(instance == null)
+            {
+                instance = new PraatConnector();
+            }
+            return instance;
         }
 
         public async void GetResult(string script)
