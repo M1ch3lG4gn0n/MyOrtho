@@ -70,12 +70,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ActivityExecuter.cs" />
+    <Compile Include="Controllers\ActivityHelper.cs" />
     <Compile Include="Controllers\FileHelper.cs" />
     <Compile Include="Controllers\GraphicModule.cs" />
     <Compile Include="Controllers\PraatConnector.cs" />
     <Compile Include="Controllers\PraatScripting.cs" />
     <Compile Include="Controllers\SoundAnalyser.cs" />
-    <Compile Include="Controllers\WANPlayerRecorder.cs" />
+    <Compile Include="Controllers\WAVPlayerRecorder.cs" />
     <Compile Include="Models\ActivityVM.cs" />
     <Compile Include="Models\Diagram.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

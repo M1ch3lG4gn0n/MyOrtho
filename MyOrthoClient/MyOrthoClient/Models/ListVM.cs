@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+
 
 namespace MyOrthoClient.Models
 {
     class ListVM
     {
-        List<ActivityVM> activityList;
-
+        public ObservableCollection<ActivityVM> ActivityList { get; set; }
         public ListVM()
         {
-            activityList = new List<ActivityVM>();
+            ActivityList = new ObservableCollection<ActivityVM>();
         }
 
-        private async void PopulateActivityList(string xmlDoc)
+        public void Add(ActivityVM activity)
         {
-            var docParsed = XDocument.Load(xmlDoc);
-            
-
+            ActivityList.Add(activity);
         }
+
+        public ActivityVM GetActivity(int index)
+        {
+            return ActivityList[index];
+        }
+        
     }
 }

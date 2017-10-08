@@ -3,33 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyOrthoClient.Models;
 
 namespace MyOrthoClient.Controllers
 {
     class ActivityExecuter
     {
-        private WANPlayerRecorder Player = new WANPlayerRecorder();
+        private WAVPlayerRecorder Player;
+        private ActivityVM CurrentActivity;
+        private PraatScripting scripting;
+        private PraatConnector connector;
+        private SoundAnalyser analyser;
 
-        public async void StartPlayback(string wavPath)
+        public ActivityExecuter(ActivityVM currentActivity)
         {
-            Player.StartPlayback(wavPath);
-        
+            this.Player = new WAVPlayerRecorder(currentActivity.Name);
+            this.CurrentActivity = currentActivity;
+            this.scripting = new PraatScripting(currentActivity.Name);
+            this.connector = PraatConnector.GetConnector();
+            this.analyser = new SoundAnalyser();
+        }
+
+        public async void StartPlayback()
+        {
+            Player.StartPlayback(this.CurrentActivity.Example_wav_path);
         }
 
         public async void StopPlayback()
         {
             Player.StopPlayback();
-
         }
 
         public async void StartRecord()
         {
-            Player.StartRecord();
+            var fileName = this.CurrentActivity.Name + DateTime.Now.ToString("yyyyMMddHHmmss");
+            Player.StartRecord(fileName);
         }
 
         public async void StopRecord()
         {
-            Player.StopRecord();
+            if (!Player.IsRecording)
+            {
+                return;
+            }
+
+            var path = await Player.StopRecord();
+
+            
         }
+
+        public async void AnalyseSample()
+        {
+            
+        }
+        
     }
 }
