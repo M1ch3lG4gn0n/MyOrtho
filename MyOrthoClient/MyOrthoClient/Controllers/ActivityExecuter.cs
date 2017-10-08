@@ -20,7 +20,8 @@ namespace MyOrthoClient.Controllers
             this.Player = new WAVPlayerRecorder(currentActivity.Name);
             this.CurrentActivity = currentActivity;
             this.scripting = new PraatScripting(currentActivity.Name);
-            this.connector = new PraatConnector();
+            this.connector = PraatConnector.GetConnector();
+            this.analyser = new SoundAnalyser();
         }
 
         public async void StartPlayback()

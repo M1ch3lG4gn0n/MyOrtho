@@ -62,9 +62,6 @@ namespace MyOrthoClient.Controllers
             return (RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
         }
 
-        public bool IsRecording()
-        {
-            return isRecording;
-        }
+        public bool IsRecording => isRecording;
     }
 }
