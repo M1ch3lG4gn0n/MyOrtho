@@ -40,7 +40,7 @@ namespace MyOrthoClient.Controllers
                 return;
             }
 
-            var result path = Player.StopRecord();
+            var path = await Player.StopRecord();
         }
 
         public async void AnalyseSample()

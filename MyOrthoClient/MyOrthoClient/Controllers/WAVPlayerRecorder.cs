@@ -12,9 +12,9 @@ namespace MyOrthoClient.Controllers
     {
         static string RECORD_FORLDER = "~\\Results\\";
         static bool isRecording = false;
-        static string FILENAME = "";
+        static string FILENAME = string.Empty;
 
-        public WANPlayerRecorder(string filename)
+        public WAVPlayerRecorder(string filename)
         {
             FILENAME = filename;
         }
@@ -49,9 +49,6 @@ namespace MyOrthoClient.Controllers
             return (RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
         }
 
-        public bool IsRecording()
-        {
-            return isRecording;
-        }
+        public bool IsRecording => isRecording;
     }
 }
