@@ -28,19 +28,36 @@ namespace MyOrthoClient
 
         public MainWindow()
         {
+
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
-            this.WindowState = WindowState.Normal;            
+            this.WindowState = WindowState.Normal;
 
-            ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
-            new KeyValuePair<DateTime, int>(DateTime.Now, 100),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(1), 130),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(2), 150),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(3), 125),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(4),155) };
+            ActivityVM activity = new ActivityVM();
+            activity.Example_wav_path = "./Ressources/truc.wav";
+            activity.Name = "Test";
+            activity.Pitch = 600;
+            activity.Intensity = 75;
+            activityListInstance.Add(activity);
 
-            DataContext = activityListInstance;
+            //this.DataContext = activityListInstance;
+            ac = new ActivityExecuter(activityListInstance.GetActivity(0));
+            ac.StopRecord();
+            var results = activityListInstance.GetActivity(0).Results;
+            var dataSourceList = new List<List<KeyValuePair<double, double>>>();
+            List<KeyValuePair<double, double>> intensity = new List<KeyValuePair<double, double>>();
+            List<KeyValuePair<double, double>> frequency = new List<KeyValuePair<double, double>>();
+
+            foreach (var line in results)
+            {
+                intensity.Add(new KeyValuePair<double, double>(line.time, line.pitch));
+                frequency.Add(new KeyValuePair<double, double>(line.time, line.frequency));
+            }
+
+            dataSourceList.Add(intensity);
+            dataSourceList.Add(frequency);
+            mcChart.DataContext = dataSourceList;
         }
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
