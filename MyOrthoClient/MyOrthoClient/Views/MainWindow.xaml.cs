@@ -23,7 +23,7 @@ namespace MyOrthoClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        ActivityExecuter ac;
+        private ActivityExecuter ac;
         ListVM activityListInstance = new ListVM();        
 
         public MainWindow()
@@ -31,15 +31,7 @@ namespace MyOrthoClient
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
-            this.WindowState = WindowState.Normal;
-
-            ActivityVM activity = new ActivityVM();
-            activity.Example_wav_path = @"\Ressources\test.wav";
-            activity.Name = "Test";
-
-            activityListInstance.Add(activity);
-
-            ac = new ActivityExecuter(activityListInstance.GetActivity(0));
+            this.WindowState = WindowState.Normal;            
 
             ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
             new KeyValuePair<DateTime, int>(DateTime.Now, 100),
@@ -53,12 +45,32 @@ namespace MyOrthoClient
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
-            
+        //TODO: Activities dummies import 
+            ActivityVM activityEx1 = new ActivityVM
+            {
+                Example_wav_path = @"\Ressources\ex1.wav",
+                Name = "Exercice 1"
+            };
+            ActivityVM activityEx2 = new ActivityVM
+            {
+                Example_wav_path = @"\Ressources\ex2.wav",
+                Name = "Exercice 2"
+            };
+            ActivityVM activityEx3 = new ActivityVM
+            {
+                Example_wav_path = @"\Ressources\ex3.wav",
+                Name = "Exercice 3"
+            };
+            //
+
+            activityListInstance.Add(activityEx1);
+            activityListInstance.Add(activityEx2);
+            activityListInstance.Add(activityEx3);
         }
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
         {
-          ac.StartPlayback();
+            ac.StartPlayback();
 
         }
         private void BtnArreter_Click(object sender, RoutedEventArgs e)
@@ -72,6 +84,12 @@ namespace MyOrthoClient
         private void BtnTerminer_Click(object sender, RoutedEventArgs e)
         {
             ac.StopRecord();
+        }
+
+        private void ListActivities_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var currentActivityIndex = ListActivities.SelectedIndex;
+            ac = new ActivityExecuter(activityListInstance.GetActivity(currentActivityIndex));
         }
     }
 }
