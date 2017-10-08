@@ -16,15 +16,15 @@ namespace MyOrthoClient.Models
             ActivityList = new ObservableCollection<ActivityVM>();
         }
 
-        public void Add()
+        public void Add(ActivityVM activity)
         {
-                       
+            ActivityList.Add(activity);
         }
 
         public ActivityVM GetActivity(int index)
         {
-            return activityList[index];
+            return ActivityList[index];
         }
-
+        
     }
 }
