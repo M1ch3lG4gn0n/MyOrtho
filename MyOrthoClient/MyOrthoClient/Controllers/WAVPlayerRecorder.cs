@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Interop;
 
 namespace MyOrthoClient.Controllers
 {
     class WAVPlayerRecorder
     {
         static string RECORD_FORLDER = "~\\Results\\";
-        static bool isRecording = false;
-        static bool isPlaying = false;
-        static string FILENAME = "";
-        static string EXERCISE_FOLDER = "";
+        private bool isRecording = false;
+        private bool isPlaying = false;
+        private string fileName = "";
+        private string exerciseFolder = "";
+        private string currentWav = "";
 
         [DllImport("winmm.dll")]
         private static extern long mciSendString(
@@ -26,19 +29,33 @@ namespace MyOrthoClient.Controllers
 
     public WAVPlayerRecorder(string folderName)
         {
-            EXERCISE_FOLDER = folderName;
+            exerciseFolder = folderName;
         }
 
         public async void StartPlayback(string wavPath)
         {
+            StopPlayback();
+
             isPlaying = true;
-            string playCommand = "Play " + wavPath + " notify";
-            //mciSendString(playCommand, null, 0, notifyForm.Handle);
+            currentWav = wavPath;
+
+            string playCommand = "Open \"" + currentWav + "\" type waveaudio alias example1";
+            mciSendString(playCommand, null, 0, IntPtr.Zero);
+
+            playCommand = "Play " + currentWav + " notify";
+            mciSendString(playCommand, null, 0, new WindowInteropHelper(Application.Current.MainWindow).Handle);
 
         }
+        
 
         public async void StopPlayback()
         {
+            if (isPlaying)
+            {
+                String playCommand = "Close " + currentWav;
+                mciSendString(playCommand, null, 0, IntPtr.Zero);
+                isPlaying = false;
+            }
             
 
         }
@@ -47,7 +64,7 @@ namespace MyOrthoClient.Controllers
         {
             //Record into RECORD_FOLDER
             isRecording = true;
-            FILENAME = filename;
+            fileName = filename;
 
             //Microphone mic = Microphone.Default;
         }
@@ -57,9 +74,10 @@ namespace MyOrthoClient.Controllers
         public async Task<string> StopRecord()
         {
             isRecording = false;
+            string completePath = RECORD_FORLDER + exerciseFolder + fileName + DateTime.Now.ToLongDateString() + ".wav";
 
             //return Task.FromResult<string>(RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
-            return (RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
+            return (completePath);
         }
 
         public bool IsRecording => isRecording;
