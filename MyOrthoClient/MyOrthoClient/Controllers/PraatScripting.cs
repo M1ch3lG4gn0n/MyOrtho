@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.IO;
 
 namespace MyOrthoClient.Controllers
@@ -15,7 +16,7 @@ namespace MyOrthoClient.Controllers
             }
         }
 
-        public string WriteScript(string wavPath, int pitch, int intensity, string resultPath)
+        public async Task<string> WriteScript(string wavPath, int pitch, int intensity, string resultPath)
         {
             if (!File.Exists(wavPath))
             {
@@ -28,10 +29,10 @@ namespace MyOrthoClient.Controllers
 
             var script = string.Format(baseScript, wavPath, pitch, intensity, resultPath);
             var path = string.Format("%localappdata%\\MyOrtho\\{0}.txt", Guid.NewGuid().ToString("N"));
-            
+
             File.WriteAllText(path, script);
-            
-            return string.Empty;
+
+            return await Task.FromResult<string>(path);
         }
 
     }

@@ -47,9 +47,12 @@ namespace MyOrthoClient.Controllers
                 return;
             }
 
-            var path = await Player.StopRecord();
+            var wavPath = await Player.StopRecord();
 
-            
+            var resultPath = string.Empty;
+            this.scripting.WriteScript(wavPath, this.CurrentActivity.Pitch, this.CurrentActivity.Intensity, resultPath);
+
+            this.connector.
         }
 
         public async void AnalyseSample()
