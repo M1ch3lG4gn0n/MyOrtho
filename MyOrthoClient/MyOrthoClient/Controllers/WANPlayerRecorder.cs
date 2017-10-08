@@ -48,5 +48,10 @@ namespace MyOrthoClient.Controllers
             //return Task.FromResult<string>(RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
             return (RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
         }
+
+        public bool IsRecording()
+        {
+            return isRecording;
+        }
     }
 }
