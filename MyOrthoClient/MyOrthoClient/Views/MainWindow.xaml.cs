@@ -26,17 +26,38 @@ namespace MyOrthoClient
         {
             
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.ResizeMode = ResizeMode.NoResize;
+            this.WindowState = WindowState.Normal;
 
             ListVM activityListInstance = new ListVM();
             this.DataContext = activityListInstance;
 
 
-            ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
+            ((LineSeries)activityChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
             new KeyValuePair<DateTime, int>(DateTime.Now, 100),
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(1), 130),
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(2), 150),
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(3), 125),
             new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(4),155) };
+        }
+
+        private void BtnImporter_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void BtnLire_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void BtnArreter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void BtnDemarrer_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
