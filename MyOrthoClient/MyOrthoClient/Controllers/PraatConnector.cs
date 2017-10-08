@@ -6,9 +6,12 @@ namespace MyOrthoClient.Controllers
 {
     class PraatConnector
     {
+        private string praatExeLocation;
+
+
         public PraatConnector()
         {
-
+            praatExeLocation = Directory.GetCurrentDirectory() + "\\praat.exe";
         }
 
         public async void GetResult(string script)
@@ -19,7 +22,7 @@ namespace MyOrthoClient.Controllers
             }
 
             ProcessStartInfo si = new ProcessStartInfo();
-            si.FileName = @"C:\Users\Michel\Source\Repos\MyOrtho\MyOrthoClient\praat.exe";
+            si.FileName = praatExeLocation;
 
             si.RedirectStandardOutput = true;
             si.WindowStyle = ProcessWindowStyle.Hidden;
