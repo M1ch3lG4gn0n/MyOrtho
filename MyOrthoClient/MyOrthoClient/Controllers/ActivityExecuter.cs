@@ -48,9 +48,20 @@ namespace MyOrthoClient.Controllers
             /*if (!Player.IsRecording)
             {
                 return;
-            }*/
+            }
 
-            var wavPath = await Player.StopRecord();
+            var wavPath = await Player.StopRecord();*/
+
+            var selectFile = new Microsoft.Win32.OpenFileDialog();
+
+            var selectedResult = selectFile.ShowDialog();
+
+            if (!(selectedResult == true))
+            {
+                return;
+            }
+
+            var wavPath = selectFile.FileName;
 
             this.CurrentActivity.Results = await GetNumericValue(wavPath);
 

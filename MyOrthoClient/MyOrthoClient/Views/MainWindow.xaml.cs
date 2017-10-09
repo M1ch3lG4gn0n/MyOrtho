@@ -107,8 +107,11 @@ namespace MyOrthoClient
                 frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.frequency);
                 pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.time, lineItem.pitch);
             }
-            frequency.ItemsSource = frequencyLineArray;
-            pitch.ItemsSource = pitchLineArray;
+            this.Dispatcher.Invoke(() =>
+            {
+                frequency.ItemsSource = frequencyLineArray;
+                pitch.ItemsSource = pitchLineArray;
+            });
         }
     }
 }

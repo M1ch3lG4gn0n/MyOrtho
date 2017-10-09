@@ -14,8 +14,8 @@
                                                 DependentValuePath="Value" 
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [0]}"
-                                                IsSelectionEnabled="True"/>
-            <my:LineSeries Name="IntensityRésultat" 
+                                                IsSelectionEnabled="True" />
+                    <my:LineSeries Name="IntensityRésultat" 
                                                 Title="Résultat"  
                                                 DependentValuePath="Value" 
                                                 IndependentValuePath="Key"
