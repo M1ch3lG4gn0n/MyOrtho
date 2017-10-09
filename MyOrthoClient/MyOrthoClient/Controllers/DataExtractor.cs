@@ -22,7 +22,7 @@ namespace MyOrthoClient.Controllers
             return instance;
         }
 
-        public IEnumerable<DataLineItem> GetFileValues(string path)
+        public ICollection<DataLineItem> GetFileValues(string path)
         {
             var list = new List<DataLineItem>();
 

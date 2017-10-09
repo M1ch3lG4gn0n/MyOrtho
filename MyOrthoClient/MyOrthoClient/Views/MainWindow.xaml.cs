@@ -32,21 +32,14 @@ namespace MyOrthoClient
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
-            this.WindowState = WindowState.Normal;            
-
-            ((LineSeries)mcChart.Series[0]).ItemsSource = new KeyValuePair<DateTime, int>[]{
-            new KeyValuePair<DateTime, int>(DateTime.Now, 100),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(1), 130),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(2), 150),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(3), 125),
-            new KeyValuePair<DateTime, int>(DateTime.Now.AddMonths(4),155) };
-
+            this.WindowState = WindowState.Normal;
             DataContext = activityListInstance;
         }
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
             string currentDir = Environment.CurrentDirectory;
+            activityListInstance.ClearItems();
 
             //TODO: Activities dummies import 
             ActivityVM activityEx1 = new ActivityVM
@@ -98,7 +91,24 @@ namespace MyOrthoClient
         private void ListActivities_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var currentActivityIndex = ListActivities.SelectedIndex;
-            ac = new ActivityExecuter(activityListInstance.GetActivity(currentActivityIndex));
+            var activity = activityListInstance.GetActivity(currentActivityIndex);
+            activity.SetExerciseValue(values => SetChartLine((LineSeries)FrequencyChart.Series[0], (LineSeries)PitchChart.Series[0], values));
+            activity.SetResultValue(values => SetChartLine((LineSeries)FrequencyChart.Series[1], (LineSeries)PitchChart.Series[1], values));
+            ac = new ActivityExecuter(activity);
+        }
+
+        private void SetChartLine(LineSeries frequency, LineSeries pitch, ICollection<DataLineItem> values)
+        {
+            var frequencyLineArray = new KeyValuePair<double, double>[values.Count];
+            var pitchLineArray = new KeyValuePair<double, double>[values.Count];
+            int i = 0;
+            foreach (var lineItem in values)
+            {
+                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.frequency);
+                pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.time, lineItem.pitch);
+            }
+            frequency.ItemsSource = frequencyLineArray;
+            pitch.ItemsSource = pitchLineArray;
         }
     }
 }

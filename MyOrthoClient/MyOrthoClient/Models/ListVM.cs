@@ -25,6 +25,11 @@ namespace MyOrthoClient.Models
         {
             return ActivityList[index];
         }
+
+        public void ClearItems()
+        {
+            ActivityList.Clear();
+        }
         
     }
 }

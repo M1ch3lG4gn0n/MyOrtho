@@ -62,7 +62,7 @@ namespace MyOrthoClient.Controllers
             
         }
 
-        private async Task<IEnumerable<DataLineItem>> GetNumericValue(string wavPath)
+        private async Task<ICollection<DataLineItem>> GetNumericValue(string wavPath)
         {
             var resultPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + Guid.NewGuid().ToString("N") + ".txt";
             if (!File.Exists(resultPath))

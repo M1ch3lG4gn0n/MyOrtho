@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.DataVisualization.Charting;
 
 namespace MyOrthoClient.Models
 {
     class ActivityVM
     {
+
+        private ICollection<DataLineItem> _exercice;
+        private Action<ICollection<DataLineItem>> _setExercise;
+        private ICollection<DataLineItem> _results;
+        private Action<ICollection<DataLineItem>> _setResult;
+        private LineSeries _frequencyExpected;
+        private LineSeries _frequencyResult;
+        private LineSeries _pitchExpected;
+        private LineSeries _pitchResult;
+
         public string Name { get; set; }
         public string Example_wav_path { get; set; }
         public int Pitch { get; set; }
@@ -26,14 +37,46 @@ namespace MyOrthoClient.Models
         public bool Duree_exacteEvaluated { get; set; }
         public int Jitter { get; set; }
         public bool JitterEvaluated { get; set; }
-        public IEnumerable<DataLineItem> Exercice { get; set; }
-        public IEnumerable<DataLineItem> Results { get; set; }      
+        public ICollection<DataLineItem> Exercice
+        {
+            get
+            {
+                return this._exercice;
+            }
+            set
+            {
+                this._exercice = value;
+                this._setExercise(value);
+            }
+        }
+        public ICollection<DataLineItem> Results
+        {
+            get
+            {
+                return this._results;
+            }
+            set
+            {
+                this._results = value;
+                this._setResult(value);
+            }
+        }      
 
         public ActivityVM() { }
 
         public override string ToString()
         {
             return this.Name;
+        }
+
+        public void SetExerciseValue(Action<ICollection<DataLineItem>> action)
+        {
+            _setExercise = action;
+        }
+
+        public void SetResultValue(Action<ICollection<DataLineItem>> action)
+        {
+            _setResult = action;
         }
     }
 }
