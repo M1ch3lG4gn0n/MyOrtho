@@ -45,14 +45,14 @@ namespace MyOrthoClient.Controllers
 
         public async void StopRecord()
         {
-            /*if (!Player.IsRecording)
+            if (!Player.IsRecording)
             {
                 return;
             }
 
-            var wavPath = await Player.StopRecord();*/
+            var wavPath = await Player.StopRecord();
 
-            var selectFile = new Microsoft.Win32.OpenFileDialog();
+            /*var selectFile = new Microsoft.Win32.OpenFileDialog();
 
             var selectedResult = selectFile.ShowDialog();
 
@@ -61,7 +61,7 @@ namespace MyOrthoClient.Controllers
                 return;
             }
 
-            var wavPath = selectFile.FileName;
+            var wavPath = selectFile.FileName;*/
 
             this.CurrentActivity.Results = await GetNumericValue(wavPath);
 
