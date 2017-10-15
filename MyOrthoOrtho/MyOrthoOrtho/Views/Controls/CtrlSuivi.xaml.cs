@@ -1,6 +1,6 @@
-﻿using MyOrthoClient.Models;
+﻿using MyOrthoOrtho.Controllers;
+using MyOrthoOrtho.Models;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,24 +15,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyOrthoClient.Controllers;
 
-namespace MyOrthoClient
+namespace MyOrthoOrtho.Views.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CtrlSuivi.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CtrlSuivi : UserControl
     {
-        private ActivityExecuter ac;
-        ListVM activityListInstance = new ListVM();        
+        private SuiviExecuter ac;
+        ListSuiviVM activityListInstance = new ListSuiviVM();
 
-        public MainWindow()
+
+        public CtrlSuivi()
         {
             InitializeComponent();
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.ResizeMode = ResizeMode.NoResize;
-            this.WindowState = WindowState.Normal;
             DataContext = activityListInstance;
         }
 
@@ -42,25 +39,28 @@ namespace MyOrthoClient
             activityListInstance.ClearItems();
 
             //TODO: Activities dummies import 
-            ActivityVM activityEx1 = new ActivityVM
+            SuiviVM activityEx1 = new SuiviVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex1.wav",
+                Result_wav_path = currentDir + @"\Ressources\re1.wav",
                 Name = "Exercice 1",
                 PitchMin = 70,
                 PitchMax = 800,
                 IntensityThreshold = 40
             };
-            ActivityVM activityEx2 = new ActivityVM
+            SuiviVM activityEx2 = new SuiviVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex2.wav",
+                Result_wav_path = currentDir + @"\Ressources\re2.wav",
                 Name = "Exercice 2",
                 PitchMin = 70,
                 PitchMax = 800,
                 IntensityThreshold = 40
             };
-            ActivityVM activityEx3 = new ActivityVM
+            SuiviVM activityEx3 = new SuiviVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex3.wav",
+                Result_wav_path = currentDir + @"\Ressources\re3.wav",
                 Name = "Exercice 3",
                 PitchMin = 70,
                 PitchMax = 800,
@@ -73,9 +73,10 @@ namespace MyOrthoClient
             activityListInstance.Add(activityEx3);
         }
 
+
         private void BtnLire_Click(object sender, RoutedEventArgs e)
         {
-            ac.StartPlayback();
+            ac.StartPlaybackExemple();
 
         }
         private void BtnArreter_Click(object sender, RoutedEventArgs e)
@@ -89,13 +90,6 @@ namespace MyOrthoClient
         private void BtnTerminer_Click(object sender, RoutedEventArgs e)
         {
             ac.StopRecord();
-            /*SoundAnalyser sa = new SoundAnalyser();
-            string currentDir = Environment.CurrentDirectory;
-            sa.CalculateCorrelation(activityListInstance.GetActivity(0).Exercice, @"C:\Users\jeant\AppData\Local\MyOrtho\Exercice 1\20171015154835.txt");*/
-        }
-        private void BtnEcouter_Click(object sender, RoutedEventArgs e)
-        {
-            ac.StartLastExercicePlayblack();
         }
 
         private void ListActivities_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -104,7 +98,7 @@ namespace MyOrthoClient
             var activity = activityListInstance.GetActivity(currentActivityIndex);
             activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
             activity.SetResultValue(values => SetChartLine((LineSeries)PitchChart.Series[1], (LineSeries)IntensityChart.Series[1], values));
-            ac = new ActivityExecuter(activity);
+            ac = new SuiviExecuter(activity);
         }
 
         private void SetChartLine(LineSeries frequency, LineSeries pitch, ICollection<DataLineItem> values)
@@ -114,7 +108,7 @@ namespace MyOrthoClient
             int i = 0;
             foreach (var lineItem in values)
             {
-                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.Intensity);
+                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.frequency);
                 pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.time, lineItem.pitch);
             }
             this.Dispatcher.Invoke(() =>
@@ -122,6 +116,11 @@ namespace MyOrthoClient
                 frequency.ItemsSource = frequencyLineArray;
                 pitch.ItemsSource = pitchLineArray;
             });
+        }
+
+        private void BtnLireResult_Click(object sender, RoutedEventArgs e)
+        {
+            ac.StartPlaybackResult();
         }
     }
 }

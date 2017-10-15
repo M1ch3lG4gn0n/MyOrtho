@@ -93,6 +93,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Écouter mon&#xD;&#xA;enregistrement" HorizontalAlignment="Left" Margin="589,35,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Name="BtnEcouter" Click="BtnEcouter_Click" Content="Écouter mon&#xD;&#xA;enregistrement" HorizontalAlignment="Left" Margin="589,35,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
     </Grid>
 </Window>
