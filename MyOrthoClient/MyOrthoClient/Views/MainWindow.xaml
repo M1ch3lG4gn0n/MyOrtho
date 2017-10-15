@@ -3,42 +3,88 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="MyOrtho" Height="916" Width="1137" xmlns:my="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:models="clr-namespace:MyOrthoClient.Models">
+<!--
+    <Window.Resources>
+        <Style x:Key="InvisibleDataPointBlue" TargetType="{x:Type charting:DataPoint}">
+            <Setter Property="Background" Value="Blue"/>
+            <Setter Property="Template" Value="{x:Null}"/>
+        </Style>
+
+        <Style x:Key="InvisibleDataPointRed" TargetType="{x:Type charting:DataPoint}">
+            <Setter Property="Background" Value="Red"/>
+            <Setter Property="Template" Value="{x:Null}"/>
+        </Style>
+    </Window.Resources>
+    -->
     <Grid Height="921">
-        <my:Chart Name="FrequencyChart"
-                                       Title="Fréquence" 
-                                       VerticalAlignment="Top" 
-                                       Margin="368,160,47.6,0" 
-                                       Height="363">
-            <my:LineSeries Name="IntensityAttendue"
-                                                Title="Attendue"  
-                                                DependentValuePath="Value" 
-                                                IndependentValuePath="Key"
-                                                ItemsSource="{Binding [0]}"
-                                                IsSelectionEnabled="True" />
-                    <my:LineSeries Name="IntensityRésultat" 
-                                                Title="Résultat"  
-                                                DependentValuePath="Value" 
-                                                IndependentValuePath="Key"
-                                                ItemsSource="{Binding [1]}"
-                                                IsSelectionEnabled="True" />
-        </my:Chart>
         <my:Chart Name="PitchChart"
                                        Title="Pitch" 
                                        VerticalAlignment="Top" 
-                                       Margin="368,520,47.6,0" 
+                                       Margin="368,160,47.6,0" 
                                        Height="363">
             <my:LineSeries Name="PitchAttendue"
                                                 Title="Attendue"  
                                                 DependentValuePath="Value" 
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [0]}"
-                                                IsSelectionEnabled="True"/>
-            <my:LineSeries Name="PitchRésultat" 
+                                                IsSelectionEnabled="True">
+
+                                                <my:LineSeries.DataPointStyle>
+                                                    <Style TargetType="my:LineDataPoint">
+                                                        <Setter Property="Background" Value="Red"/>
+                                                        <Setter Property="Template" Value="{x:Null}"/>
+                                                    </Style>
+                                                </my:LineSeries.DataPointStyle>
+                </my:LineSeries>
+
+            <my:LineSeries Name="PitchRésultat"
                                                 Title="Résultat"  
                                                 DependentValuePath="Value" 
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [1]}"
-                                                IsSelectionEnabled="True" />
+                                                IsSelectionEnabled="True">
+
+                                                <my:LineSeries.DataPointStyle>
+                                                    <Style TargetType="my:LineDataPoint">
+                                                    <Setter Property="Background" Value="Blue"/>
+                                                    <Setter Property="Template" Value="{x:Null}"/>
+                                                </Style>
+                                                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
+        </my:Chart>
+        <my:Chart Name="IntensityChart"
+                                       Title="Intensité" 
+                                       VerticalAlignment="Top" 
+                                       Margin="368,520,47.6,0" 
+                                       Height="363">
+            <my:LineSeries Name="IntensityAttendue"
+                                                Title="Attendue"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [0]}"
+                                                IsSelectionEnabled="True">
+                
+                                                <my:LineSeries.DataPointStyle>
+                                                    <Style TargetType="my:LineDataPoint">
+                                                        <Setter Property="Background" Value="Red"/>
+                                                        <Setter Property="Template" Value="{x:Null}"/>
+                                                    </Style>
+                                                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
+                <my:LineSeries Name="IntensityRésultat" 
+                                                Title="Résultat"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [1]}"
+                                                IsSelectionEnabled="True">
+
+                                                <my:LineSeries.DataPointStyle>
+                                                    <Style TargetType="my:LineDataPoint">
+                                                        <Setter Property="Background" Value="Blue"/>
+                                                        <Setter Property="Template" Value="{x:Null}"/>
+                                                    </Style>
+                                                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
         </my:Chart>
         <Button x:Name="BtnImporter" Content="Importer" HorizontalAlignment="left" Margin="269,35,0,0" VerticalAlignment="Top" Width="100" Height="50"
                 Click="BtnImporter_Click"/>
