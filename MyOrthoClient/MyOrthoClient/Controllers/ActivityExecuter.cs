@@ -84,7 +84,7 @@ namespace MyOrthoClient.Controllers
             {
                 File.WriteAllText(resultPath, string.Empty);
             }
-            var scriptPath = await this.scripting.WriteScript(wavPath, this.CurrentActivity.Pitch, this.CurrentActivity.Intensity, resultPath);
+            var scriptPath = await this.scripting.WriteScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath);
 
             this.connector.GetResult(scriptPath);
 

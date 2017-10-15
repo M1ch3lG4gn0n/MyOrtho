@@ -46,22 +46,25 @@ namespace MyOrthoClient
             {
                 Example_wav_path = currentDir + @"\Ressources\ex1.wav",
                 Name = "Exercice 1",
-                Pitch = 600,
-                Intensity = 75
+                PitchMin = 70,
+                PitchMax = 800,
+                IntensityThreshold = 40
             };
             ActivityVM activityEx2 = new ActivityVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex2.wav",
                 Name = "Exercice 2",
-                Pitch = 600,
-                Intensity = 75
+                PitchMin = 70,
+                PitchMax = 800,
+                IntensityThreshold = 40
             };
             ActivityVM activityEx3 = new ActivityVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex3.wav",
                 Name = "Exercice 3",
-                Pitch = 600,
-                Intensity = 75
+                PitchMin = 70,
+                PitchMax = 800,
+                IntensityThreshold = 40
             };
             //
 

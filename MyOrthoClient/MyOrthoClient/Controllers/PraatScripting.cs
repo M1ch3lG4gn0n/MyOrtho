@@ -6,7 +6,7 @@ namespace MyOrthoClient.Controllers
 {
     class PraatScripting
     {
-        string baseScript = "sound = Read from file: \"{0}\"\r\npitch = {1}\r\nintensity = {2}\r\ntmin = Get start time\r\ntmax = Get end time\r\nTo Pitch: 0.01, 70, 800\r\nRename: \"pitch\"\r\nselectObject: sound\r\nTo Intensity: 75, 0.01\r\nRename: \"intensity\"\r\nn = Get number of frames\r\ntimes=0\r\ni=1\r\nwhile times=0\r\n	if i<=n\r\n		intensity = Get value in frame: i\r\n		if intensity > 40\r\n			times = Get time from frame: i\r\n		endif\r\n	endif\r\n	i= i+1\r\nendwhile\r\n\r\nresultats$ = \"{3}\"\r\nfor i to (tmax-tmin)/0.01\r\n    time = tmin + i * 0.01\r\n    selectObject: \"Pitch pitch\"\r\n    pitch = Get value at time: time, \"Hertz\", \"Linear\"\r\n    selectObject: \"Intensity intensity\"\r\n    intensity = Get value at time: time, \"Cubic\"\r\n    appendFileLine: resultats$, fixed$ (time, 2), \" \", fixed$ (pitch, 3), \" \", fixed$ (intensity, 3)\r\nendfor";
+        string baseScript = "sound = Read from file: \"{0}\"\r\npitch = 0\r\nintensity = 0\r\ntmin = Get start time\r\ntmax = Get end time\r\nTo Pitch: 0.01, {1}, {2}\r\nRename: \"pitch\"\r\nselectObject: sound\r\nTo Intensity: 75, 0.01\r\nRename: \"intensity\"\r\nn = Get number of frames\r\ntimes=0\r\ni=1\r\nwhile times=0\r\n	if i<=n\r\n		intensity = Get value in frame: i\r\n		if intensity > {3}\r\n			times = Get time from frame: i\r\n		endif\r\n	endif\r\n	i= i+1\r\nendwhile\r\n\r\nresultats$ = \"{4}\"\r\nfor i to (tmax-tmin)/0.01\r\n    time = tmin + i * 0.01\r\n    selectObject: \"Pitch pitch\"\r\n    pitch = Get value at time: time, \"Hertz\", \"Linear\"\r\n    selectObject: \"Intensity intensity\"\r\n    intensity = Get value at time: time, \"Cubic\"\r\n    appendFileLine: resultats$, fixed$ (time, 2), \" \", fixed$ (pitch, 3), \" \", fixed$ (intensity, 3)\r\nendfor";
         string localAppData;
 
         public PraatScripting(string exerciceName)
@@ -18,7 +18,7 @@ namespace MyOrthoClient.Controllers
             }
         }
 
-        public async Task<string> WriteScript(string wavPath, int pitch, int intensity, string resultPath)
+        public async Task<string> WriteScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath)
         {
             if (!File.Exists(wavPath))
             {
@@ -29,7 +29,7 @@ namespace MyOrthoClient.Controllers
                 throw new FileNotFoundException("Result file not found");
             }
 
-            var script = string.Format(baseScript, wavPath, pitch, intensity, resultPath);
+            var script = string.Format(baseScript, wavPath, pitchMin, pitchMax, intensityThreshold, resultPath);
             var path = string.Format(localAppData+"\\{0}.praat", Guid.NewGuid().ToString("N"));
 
             File.WriteAllText(path, script);
