@@ -21,6 +21,7 @@ namespace MyOrthoOrtho.Models
 
         public string Name { get; set; }
         public string Example_wav_path { get; set; }
+        public string Result_wav_path { get; set; }
         public int PitchMin { get; set; }
         public int PitchMax { get; set; }
         public int IntensityThreshold { get; set; }

@@ -34,9 +34,16 @@ namespace MyOrthoOrtho.Controllers
             Task.Run(() => this.CurrentActivity.Exercice = GetNumericValue(this.CurrentActivity.Example_wav_path).Result);
         }
 
-        public void StartPlayback()
+        public void StartPlaybackExemple()
         {
+            Player.StopPlayback();
             Player.StartPlayback(this.CurrentActivity.Example_wav_path);
+        }
+
+        public void StartPlaybackResult()
+        {
+            Player.StopPlayback();
+            Player.StartPlayback(this.CurrentActivity.Result_wav_path);
         }
 
         public void StopPlayback()
@@ -58,18 +65,7 @@ namespace MyOrthoOrtho.Controllers
             }
 
             var wavPath = lastExerciceWavPath = await Player.StopRecord();
-
-            /*var selectFile = new Microsoft.Win32.OpenFileDialog();
-
-            var selectedResult = selectFile.ShowDialog();
-
-            if (!(selectedResult == true))
-            {
-                return;
-            }
-
-            var wavPath = selectFile.FileName;*/
-
+            
             this.CurrentActivity.Results = await GetNumericValue(wavPath);
 
             this.AnalyzeSample(this.CurrentActivity.Results);

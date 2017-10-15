@@ -42,6 +42,7 @@ namespace MyOrthoOrtho.Views.Controls
             SuiviVM activityEx1 = new SuiviVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex1.wav",
+                Result_wav_path = currentDir + @"\Ressources\re1.wav",
                 Name = "Exercice 1",
                 PitchMin = 70,
                 PitchMax = 800,
@@ -50,6 +51,7 @@ namespace MyOrthoOrtho.Views.Controls
             SuiviVM activityEx2 = new SuiviVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex2.wav",
+                Result_wav_path = currentDir + @"\Ressources\re2.wav",
                 Name = "Exercice 2",
                 PitchMin = 70,
                 PitchMax = 800,
@@ -58,6 +60,7 @@ namespace MyOrthoOrtho.Views.Controls
             SuiviVM activityEx3 = new SuiviVM
             {
                 Example_wav_path = currentDir + @"\Ressources\ex3.wav",
+                Result_wav_path = currentDir + @"\Ressources\re3.wav",
                 Name = "Exercice 3",
                 PitchMin = 70,
                 PitchMax = 800,
@@ -73,7 +76,7 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
         {
-            ac.StartPlayback();
+            ac.StartPlaybackExemple();
 
         }
         private void BtnArreter_Click(object sender, RoutedEventArgs e)
@@ -115,5 +118,9 @@ namespace MyOrthoOrtho.Views.Controls
             });
         }
 
+        private void BtnLireResult_Click(object sender, RoutedEventArgs e)
+        {
+            ac.StartPlaybackResult();
+        }
     }
 }
