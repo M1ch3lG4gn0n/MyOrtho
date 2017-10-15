@@ -61,7 +61,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\PraatHelper.cs" />
+    <Compile Include="Controllers\SuiviExecuter.cs" />
     <Compile Include="Models\ApplicationVM.cs" />
+    <Compile Include="Models\ListSuiviVM.cs" />
     <Compile Include="Models\SuiviVM.cs" />
     <Compile Include="Models\PreparationVM.cs" />
     <Compile Include="Models\VMBase.cs" />
@@ -78,7 +80,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\ActivityExecuter.cs" />
     <Compile Include="Controllers\ActivityHelper.cs" />
     <Compile Include="Controllers\DataExtractor.cs" />
     <Compile Include="Controllers\FileHelper.cs" />

@@ -18,7 +18,7 @@ namespace MyOrthoOrtho.Controllers
             }
         }
 
-        public async Task<string> WriteScript(string wavPath, int pitch, int intensity, string resultPath)
+        public async Task<string> WriteScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath)
         {
             if (!File.Exists(wavPath))
             {
@@ -29,8 +29,8 @@ namespace MyOrthoOrtho.Controllers
                 throw new FileNotFoundException("Result file not found");
             }
 
-            var script = string.Format(baseScript, wavPath, pitch, intensity, resultPath);
-            var path = string.Format(localAppData+"\\{0}.praat", Guid.NewGuid().ToString("N"));
+            var script = string.Format(baseScript, wavPath, pitchMin, pitchMax, intensityThreshold, resultPath);
+            var path = string.Format(localAppData + "\\{0}.praat", Guid.NewGuid().ToString("N"));
 
             File.WriteAllText(path, script);
 
