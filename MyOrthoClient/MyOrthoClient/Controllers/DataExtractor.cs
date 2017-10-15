@@ -39,6 +39,11 @@ namespace MyOrthoClient.Controllers
             return list;
         }
 
+        public string GetFileSingleValue(string path)
+        {
+            return File.ReadAllText(path);
+        }
+
         private DataLineItem ValidateValue(string line)
         {
             if (line.Contains("undefined"))
@@ -50,7 +55,7 @@ namespace MyOrthoClient.Controllers
             return new DataLineItem()
             {
                 time = double.Parse(values[0]),
-                frequency = double.Parse(values[1]),
+                Intensity = double.Parse(values[1]),
                 pitch = double.Parse(values[2])
             };
         }

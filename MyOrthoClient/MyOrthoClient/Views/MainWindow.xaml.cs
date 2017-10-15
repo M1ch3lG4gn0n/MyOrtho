@@ -107,7 +107,7 @@ namespace MyOrthoClient
             int i = 0;
             foreach (var lineItem in values)
             {
-                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.frequency);
+                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.Intensity);
                 pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.time, lineItem.pitch);
             }
             this.Dispatcher.Invoke(() =>

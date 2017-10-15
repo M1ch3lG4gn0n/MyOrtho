@@ -9,7 +9,7 @@ namespace MyOrthoClient.Models
     class DataLineItem
     {
         public double time { get; set; }
-        public double frequency { get; set; }
+        public double Intensity { get; set; }
         public double pitch { get; set; }
     }
 }

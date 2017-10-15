@@ -33,7 +33,7 @@ namespace MyOrthoClient.Controllers
             }
             currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            Task.Run(() => this.CurrentActivity.Exercice = GetNumericValue(this.CurrentActivity.Example_wav_path).Result);
+            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path));
         }
 
         public void StartPlayback()
@@ -61,18 +61,8 @@ namespace MyOrthoClient.Controllers
 
             var wavPath = lastExerciceWavPath = await Player.StopRecord();
 
-            /*var selectFile = new Microsoft.Win32.OpenFileDialog();
-
-            var selectedResult = selectFile.ShowDialog();
-
-            if (!(selectedResult == true))
-            {
-                return;
-            }
-
-            var wavPath = selectFile.FileName;*/
-
-            this.CurrentActivity.Results = await GetNumericValue(wavPath);
+            this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath);
+            this.CurrentActivity.Jitter = CalculateJitter(wavPath);
 
             this.AnalyzeSample(this.CurrentActivity.Results);
         }
@@ -90,9 +80,9 @@ namespace MyOrthoClient.Controllers
             
         }
 
-        private async Task<ICollection<DataLineItem>> GetNumericValue(string wavPath)
+        private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath)
         {
-            var resultPath = currentExercicePath + ".txt";
+            var resultPath = currentExercicePath + "IntensityFrequency.txt";
             if (!File.Exists(resultPath))
             {
                 File.Create(resultPath).Close();
@@ -101,11 +91,35 @@ namespace MyOrthoClient.Controllers
             {
                 File.WriteAllText(resultPath, string.Empty);
             }
-            var scriptPath = await this.scripting.WriteScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath);
+            var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath);
 
             this.connector.GetResult(scriptPath);
 
             return DataExtractor.GetInstance().GetFileValues(resultPath);
+        }
+
+        private double CalculateJitter(string wavPath)
+        {
+            var resultPath = currentExercicePath + "Jitter.txt";
+            if (!File.Exists(resultPath))
+            {
+                File.Create(resultPath).Close();
+            }
+            else
+            {
+                File.WriteAllText(resultPath, string.Empty);
+            }
+            var scriptPath = this.scripting.WriteJitterScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, resultPath);
+
+            this.connector.GetResult(scriptPath);
+
+            double result;
+            if(double.TryParse(DataExtractor.GetInstance().GetFileSingleValue(resultPath), out result))
+            {
+                return result;
+            }
+
+            return 0;
         }
         
     }
