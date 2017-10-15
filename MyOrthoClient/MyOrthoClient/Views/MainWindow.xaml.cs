@@ -90,6 +90,10 @@ namespace MyOrthoClient
         {
             ac.StopRecord();
         }
+        private void BtnEcouter_Click(object sender, RoutedEventArgs e)
+        {
+            ac.StartLastExercicePlayblack();
+        }
 
         private void ListActivities_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

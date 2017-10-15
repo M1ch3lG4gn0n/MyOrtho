@@ -79,7 +79,7 @@ namespace MyOrthoClient.Controllers
 
         public void StartLastExercicePlayblack()
         {
-            if (string.IsNullOrEmpty(this.lastExerciceWavPath))
+            if (!string.IsNullOrEmpty(this.lastExerciceWavPath))
             {
                 Player.StartPlayback(this.lastExerciceWavPath);
             }
