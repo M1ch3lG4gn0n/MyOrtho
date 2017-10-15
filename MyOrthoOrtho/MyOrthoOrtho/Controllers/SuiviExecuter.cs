@@ -32,6 +32,7 @@ namespace MyOrthoOrtho.Controllers
             currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
 
             Task.Run(() => this.CurrentActivity.Exercice = GetNumericValue(this.CurrentActivity.Example_wav_path).Result);
+            Task.Run(() => this.CurrentActivity.Results = GetNumericValue(this.CurrentActivity.Result_wav_path).Result);
         }
 
         public void StartPlaybackExemple()

@@ -37,6 +37,7 @@ namespace MyOrthoOrtho.Models
         public bool Duree_exacteEvaluated { get; set; }
         public int Jitter { get; set; }
         public bool JitterEvaluated { get; set; }
+
         public ICollection<DataLineItem> Exercice
         {
             get
@@ -49,6 +50,7 @@ namespace MyOrthoOrtho.Models
                 this._setExercise(value);
             }
         }
+
         public ICollection<DataLineItem> Results
         {
             get
