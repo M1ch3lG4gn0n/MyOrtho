@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyOrthoClient.Models
 {
-    class DataLineItem
+    public class DataLineItem
     {
         public double time { get; set; }
         public double Intensity { get; set; }

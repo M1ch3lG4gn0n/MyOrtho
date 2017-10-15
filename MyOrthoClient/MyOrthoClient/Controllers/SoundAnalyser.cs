@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyOrthoClient.Models;
 
 namespace MyOrthoClient.Controllers
 {
@@ -87,26 +88,17 @@ namespace MyOrthoClient.Controllers
             return covariance / len;
         }
 
-        public double[] CalculateCorrelation(string expected, string exercise)
+        public double[] CalculateCorrelation(ICollection<DataLineItem> expected, ICollection<DataLineItem> exercise)
         {
-            string[] lines = System.IO.File.ReadAllLines(expected);
-            String[] parts;
-            foreach (string line in lines)
+            foreach (var lineItem in expected)
             {
-                parts = line.Split(' ');
-
-                x.Add(parts[1]);
-                xin.Add(parts[2]);
+                x.Add(lineItem.Intensity);
+                xin.Add(lineItem.pitch);
             }
-            
-            string[] lines1 = System.IO.File.ReadAllLines(exercise);
-            String[] parts1;
-            foreach (string line1 in lines1)
+            foreach (var lineItem in exercise)
             {
-                parts1 = line1.Split(' ');
-
-                y.Add(parts1[1]);
-                yin.Add(parts1[2]);
+                y.Add(lineItem.Intensity);
+                yin.Add(lineItem.pitch);
             }
 
             double[] Xsample = new double[x.Count];
