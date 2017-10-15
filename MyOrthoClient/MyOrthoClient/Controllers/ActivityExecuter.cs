@@ -15,32 +15,41 @@ namespace MyOrthoClient.Controllers
         private PraatScripting scripting;
         private PraatConnector connector;
         private SoundAnalyser analyser;
+        private string lastExerciceWavPath;
+        private string exerciceFolderPath;
+        private string currentExercicePath;
 
         public ActivityExecuter(ActivityVM currentActivity)
         {
-            this.Player = new WAVPlayerRecorder(currentActivity.Name);
+            this.Player = new WAVPlayerRecorder();
             this.CurrentActivity = currentActivity;
             this.scripting = new PraatScripting(currentActivity.Name);
             this.connector = PraatConnector.GetConnector();
             this.analyser = new SoundAnalyser();
+            this.exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + this.CurrentActivity.Name+ "\\";
+            if (!Directory.Exists(this.exerciceFolderPath))
+            {
+                Directory.CreateDirectory(this.exerciceFolderPath);
+            }
+            currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
 
             Task.Run(() => this.CurrentActivity.Exercice = GetNumericValue(this.CurrentActivity.Example_wav_path).Result);
         }
 
-        public async void StartPlayback()
+        public void StartPlayback()
         {
             Player.StartPlayback(this.CurrentActivity.Example_wav_path);
         }
 
-        public async void StopPlayback()
+        public void StopPlayback()
         {
             Player.StopPlayback();
         }
 
-        public async void StartRecord()
+        public void StartRecord()
         {
-            var fileName = this.CurrentActivity.Name + DateTime.Now.ToString("yyyyMMddHHmmss");
-            Player.StartRecord(fileName);
+            currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
+            Player.StartRecord(currentExercicePath);
         }
 
         public async void StopRecord()
@@ -50,7 +59,7 @@ namespace MyOrthoClient.Controllers
                 return;
             }
 
-            var wavPath = await Player.StopRecord();
+            var wavPath = lastExerciceWavPath = await Player.StopRecord();
 
             /*var selectFile = new Microsoft.Win32.OpenFileDialog();
 
@@ -68,6 +77,14 @@ namespace MyOrthoClient.Controllers
             this.AnalyzeSample(this.CurrentActivity.Results);
         }
 
+        public void StartLastExercicePlayblack()
+        {
+            if (string.IsNullOrEmpty(this.lastExerciceWavPath))
+            {
+                Player.StartPlayback(this.lastExerciceWavPath);
+            }
+        }
+
         private async void AnalyzeSample(IEnumerable<DataLineItem> values)
         {
             
@@ -75,7 +92,7 @@ namespace MyOrthoClient.Controllers
 
         private async Task<ICollection<DataLineItem>> GetNumericValue(string wavPath)
         {
-            var resultPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + Guid.NewGuid().ToString("N") + ".txt";
+            var resultPath = currentExercicePath + ".txt";
             if (!File.Exists(resultPath))
             {
                 File.Create(resultPath).Close();

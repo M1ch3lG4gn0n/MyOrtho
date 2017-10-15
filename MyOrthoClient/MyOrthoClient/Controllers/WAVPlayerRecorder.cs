@@ -13,12 +13,9 @@ namespace MyOrthoClient.Controllers
 {
     class WAVPlayerRecorder
     {
-        static string RECORD_FORLDER = Directory.GetCurrentDirectory() + "\\Results\\";
         private bool isRecording = false;
         private bool isPlaying = false;
         private string fileName = "";
-        private string exerciseFolder = "";
-        private string currentWav = "";
         private System.Media.SoundPlayer player;
         [DllImport("winmm.dll")]
         private static extern long mciSendString(
@@ -28,9 +25,8 @@ namespace MyOrthoClient.Controllers
             IntPtr winHandle);
         
 
-    public WAVPlayerRecorder(string folderName)
+        public WAVPlayerRecorder()
         {
-            exerciseFolder = folderName;
         }
 
         public async void StartPlayback(string wavPath)
@@ -50,7 +46,7 @@ namespace MyOrthoClient.Controllers
         }
         
 
-        public async void StopPlayback()
+        public void StopPlayback()
         {
             if (isPlaying)
             {
@@ -62,13 +58,12 @@ namespace MyOrthoClient.Controllers
 
         }
 
-        public async void StartRecord(string filename)
+        public void StartRecord(string filename)
         {
             //Record into RECORD_FOLDER
             isRecording = true;
-            fileName = filename;
+            this.fileName = filename;
             long[] code =new long[3];
-            string completePath = RECORD_FORLDER + exerciseFolder + "\\" + fileName + ".wav";
             int length = 0;
             
             code[0] = mciSendString("open new Type waveaudio Alias recsound", null, 0, IntPtr.Zero);
@@ -83,13 +78,9 @@ namespace MyOrthoClient.Controllers
         public async Task<string> StopRecord()
         {
             isRecording = false;
-            string completePath =  RECORD_FORLDER + exerciseFolder + "\\" + fileName + ".wav";
+            string completePath =  this.fileName + ".wav";
             int length = 0;
             long[] code = new long[3];
-            if (!Directory.Exists(RECORD_FORLDER + exerciseFolder))
-            {
-                Directory.CreateDirectory(RECORD_FORLDER + exerciseFolder);
-            }
            
             StringBuilder outs = new StringBuilder();
             mciSendString("stop recsound", outs, length, IntPtr.Zero);
