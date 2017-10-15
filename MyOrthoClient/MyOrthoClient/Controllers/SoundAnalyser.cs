@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace MyOrthoClient.Controllers
 {
-    class SoundAnalyser
+    public class SoundAnalyser
     {
-       /* ArrayList x = new ArrayList();
+        ArrayList x = new ArrayList();
         ArrayList y = new ArrayList();
         ArrayList xin = new ArrayList();
         ArrayList yin = new ArrayList();
         ArrayList vect = new ArrayList();
         ArrayList vectin = new ArrayList();
-
-
-
+        
         double X_moy = 0;
         double y_moy = 0;
         double Xin_moy = 0;
@@ -39,159 +37,168 @@ namespace MyOrthoClient.Controllers
         double CCCin = 0;
         double PCCin = 0;
 
-        public void calculateCorrelation()
+        public SoundAnalyser()
         {
 
-            string text = System.IO.File.ReadAllText(@"C:\Users\Public\TestFolder\WriteText.txt");
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Public\TestFolder\WriteLines2.txt");
+        }
 
-            while(string line in lines){
+        public double CalculerMoyenne(ArrayList x)
+        {
+            double moy = 0;
+            for (int i = 0; i < x.Count; i++)
+            {
+                moy = moy + Convert.ToDouble(x[i]);
 
             }
+            moy = moy / x.Count;
+            return moy;
+
         }
-        
 
-        BufferedReader in = new BufferedReader(new FileReader(racine+pathCorrelation));
-		 String line;
-        String[] parts; 
-				try {
-					while((line = in.readLine()) != null)
-					  {
-						
-						  parts = line.split(" ");
-						 
-						 x.addElement(Double.parseDouble(parts[1]));  
-						 
-						 xin.addElement(Double.parseDouble(parts[2])); 
-						 
-					  }
-} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				   
-				try {
-					in.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-		BufferedReader in1 = new BufferedReader(new FileReader(racine + pathCorrelationRef));
-String line1;
-String[] parts1; 
-		   	  
-			try {
-				while((line1 = in1.readLine()) != null)
-				  {
-					
-					  parts1 = line1.split(" ");
-					  
-					 y.addElement(Double.parseDouble(parts1[1]));  
-					 yin.addElement(Double.parseDouble(parts1[2])); 
-				  }
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				   
-			try {
-				in1.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//création de tableau avec la taille des vecteurs
-		     double[] Xsample = new double[x.size()];
-double[] Ysample = new double[y.size()];
-double[] Xinsample = new double[xin.size()];
-double[] Yinsample = new double[yin.size()];
-			for(int i=0; i<x.size(); i++){
-				Xsample[i]= x.elementAt(i);
-				Ysample[i]= y.elementAt(i);
-				Xinsample[i]= xin.elementAt(i);
-				Yinsample[i]= yin.elementAt(i);
-			}
-		      
-		 // calcul de la moyenne
-			X_moy = calculerMoyenne(x);
-Xin_moy = calculerMoyenne(xin);
-y_moy=calculerMoyenne(y);
-yin_moy =  calculerMoyenne(yin);
+        public double ComputeCoeff(double[] values1, double[] values2)
+        {
+            if (values1.Length != values2.Length)
+                throw new ArgumentException("values must be the same length");
 
-double corr = new PearsonsCorrelation().correlation(Xsample, Ysample);
-double cov = new Covariance().covariance(Xsample, Ysample);
-System.out.print("correlation est: "+corr+"\n");
-System.out.print("covariance est: "+cov+"\n");
-			
-		 // calcul de la somme de (x-xmoy)*2
-		 
-		for(int i=0; i<x.size(); i++){		 
-			moyX_Xbar += Math.pow((x.elementAt(i)-X_moy),2);
-			moyXin_Xinbar += Math.pow((xin.elementAt(i)-Xin_moy),2);
-		}
-		
-		// ********calcul de X_var
-		
-		x_var= 1.0/((x.size()-1))* moyX_Xbar;
-xin_var= 1.0/((xin.size()-1))* moyXin_Xinbar;
-System.out.print(" xin-var: "+ xin_var+"\n");
-				
-		 // calcul de la somme de (y-ymoy)*2
-		
-		for(int i=0; i<y.size(); i++){	 
-			moyY_Ybar += Math.pow((y.elementAt(i)-y_moy),2);
-			moyYin_Yinbar += Math.pow((yin.elementAt(i)-yin_moy),2);
-		}
-		
-		// calcul de y_var
-		
-		y_var= 1.0/((y.size()-1))* moyY_Ybar;
-yin_var= 1.0/((yin.size()-1))* moyYin_Yinbar;
-		//double var1= variance(x,X_moy);
-		//double var2= variance(y,y_moy);
-		 
-		// ******calcul de covariance
-		//covariance1=calculerMoyenne((x.elementAt(i)-X_moy)*(y.elementAt(i)-y_moy));
-		for(int i=0; i<y.size(); i++){
-			 
-			vect.add((x.elementAt(i)-X_moy)* (y.elementAt(i)-y_moy));
-			vectin.add((xin.elementAt(i)-Xin_moy)* (yin.elementAt(i)-yin_moy));
-			//System.out.print(vect.elementAt(i)+",");
-			
-		}
-		for(int i=0; i<y.size(); i++){
-			 
-			covariance+=(x.elementAt(i)-X_moy)* (y.elementAt(i)-y_moy);
-			covariancein+=(xin.elementAt(i)-Xin_moy)* (yin.elementAt(i)-yin_moy);
-		}
-		covariance= covariance/(y.size()-1);
-		covariancein= covariancein/(yin.size()-1);
-		
-		//double moy=calculerMoyenne(vect);
-		//covariance = ;
-		System.out.print("covariance: "+covariance+"\n");
-System.out.print("covariancein: "+covariancein+"\n");
-CCC=(2* covariance)/(x_var+y_var+(Math.pow((X_moy-y_moy),2)));
-		PCC=covariance/((Math.sqrt(x_var))* (Math.sqrt(y_var)));
-		CCCin=(2* covariancein)/(xin_var+yin_var+(Math.pow((Xin_moy-yin_moy),2)));
-		PCCin=covariancein/((Math.sqrt(xin_var))* (Math.sqrt(yin_var)));
-		
-		//formattage des valeurs pour avoir seulement deux decimal après virgule
-		
-		PCC =Double.parseDouble(new DecimalFormat("##.##").format(PCC));
-		PCCin =Double.parseDouble(new DecimalFormat("##.##").format(PCCin));
-		CCCin =Double.parseDouble(new DecimalFormat("##.##").format(CCCin));
-		CCC =Double.parseDouble(new DecimalFormat("##.##").format(CCC));
-		resultat[0]=CCC;
-		resultat[1]=PCC;
-		resultat[2]=CCCin;
-		resultat[3]=PCCin;
-		
-		
-		System.out.printf("CCC = "+CCC+"   PCC = "+PCC + " CCCin = "+CCCin+"   PCCin = "+PCCin);
-		return resultat;
-		 
-	 }*/
+            var avg1 = values1.Average();
+            var avg2 = values2.Average();
+
+            var sum1 = values1.Zip(values2, (x1, y1) => (x1 - avg1) * (y1 - avg2)).Sum();
+
+            var sumSqr1 = values1.Sum(x => Math.Pow((x - avg1), 2.0));
+            var sumSqr2 = values2.Sum(y => Math.Pow((y - avg2), 2.0));
+
+            var result = sum1 / Math.Sqrt(sumSqr1 * sumSqr2);
+
+            return result;
+        }
+
+        public double ComputeCovariance(IEnumerable<double> source, IEnumerable<double> other)
+        {
+            int len = source.Count();
+
+            double avgSource = source.Average();
+            double avgOther = other.Average();
+            double covariance = 0;
+
+            for (int i = 0; i < len; i++)
+                covariance += (source.ElementAt(i) - avgSource) * (other.ElementAt(i) - avgOther);
+
+            return covariance / len;
+        }
+
+        public double[] CalculateCorrelation(string expected, string exercise)
+        {
+            string[] lines = System.IO.File.ReadAllLines(expected);
+            String[] parts;
+            foreach (string line in lines)
+            {
+                parts = line.Split(' ');
+
+                x.Add(parts[1]);
+                xin.Add(parts[2]);
+            }
+            
+            string[] lines1 = System.IO.File.ReadAllLines(exercise);
+            String[] parts1;
+            foreach (string line1 in lines1)
+            {
+                parts1 = line1.Split(' ');
+
+                y.Add(parts1[1]);
+                yin.Add(parts1[2]);
+            }
+
+            double[] Xsample = new double[x.Count];
+            double[] Ysample = new double[y.Count];
+            double[] Xinsample = new double[xin.Count];
+            double[] Yinsample = new double[yin.Count];
+
+            for (int i = 0; i < x.Count; i++)
+            {
+                Xsample[i] = Convert.ToDouble(x[i]);
+                Ysample[i] = Convert.ToDouble(y[i]);
+                Xinsample[i] = Convert.ToDouble(xin[i]);
+                Yinsample[i] = Convert.ToDouble(yin[i]);
+            }
+
+            // calcul de la moyenne
+            X_moy = CalculerMoyenne(x);
+            Xin_moy = CalculerMoyenne(xin);
+            y_moy = CalculerMoyenne(y);
+            yin_moy = CalculerMoyenne(yin);
+
+            var corr = ComputeCoeff(Xsample.ToArray(), Ysample.ToArray());
+            double cov = ComputeCovariance(Xsample, Ysample);
+
+            Console.Out.WriteLine("correlation est: " + corr + "\n");
+            Console.Out.WriteLine("covariance est: " + cov + "\n");
+
+            for (int i = 0; i < x.Count; i++)
+            {
+                moyX_Xbar += Math.Pow((Convert.ToDouble(x[i]) - X_moy), 2);
+                moyXin_Xinbar += Math.Pow((Convert.ToDouble(xin[i]) - Xin_moy), 2);
+            }
+
+            // ********calcul de X_var
+
+            x_var = 1.0 / ((x.Count - 1)) * moyX_Xbar;
+            xin_var = 1.0 / ((xin.Count - 1)) * moyXin_Xinbar;
+            Console.Out.WriteLine(" xin-var: " + xin_var + "\n");
+
+            // calcul de la somme de (y-ymoy)*2
+            for (int i = 0; i < y.Count; i++)
+            {
+                moyY_Ybar += Math.Pow((Convert.ToDouble(y[i]) - y_moy), 2);
+                moyYin_Yinbar += Math.Pow((Convert.ToDouble(yin[i]) - yin_moy), 2);
+            }
+
+            // calcul de y_var
+
+            y_var = 1.0 / ((y.Count - 1)) * moyY_Ybar;
+            yin_var = 1.0 / ((yin.Count - 1)) * moyYin_Yinbar;
+
+            for (int i = 0; i < y.Count; i++)
+            {
+                vect.Add((Convert.ToDouble(x[i]) - X_moy) * (Convert.ToDouble(y[i]) - y_moy));
+                vectin.Add(((Convert.ToDouble(xin[i]) - Xin_moy) * ((Convert.ToDouble(yin[i]) - yin_moy))));
+            }
+
+            for (int i = 0; i < y.Count; i++)
+            {
+
+                covariance += ((Convert.ToDouble(x[i]) - X_moy) * (Convert.ToDouble(y[i]) - y_moy));
+                covariancein += ((Convert.ToDouble(xin[i]) - Xin_moy) * (Convert.ToDouble(yin[i]) - yin_moy));
+            }
+            covariance = covariance / (y.Count - 1);
+            covariancein = covariancein / (yin.Count - 1);
+
+            //double moy=calculerMoyenne(vect);
+            //covariance = ;
+            Console.Out.WriteLine("covariance: " + covariance + "\n");
+            Console.Out.WriteLine("covariancein: " + covariancein + "\n");
+
+            CCC = (2 * covariance) / (x_var + y_var + (Math.Pow((X_moy - y_moy), 2)));
+            PCC = covariance / ((Math.Sqrt(x_var)) * (Math.Sqrt(y_var)));
+            CCCin = (2 * covariancein) / (xin_var + yin_var + (Math.Pow((Xin_moy - yin_moy), 2)));
+            PCCin = covariancein / ((Math.Sqrt(xin_var)) * (Math.Sqrt(yin_var)));
+
+            //formattage des valeurs pour avoir seulement deux decimal après virgule
+
+            PCC = Convert.ToDouble(PCC.ToString("##.##"));
+            PCCin = Convert.ToDouble(PCCin.ToString("##.##"));
+            CCCin = Convert.ToDouble(CCCin.ToString("##.##"));
+            CCC = Convert.ToDouble(CCC.ToString("##.##"));
+            resultat[0] = CCC;
+            resultat[1] = PCC;
+            resultat[2] = CCCin;
+            resultat[3] = PCCin;
+
+
+            Console.Out.WriteLine("CCC = " + CCC + "   PCC = " + PCC + " CCCin = " + CCCin + "   PCCin = " + PCCin);
+            return resultat;
+        }
+
+
     }
 }

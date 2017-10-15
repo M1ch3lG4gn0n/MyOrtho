@@ -89,6 +89,9 @@ namespace MyOrthoClient
         private void BtnTerminer_Click(object sender, RoutedEventArgs e)
         {
             ac.StopRecord();
+            /*SoundAnalyser sa = new SoundAnalyser();
+            string currentDir = Environment.CurrentDirectory;
+            sa.CalculateCorrelation(activityListInstance.GetActivity(0).Exercice, @"C:\Users\jeant\AppData\Local\MyOrtho\Exercice 1\20171015154835.txt");*/
         }
         private void BtnEcouter_Click(object sender, RoutedEventArgs e)
         {
