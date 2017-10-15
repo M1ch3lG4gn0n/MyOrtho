@@ -13,7 +13,7 @@ namespace MyOrthoClient.Controllers
 {
     class WAVPlayerRecorder
     {
-        static string RECORD_FORLDER = "~\\Results\\";
+        static string RECORD_FORLDER = Directory.GetCurrentDirectory() + "\\Results\\";
         private bool isRecording = false;
         private bool isPlaying = false;
         private string fileName = "";
@@ -67,11 +67,15 @@ namespace MyOrthoClient.Controllers
             //Record into RECORD_FOLDER
             isRecording = true;
             fileName = filename;
+            long[] code =new long[3];
+            string completePath = RECORD_FORLDER + exerciseFolder + "\\" + fileName + ".wav";
+            int length = 0;
+            
+            code[0] = mciSendString("open new Type waveaudio Alias recsound", null, 0, IntPtr.Zero);
 
-            mciSendString("open new Type waveaudio Alias recsound", null, 0, IntPtr.Zero);
-            mciSendString("record recsound", null, 0, IntPtr.Zero);
+            code[1] = mciSendString("record recsound", null, 0, IntPtr.Zero);
 
-            //Microphone mic = Microphone.Default;
+            code[2] = 0;
         }
 
 
@@ -79,11 +83,20 @@ namespace MyOrthoClient.Controllers
         public async Task<string> StopRecord()
         {
             isRecording = false;
-            string completePath = RECORD_FORLDER + exerciseFolder + fileName + DateTime.Now.ToLongDateString() + ".wav";
+            string completePath =  RECORD_FORLDER + exerciseFolder + "\\" + fileName + ".wav";
             int length = 0;
+            long[] code = new long[3];
+            if (!Directory.Exists(RECORD_FORLDER + exerciseFolder))
+            {
+                Directory.CreateDirectory(RECORD_FORLDER + exerciseFolder);
+            }
+           
             StringBuilder outs = new StringBuilder();
-            long i = mciSendString(@"save recsound C:\test\recordtest.wav", outs, length, IntPtr.Zero);
+            mciSendString("stop recsound", outs, length, IntPtr.Zero);
+            code[0] = mciSendString("save recsound \"" + completePath + "\"", outs, length, IntPtr.Zero);
+            code[1] = mciSendString("close recsound", null, 0, IntPtr.Zero);
 
+            code[2] = 0;
             //return Task.FromResult<string>(RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
             return (completePath);
         }
