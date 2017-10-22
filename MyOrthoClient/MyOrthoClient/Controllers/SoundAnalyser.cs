@@ -163,7 +163,7 @@ namespace MyOrthoClient.Controllers
             y_var = 1.0 / ((y.Count - 1)) * moyY_Ybar;
             yin_var = 1.0 / ((yin.Count - 1)) * moyYin_Yinbar;
 
-            for (int i = 0; i < y.Count; i++)
+            for (int i = 0; i < lenght; i++)
             {
                 vect.Add((Convert.ToDouble(x[i]) - X_moy) * (Convert.ToDouble(y[i]) - y_moy));
                 vectin.Add(((Convert.ToDouble(xin[i]) - Xin_moy) * ((Convert.ToDouble(yin[i]) - yin_moy))));
