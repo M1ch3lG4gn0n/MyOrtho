@@ -41,7 +41,7 @@ namespace MyOrthoClient.Controllers
 
         public string GetFileSingleValue(string path)
         {
-            return File.ReadAllText(path);
+            return File.ReadAllText(path).Trim(new char[] { '\r', '\n', '%', ' ' });
         }
 
         private DataLineItem ValidateValue(string line)
