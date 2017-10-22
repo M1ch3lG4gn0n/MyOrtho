@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MyOrthoClient.Controllers;
+using System.Windows.Threading;
 
 namespace MyOrthoClient
 {
@@ -101,6 +102,13 @@ namespace MyOrthoClient
             SoundAnalyser sa = new SoundAnalyser();
             string currentDir = Environment.CurrentDirectory;
             sa.CalculateCorrelation(activityListInstance.GetActivity(0).Exercice, activityListInstance.GetActivity(0).Results);
+
+            Task.Factory.StartNew(() =>
+            {
+                //Update Text on the UI thread 
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Input,
+               new Action(() => { JitterTxt.Text = SelectedItemJitter; }));
+            });
         }
         private void BtnEcouter_Click(object sender, RoutedEventArgs e)
         {
