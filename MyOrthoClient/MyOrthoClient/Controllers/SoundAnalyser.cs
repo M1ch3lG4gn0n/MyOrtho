@@ -169,7 +169,7 @@ namespace MyOrthoClient.Controllers
                 vectin.Add(((Convert.ToDouble(xin[i]) - Xin_moy) * ((Convert.ToDouble(yin[i]) - yin_moy))));
             }
 
-            for (int i = 0; i < y.Count; i++)
+            for (int i = 0; i < lenght; i++)
             {
 
                 covariance += ((Convert.ToDouble(x[i]) - X_moy) * (Convert.ToDouble(y[i]) - y_moy));
