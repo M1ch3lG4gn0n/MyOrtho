@@ -95,7 +95,7 @@ namespace MyOrthoClient.Controllers
         public double[] CalculateCorrelation(ICollection<DataLineItem> expected, ICollection<DataLineItem> exercise)
         {
             foreach (var lineItem in expected)
-            {
+            {   
                 x.Add(lineItem.Intensity);
                 xin.Add(lineItem.pitch);
             }
@@ -190,10 +190,10 @@ namespace MyOrthoClient.Controllers
 
             //formattage des valeurs pour avoir seulement deux decimal après virgule
 
-            PCC = Convert.ToDouble(PCC.ToString("##.##"));
-            PCCin = Convert.ToDouble(PCCin.ToString("##.##"));
-            CCCin = Convert.ToDouble(CCCin.ToString("##.##"));
-            CCC = Convert.ToDouble(CCC.ToString("##.###"));
+            PCC = Convert.ToDouble(PCC.ToString("##.#####"));
+            PCCin = Convert.ToDouble(PCCin.ToString("##.#####"));
+            CCCin = Convert.ToDouble(CCCin.ToString("##.#####"));
+            CCC = Convert.ToDouble(CCC.ToString("##.#####"));
             resultat[0] = CCC;
             resultat[1] = PCC;
             resultat[2] = CCCin;

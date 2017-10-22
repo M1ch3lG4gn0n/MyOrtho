@@ -24,6 +24,15 @@ namespace MyOrthoClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string SelectedItemJitter
+        {
+            get
+            {
+                var value = activityListInstance.GetActivity(0)?.Jitter.ToString();
+                return value ?? string.Empty;
+            }
+        }
+
         private ActivityExecuter ac;
         ListVM activityListInstance = new ListVM();        
 

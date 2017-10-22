@@ -84,6 +84,7 @@
                 Click="BtnDemarrer_Click"/>
         <Button x:Name="BtnTerminer" Content="Terminer&#xD;&#xA;l'exercice" HorizontalAlignment="left" Margin="418,105,0,0" VerticalAlignment="Top" Width="100" Height="50"
                 Click="BtnTerminer_Click"/>
+        
         <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="370" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -94,5 +95,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Name="BtnEcouter" Click="BtnEcouter_Click" Content="Écouter mon&#xD;&#xA;enregistrement" HorizontalAlignment="Left" Margin="589,35,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <TextBox Name="JitterTxt" Text="{Binding SelectedItemJitter}" HorizontalAlignment="Left" Height="24" Margin="589,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>
