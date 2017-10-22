@@ -58,8 +58,8 @@ namespace MyOrthoClient.Controllers
 
         public double ComputeCoeff(double[] values1, double[] values2)
         {
-            if (values1.Length != values2.Length)
-                throw new ArgumentException("values must be the same length");
+            /*if (values1.Length != values2.Length)
+                throw new ArgumentException("values must be the same length");*/
 
             var avg1 = values1.Average();
             var avg2 = values2.Average();
@@ -76,7 +76,11 @@ namespace MyOrthoClient.Controllers
 
         public double ComputeCovariance(IEnumerable<double> source, IEnumerable<double> other)
         {
-            int len = source.Count();
+            int len;
+            if (source.Count() < other.Count())
+                len = source.Count();
+            else
+                len = other.Count();
 
             double avgSource = source.Average();
             double avgOther = other.Average();
@@ -106,7 +110,16 @@ namespace MyOrthoClient.Controllers
             double[] Xinsample = new double[xin.Count];
             double[] Yinsample = new double[yin.Count];
 
-            for (int i = 0; i < x.Count; i++)
+            int lenght = 0;
+
+            if (x.Count > y.Count)
+                lenght = y.Count;
+            else
+                lenght = x.Count;
+
+
+
+            for (int i = 0; i < lenght; i++)
             {
                 Xsample[i] = Convert.ToDouble(x[i]);
                 Ysample[i] = Convert.ToDouble(y[i]);
@@ -180,7 +193,7 @@ namespace MyOrthoClient.Controllers
             PCC = Convert.ToDouble(PCC.ToString("##.##"));
             PCCin = Convert.ToDouble(PCCin.ToString("##.##"));
             CCCin = Convert.ToDouble(CCCin.ToString("##.##"));
-            CCC = Convert.ToDouble(CCC.ToString("##.##"));
+            CCC = Convert.ToDouble(CCC.ToString("##.###"));
             resultat[0] = CCC;
             resultat[1] = PCC;
             resultat[2] = CCCin;
