@@ -64,7 +64,7 @@ namespace MyOrthoClient.Controllers
             this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath);
             this.CurrentActivity.Jitter = CalculateJitter(wavPath);
 
-            this.AnalyzeSample(this.CurrentActivity.Results);
+            this.AnalyzeSample();
         }
 
         public void StartLastExercicePlayblack()
@@ -75,7 +75,7 @@ namespace MyOrthoClient.Controllers
             }
         }
 
-        private async void AnalyzeSample(IEnumerable<DataLineItem> values)
+        private async void AnalyzeSample()
         {
             
         }
