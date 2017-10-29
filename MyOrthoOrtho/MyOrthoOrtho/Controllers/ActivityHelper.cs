@@ -9,17 +9,17 @@ using MyOrthoOrtho.Models;
 
 namespace MyOrthoOrtho.Controllers
 {
-    /*class ActivityHelper
+    class ActivityHelper
     {
-        public async void PopulateActivityList(ListVM instance)
+        public async void PopulateActivityList(ListSuiviVM instance)
         {
 
-            FileHelper.FileReader fr = new FileHelper.FileReader();
+            /*FileHelper.FileReader fr = new FileHelper.FileReader();
             var xmlDoc = XElement.Load(fr.ReadFile());
             List<XElement> activityNodes = xmlDoc.Descendants().Where(x => x.Name.ToString().Equals("Activity")).ToList();
             for (var i=0; i>activityNodes.Count; i++)
             {
-                var activity = new ActivityVM();
+                var activity = new SuiviVM();
                 activity.Name = activityNodes[i].Descendants("Name").ToString();
                 activity.Example_wav_path = activityNodes[i].Descendants("Example_wav_path").ToString();
                 activity.Pitch = Convert.ToInt32(activityNodes[i].Descendants("Pitch").ToString());
@@ -40,8 +40,8 @@ namespace MyOrthoOrtho.Controllers
                 activity.JitterEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("JitterEvaluated").ToString());
 
                 instance.Add(activity);            
-            }
+            }*/
 
         }
-    }*/
+    }
 }

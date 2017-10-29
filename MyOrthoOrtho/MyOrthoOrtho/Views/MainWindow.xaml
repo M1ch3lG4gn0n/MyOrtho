@@ -7,7 +7,17 @@
         xmlns:controls="clr-namespace:MyOrthoOrtho.Views.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="916" Width="1137">
-    <Grid>
-        <controls:CtrlSuivi/>
-    </Grid>
+    
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button x:Name="btnPreparation" Click="Navigate_Preparation" Content="Préparation" />
+                <Button x:Name="btnSuivi" Click="Navigate_Suivi" Content="Suivi" />
+                <Button x:Name="btnHelp" Click="OpenHelp" Content="Aide" />
+            </ToolBar>
+        </ToolBarTray>
+        <controls:CtrlSuivi x:Name="ctrlSuivi" Visibility="Hidden"/>
+        <controls:CtrlPreparation x:Name="ctrlPreparation" Visibility="Hidden"/>
+    </DockPanel>
+    
 </Window>

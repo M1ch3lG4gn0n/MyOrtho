@@ -31,5 +31,23 @@ namespace MyOrthoOrtho.Views
             this.WindowState = WindowState.Normal;
             
         }
+
+        private void Navigate_Preparation(object sender, RoutedEventArgs e)
+        {
+            ctrlSuivi.Visibility = Visibility.Hidden;
+            ctrlPreparation.Visibility = Visibility.Visible;
+        }
+
+        private void Navigate_Suivi(object sender, RoutedEventArgs e)
+        {
+            ctrlPreparation.Visibility = Visibility.Hidden;
+            ctrlSuivi.Visibility = Visibility.Visible;
+        }
+
+        private void OpenHelp(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+   
 }
