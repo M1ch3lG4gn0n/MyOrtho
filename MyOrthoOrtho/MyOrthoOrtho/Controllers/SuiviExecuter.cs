@@ -16,7 +16,7 @@ namespace MyOrthoOrtho.Controllers
         private PraatConnector connector;
         private string lastExerciceWavPath;
         private string exerciceFolderPath;
-        private string currentExercicePath;
+        //private string currentExercicePath;
 
         public SuiviExecuter(SuiviVM currentActivity)
         {
@@ -29,10 +29,13 @@ namespace MyOrthoOrtho.Controllers
             {
                 Directory.CreateDirectory(this.exerciceFolderPath);
             }
-            currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
+            //currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            Task.Run(() => this.CurrentActivity.Exercice = GetNumericValue(this.CurrentActivity.Example_wav_path).Result);
-            Task.Run(() => this.CurrentActivity.Results = GetNumericValue(this.CurrentActivity.Result_wav_path).Result);
+            string currentExerciceFilePath = (this.exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+            string currentResultFilePath = (this.exerciceFolderPath + "resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+
+            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath));
+            Task.Run(() => this.CurrentActivity.Results = CalculateIntensityAndFrequency(this.CurrentActivity.Result_wav_path, currentResultFilePath));
         }
 
         public void StartPlaybackExemple()
@@ -54,22 +57,22 @@ namespace MyOrthoOrtho.Controllers
 
         public void StartRecord()
         {
-            currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
-            Player.StartRecord(currentExercicePath);
+            string currentExerciceFilePath = (this.exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+            Player.StartRecord(currentExerciceFilePath);
         }
 
         public async void StopRecord()
         {
+            string filename = (this.exerciceFolderPath + "resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
             if (!Player.IsRecording)
             {
                 return;
             }
 
             var wavPath = lastExerciceWavPath = await Player.StopRecord();
-            
-            this.CurrentActivity.Results = await GetNumericValue(wavPath);
 
-            this.AnalyzeSample(this.CurrentActivity.Results);
+            this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath, this.exerciceFolderPath + filename);
+            
         }
 
         public void StartLastExercicePlayblack()
@@ -85,9 +88,10 @@ namespace MyOrthoOrtho.Controllers
 
         }
 
-        private async Task<ICollection<DataLineItem>> GetNumericValue(string wavPath)
+        private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath)
         {
-            var resultPath = currentExercicePath + ".txt";
+            //var resultPath = currentExercicePath + ".txt";
+
             if (!File.Exists(resultPath))
             {
                 File.Create(resultPath).Close();
@@ -96,7 +100,7 @@ namespace MyOrthoOrtho.Controllers
             {
                 File.WriteAllText(resultPath, string.Empty);
             }
-            var scriptPath = await this.scripting.WriteScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath);
+            var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath);
 
             this.connector.GetResult(scriptPath);
 

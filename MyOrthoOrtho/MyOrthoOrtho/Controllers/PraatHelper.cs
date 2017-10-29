@@ -17,9 +17,9 @@ namespace MyOrthoOrtho.Controllers
             scripter = new PraatScripting(activityName);
         }
 
-        public async Task<string> WriteScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath)
+        public string WriteIntensityFrequencyScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath)
         {
-            return await(scripter.WriteScript(wavPath, pitchMin, pitchMax, intensityThreshold, resultPath));
+            return scripter.WriteIntensityFrequencyScript(wavPath, pitchMin, pitchMax, intensityThreshold, resultPath);
         }
 
         public void GetResult(string script)
