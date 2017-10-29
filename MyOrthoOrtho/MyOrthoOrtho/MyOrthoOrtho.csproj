@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\PraatHelper.cs" />
+    <Compile Include="Controllers\PreparationExecuter.cs" />
     <Compile Include="Controllers\SuiviExecuter.cs" />
     <Compile Include="Models\ApplicationVM.cs" />
     <Compile Include="Models\ListSuiviVM.cs" />
@@ -87,8 +88,8 @@
     <Compile Include="Controllers\PraatScripting.cs" />
     <Compile Include="Controllers\WAVPlayerRecorder.cs" />
     <Page Include="Views\Controls\CtrlPreparation.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Controls\CtrlSuivi.xaml">
       <SubType>Designer</SubType>

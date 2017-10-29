@@ -5,8 +5,90 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyOrthoOrtho.Views.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             xmlns:my="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             d:DesignHeight="916" d:DesignWidth="1137">
+    <Grid Height="921" Margin="0,0,-30,-5">
+        <my:Chart Name="PitchChart"
+                                       Title="Pitch" 
+                                       VerticalAlignment="Top" 
+                                       Margin="376,25,40,0" 
+                                       Height="362">
+            <my:LineSeries Name="PitchAttendue"
+                                                Title="Attendue"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [0]}"
+                                                IsSelectionEnabled="True">
+
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Red"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
+
+            <my:LineSeries Name="PitchRésultat"
+                                                Title="Résultat"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [1]}"
+                                                IsSelectionEnabled="True">
+
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Blue"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
+        </my:Chart>
+        <my:Chart Name="IntensityChart"
+                                       Title="Intensité" 
+                                       VerticalAlignment="Top" 
+                                       Margin="376,396,40,0" 
+                                       Height="363">
+            <my:LineSeries Name="IntensityAttendue"
+                                                Title="Attendue"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [0]}"
+                                                IsSelectionEnabled="True">
+
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Red"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
+            <my:LineSeries Name="IntensityRésultat" 
+                                                Title="Résultat"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [1]}"
+                                                IsSelectionEnabled="True">
+
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Blue"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
+        </my:Chart>
+        <Button x:Name="BtnCreerExercice" Content="Créer un exercice" HorizontalAlignment="left" Margin="23,304,0,0" VerticalAlignment="Top" Width="330" Height="45"
+                Click="BtnCreerExercice_Click"/>
+        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="23,388,0,0" VerticalAlignment="Top" Width="155" Height="29"
+                Click="BtnLire_Click"/>
+        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="198,388,0,0" VerticalAlignment="Top" Width="155" Height="29"
+                Click="BtnArreter_Click"/>
+        <TextBox x:Name="txtPitchMin"  HorizontalAlignment="Left" Height="23" Margin="23,219,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtPitchMax"  HorizontalAlignment="Left" Height="23" Margin="198,219,0,0" TextWrapping="Wrap" Text="800" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtIntensityThreshold"  HorizontalAlignment="Left" Height="23" Margin="23,262,0,0" TextWrapping="Wrap" Text="40" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtDuration"  HorizontalAlignment="Left" Height="23" Margin="198,262,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="23" Margin="23,168,0,0" TextWrapping="Wrap" Text="Exercice 1" VerticalAlignment="Top" Width="330"/>
+        <Button Content="Importer un .WAV" Height="32" HorizontalAlignment="Left" Margin="23,25,0,0" Name="btnImporterExercice" VerticalAlignment="Top" Width="173" Click="btnImporterExercice_Click" RenderTransformOrigin="1.133,1.75" />
+        <TextBox IsReadOnly="True" Height="32" HorizontalAlignment="Left" Margin="23,79,0,0" Name="txtFileName" VerticalAlignment="Top" Width="330" />
     </Grid>
 </UserControl>

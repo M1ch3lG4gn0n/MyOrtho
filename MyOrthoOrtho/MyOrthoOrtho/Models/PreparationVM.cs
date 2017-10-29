@@ -21,10 +21,10 @@ namespace MyOrthoOrtho.Models
 
         public string Name { get; set; }
         public string Example_wav_path { get; set; }
-        public int Pitch { get; set; }
-        public bool PitchEvaluated { get; set; }
-        public int Intensity { get; set; }
-        public bool IntensityEvaluated { get; set; }
+        public string Result_wav_path { get; set; }
+        public int PitchMin { get; set; }
+        public int PitchMax { get; set; }
+        public int IntensityThreshold { get; set; }
         public int F0_exact { get; set; }
         public bool F0_exactEvaluated { get; set; }
         public int F0_stable { get; set; }
@@ -37,6 +37,7 @@ namespace MyOrthoOrtho.Models
         public bool Duree_exacteEvaluated { get; set; }
         public int Jitter { get; set; }
         public bool JitterEvaluated { get; set; }
+        public int Duree_expected { get; set; }
         public ICollection<DataLineItem> Exercice
         {
             get

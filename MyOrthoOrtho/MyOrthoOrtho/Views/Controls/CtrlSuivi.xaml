@@ -83,7 +83,7 @@
                 Click="BtnLire_Click"/>
         <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="762,35,0,0" VerticalAlignment="Top" Width="104" Height="31"
                 Click="BtnArreter_Click"/>
-        <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="370" Margin="10,86,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
+        <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="370" Margin="10,35,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
