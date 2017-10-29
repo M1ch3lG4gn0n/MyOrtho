@@ -34,13 +34,13 @@ namespace MyOrthoOrtho.Views
 
         private void Navigate_Preparation(object sender, RoutedEventArgs e)
         {
-            ctrlSuivi.Visibility = Visibility.Hidden;
+            ctrlSuivi.Visibility = Visibility.Collapsed;
             ctrlPreparation.Visibility = Visibility.Visible;
         }
 
         private void Navigate_Suivi(object sender, RoutedEventArgs e)
         {
-            ctrlPreparation.Visibility = Visibility.Hidden;
+            ctrlPreparation.Visibility = Visibility.Collapsed;
             ctrlSuivi.Visibility = Visibility.Visible;
         }
 
