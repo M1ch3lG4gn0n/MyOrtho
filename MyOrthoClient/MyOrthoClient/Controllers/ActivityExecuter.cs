@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyOrthoClient.Models;
+using System.Media;
 
 namespace MyOrthoClient.Controllers
 {
@@ -36,9 +37,9 @@ namespace MyOrthoClient.Controllers
             Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path));
         }
 
-        public void StartPlayback()
+        public void StartPlayback(Action playDone)
         {
-            Player.StartPlayback(this.CurrentActivity.Example_wav_path);
+            Task.Run(() => Player.StartPlayback(this.CurrentActivity.Example_wav_path, playDone));
         }
 
         public void StopPlayback()
@@ -67,11 +68,11 @@ namespace MyOrthoClient.Controllers
             this.AnalyzeSample();
         }
 
-        public void StartLastExercicePlayblack()
+        public void StartLastExercicePlayblack(Action playDone)
         {
             if (!string.IsNullOrEmpty(this.lastExerciceWavPath))
             {
-                Player.StartPlayback(this.lastExerciceWavPath);
+                Task.Run(() => Player.StartPlayback(this.lastExerciceWavPath, playDone));
             }
         }
 

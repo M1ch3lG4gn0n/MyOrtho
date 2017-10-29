@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.IO;
+using System.Threading;
+using CSCore;
+using CSCore.Codecs.WAV;
 
 namespace MyOrthoClient.Controllers
 {
@@ -17,6 +20,8 @@ namespace MyOrthoClient.Controllers
         private bool isPlaying = false;
         private string fileName = "";
         private System.Media.SoundPlayer player;
+        private Task playbackThread;
+
         [DllImport("winmm.dll")]
         private static extern long mciSendString(
             string command,
@@ -29,14 +34,24 @@ namespace MyOrthoClient.Controllers
         {
         }
 
-        public async void StartPlayback(string wavPath)
+        public async void StartPlayback(string wavPath, Action playDone)
         {
             StopPlayback();
 
             isPlaying = true;
             player = new System.Media.SoundPlayer(wavPath);
+            
             player.Play();
 
+            IWaveSource wavSource = new WaveFileReader(wavPath);
+            TimeSpan totalTime = wavSource.GetLength();
+
+            playbackThread = Task.Run(() =>
+            {
+                Thread.Sleep(totalTime);
+                playDone();
+            });
+            
            /* string playCommand = "Open \"" + currentWav + "\" type waveaudio alias example1";
             mciSendString(playCommand, null, 0, IntPtr.Zero);
 
@@ -51,7 +66,7 @@ namespace MyOrthoClient.Controllers
             if (isPlaying)
             {
                 player.Stop();
-                
+                //playbackThread.Dispose();
                 isPlaying = false;
             }
             
