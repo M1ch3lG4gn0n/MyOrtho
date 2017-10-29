@@ -18,7 +18,7 @@ namespace PraatTests
             si.WindowStyle = ProcessWindowStyle.Hidden;
             si.UseShellExecute = false;
 
-            si.Arguments = @"--run C:\Users\Michel\AppData\Local\MyOrtho\9d1da5b6e3fc48fc83dceb79815872bc.praat";
+            si.Arguments = @"--run C:\Users\Michel\AppData\Local\MyOrtho\370139038f97454fa07b4a3d51226c0c.praat";
 
             Process p = new Process();
             p.StartInfo = si;
