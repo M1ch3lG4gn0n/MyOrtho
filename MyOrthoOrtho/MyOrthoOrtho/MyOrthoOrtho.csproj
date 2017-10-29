@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\PraatHelper.cs" />
+    <Compile Include="Controllers\PreparationExecuter.cs" />
     <Compile Include="Controllers\SuiviExecuter.cs" />
     <Compile Include="Models\ApplicationVM.cs" />
     <Compile Include="Models\ListSuiviVM.cs" />

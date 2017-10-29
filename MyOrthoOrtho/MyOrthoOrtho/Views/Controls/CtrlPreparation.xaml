@@ -11,7 +11,7 @@
         <my:Chart Name="PitchChart"
                                        Title="Pitch" 
                                        VerticalAlignment="Top" 
-                                       Margin="248,86,168,0" 
+                                       Margin="376,25,40,0" 
                                        Height="362">
             <my:LineSeries Name="PitchAttendue"
                                                 Title="Attendue"  
@@ -46,7 +46,7 @@
         <my:Chart Name="IntensityChart"
                                        Title="Intensité" 
                                        VerticalAlignment="Top" 
-                                       Margin="248,453,168,0" 
+                                       Margin="376,396,40,0" 
                                        Height="363">
             <my:LineSeries Name="IntensityAttendue"
                                                 Title="Attendue"  
@@ -77,21 +77,18 @@
                 </my:LineSeries.DataPointStyle>
             </my:LineSeries>
         </my:Chart>
-        <Button x:Name="BtnImporter" Content="Importer les résultats" HorizontalAlignment="left" Margin="248,35,0,0" VerticalAlignment="Top" Width="133" Height="29"
-                Click="BtnImporter_Click"/>
-        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="454,35,0,0" VerticalAlignment="Top" Width="105" Height="29"
+        <Button x:Name="BtnCreerExercice" Content="Créer un exercice" HorizontalAlignment="left" Margin="23,304,0,0" VerticalAlignment="Top" Width="330" Height="45"
+                Click="BtnCreerExercice_Click"/>
+        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="23,388,0,0" VerticalAlignment="Top" Width="155" Height="29"
                 Click="BtnLire_Click"/>
-        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="762,35,0,0" VerticalAlignment="Top" Width="104" Height="31"
+        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="198,388,0,0" VerticalAlignment="Top" Width="155" Height="29"
                 Click="BtnArreter_Click"/>
-        <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="370" Margin="10,35,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Content="Écouter l'enregistrement" HorizontalAlignment="Left" Margin="582,35,0,0" VerticalAlignment="Top" Width="159" Height="29" Click="BtnLireResult_Click"/>
+        <TextBox x:Name="txtPitchMin"  HorizontalAlignment="Left" Height="23" Margin="23,219,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtPitchMax"  HorizontalAlignment="Left" Height="23" Margin="198,219,0,0" TextWrapping="Wrap" Text="800" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtIntensityThreshold"  HorizontalAlignment="Left" Height="23" Margin="23,262,0,0" TextWrapping="Wrap" Text="40" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtDuration"  HorizontalAlignment="Left" Height="23" Margin="198,262,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="23" Margin="23,168,0,0" TextWrapping="Wrap" Text="Exercice 1" VerticalAlignment="Top" Width="330"/>
+        <Button Content="Importer un .WAV" Height="32" HorizontalAlignment="Left" Margin="23,25,0,0" Name="btnImporterExercice" VerticalAlignment="Top" Width="173" Click="btnImporterExercice_Click" RenderTransformOrigin="1.133,1.75" />
+        <TextBox IsReadOnly="True" Height="32" HorizontalAlignment="Left" Margin="23,79,0,0" Name="txtFileName" VerticalAlignment="Top" Width="330" />
     </Grid>
 </UserControl>
