@@ -68,11 +68,10 @@ namespace MyOrthoOrtho.Controllers
             {
                 return;
             }
-
+           
             var wavPath = lastExerciceWavPath = await Player.StopRecord();
+            CurrentActivity.Example_wav_path = wavPath;
 
-            this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath, this.exerciceFolderPath + filename);
-            
         }
 
         public void StartLastExercicePlayblack()

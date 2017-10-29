@@ -63,6 +63,15 @@ namespace MyOrthoOrtho.Views.Controls
             }
         }
 
+        private void BtnDemarrer_Click(object sender, RoutedEventArgs e)
+        {
+            ac.StartRecord();
+        }
+        private void BtnTerminer_Click(object sender, RoutedEventArgs e)
+        {
+            ac.StopRecord();
+        }
+
         private void SetChartLine(LineSeries frequency, LineSeries pitch, ICollection<DataLineItem> values)
         {
             var frequencyLineArray = new KeyValuePair<double, double>[values.Count];

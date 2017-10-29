@@ -11,7 +11,7 @@
         <my:Chart Name="PitchChart"
                                        Title="Pitch" 
                                        VerticalAlignment="Top" 
-                                       Margin="376,25,40,0" 
+                                       Margin="390,156,26,0" 
                                        Height="362">
             <my:LineSeries Name="PitchAttendue"
                                                 Title="Attendue"  
@@ -46,7 +46,7 @@
         <my:Chart Name="IntensityChart"
                                        Title="Intensité" 
                                        VerticalAlignment="Top" 
-                                       Margin="376,396,40,0" 
+                                       Margin="390,553,26,0" 
                                        Height="363">
             <my:LineSeries Name="IntensityAttendue"
                                                 Title="Attendue"  
@@ -77,18 +77,22 @@
                 </my:LineSeries.DataPointStyle>
             </my:LineSeries>
         </my:Chart>
-        <Button x:Name="BtnCreerExercice" Content="Créer un exercice" HorizontalAlignment="left" Margin="23,304,0,0" VerticalAlignment="Top" Width="330" Height="45"
+        <Button x:Name="BtnCreerExercice" Content="Créer un exercice" HorizontalAlignment="left" Margin="23,397,0,0" VerticalAlignment="Top" Width="330" Height="45"
                 Click="BtnCreerExercice_Click"/>
-        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="23,388,0,0" VerticalAlignment="Top" Width="155" Height="29"
+        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="23,481,0,0" VerticalAlignment="Top" Width="155" Height="29"
                 Click="BtnLire_Click"/>
-        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="198,388,0,0" VerticalAlignment="Top" Width="155" Height="29"
+        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="198,481,0,0" VerticalAlignment="Top" Width="155" Height="29"
                 Click="BtnArreter_Click"/>
-        <TextBox x:Name="txtPitchMin"  HorizontalAlignment="Left" Height="23" Margin="23,219,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="155"/>
-        <TextBox x:Name="txtPitchMax"  HorizontalAlignment="Left" Height="23" Margin="198,219,0,0" TextWrapping="Wrap" Text="800" VerticalAlignment="Top" Width="155"/>
-        <TextBox x:Name="txtIntensityThreshold"  HorizontalAlignment="Left" Height="23" Margin="23,262,0,0" TextWrapping="Wrap" Text="40" VerticalAlignment="Top" Width="155"/>
-        <TextBox x:Name="txtDuration"  HorizontalAlignment="Left" Height="23" Margin="198,262,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155"/>
-        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="23" Margin="23,168,0,0" TextWrapping="Wrap" Text="Exercice 1" VerticalAlignment="Top" Width="330"/>
-        <Button Content="Importer un .WAV" Height="32" HorizontalAlignment="Left" Margin="23,25,0,0" Name="btnImporterExercice" VerticalAlignment="Top" Width="173" Click="btnImporterExercice_Click" RenderTransformOrigin="1.133,1.75" />
-        <TextBox IsReadOnly="True" Height="32" HorizontalAlignment="Left" Margin="23,79,0,0" Name="txtFileName" VerticalAlignment="Top" Width="330" />
+        <TextBox x:Name="txtPitchMin"  HorizontalAlignment="Left" Height="23" Margin="23,312,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtPitchMax"  HorizontalAlignment="Left" Height="23" Margin="198,312,0,0" TextWrapping="Wrap" Text="800" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtIntensityThreshold"  HorizontalAlignment="Left" Height="23" Margin="23,355,0,0" TextWrapping="Wrap" Text="40" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtDuration"  HorizontalAlignment="Left" Height="23" Margin="198,355,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="155"/>
+        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="23" Margin="23,261,0,0" TextWrapping="Wrap" Text="Exercice 1" VerticalAlignment="Top" Width="330"/>
+        <Button Content="Importer un .WAV" Height="32" HorizontalAlignment="Left" Margin="390,34,0,0" Name="btnImporterExercice" VerticalAlignment="Top" Width="173" Click="btnImporterExercice_Click" RenderTransformOrigin="1.133,1.75" />
+        <TextBox IsReadOnly="True" Height="32" HorizontalAlignment="Left" Margin="23,156,0,0" Name="txtFileName" VerticalAlignment="Top" Width="326" />
+        <Button x:Name="BtnDemarrer" Content="Démarrer&#xA;l'enregistrement" HorizontalAlignment="left" Margin="23,34,0,0" VerticalAlignment="Top" Width="138" Height="87"
+            Click="BtnDemarrer_Click"/>
+        <Button x:Name="BtnTerminer" Content="Terminer&#xA;l'exercice" HorizontalAlignment="left" Margin="198,34,0,0" VerticalAlignment="Top" Width="151" Height="87"
+            Click="BtnTerminer_Click"/>
     </Grid>
 </UserControl>
