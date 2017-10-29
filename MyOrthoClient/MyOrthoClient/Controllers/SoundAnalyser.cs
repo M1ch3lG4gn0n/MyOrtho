@@ -182,7 +182,7 @@ namespace MyOrthoClient.Controllers
             //covariance = ;
             Console.Out.WriteLine("covariance: " + covariance + "\n");
             Console.Out.WriteLine("covariancein: " + covariancein + "\n");
-
+            
             CCC = (2 * covariance) / (x_var + y_var + (Math.Pow((X_moy - y_moy), 2)));
             PCC = covariance / ((Math.Sqrt(x_var)) * (Math.Sqrt(y_var)));
             CCCin = (2 * covariancein) / (xin_var + yin_var + (Math.Pow((Xin_moy - yin_moy), 2)));

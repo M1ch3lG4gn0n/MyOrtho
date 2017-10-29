@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdornedControl">
+      <HintPath>..\..\..\SimpleAdornedControlSample\AdornedControl\bin\Debug\AdornedControl.dll</HintPath>
+    </Reference>
+    <Reference Include="CSCore">
+      <HintPath>..\..\..\CSCore.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
@@ -112,7 +118,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Praat.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

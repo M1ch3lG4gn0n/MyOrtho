@@ -5,6 +5,7 @@
         xmlns:models="clr-namespace:MyOrthoClient.Models">
 
     <Grid Height="921">
+
         <my:Chart Name="PitchChart"
                                        Title="Pitch" 
                                        VerticalAlignment="Top" 
