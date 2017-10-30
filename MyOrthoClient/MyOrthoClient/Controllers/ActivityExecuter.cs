@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyOrthoClient.Models;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace MyOrthoClient.Controllers
 {
@@ -48,6 +51,14 @@ namespace MyOrthoClient.Controllers
 
         public void StartRecord()
         {
+            if (Player.IsRecording)
+            {
+                return;
+            }
+
+            this.CurrentActivity.Results = new List<DataLineItem>();
+            this.CurrentActivity.Jitter = 0;
+
             currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
             Player.StartRecord(currentExercicePath);
         }
@@ -62,9 +73,10 @@ namespace MyOrthoClient.Controllers
             var wavPath = lastExerciceWavPath = await Player.StopRecord();
 
             this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath);
-            this.CurrentActivity.Jitter = CalculateJitter(wavPath);
 
-            this.AnalyzeSample();
+            this.AnalyzeSample(CurrentActivity.Exercice, CurrentActivity.Results);
+
+            this.EvaluateExercice(wavPath);
         }
 
         public void StartLastExercicePlayblack()
@@ -75,8 +87,9 @@ namespace MyOrthoClient.Controllers
             }
         }
 
-        private async void AnalyzeSample()
+        private void AnalyzeSample(ICollection<DataLineItem> baseline, ICollection<DataLineItem> values)
         {
+            var correlation = analyser.CalculateCorrelation(baseline, values);
             
         }
 
@@ -95,10 +108,10 @@ namespace MyOrthoClient.Controllers
 
             this.connector.GetResult(scriptPath);
 
-            return DataExtractor.GetInstance().GetFileValues(resultPath);
+            return DataExtractor.GetInstance().GetIntensityFrequencyValues(resultPath);
         }
 
-        private double CalculateJitter(string wavPath)
+        private ICollection<JitterIntervalItem> CalculateJitter(string wavPath)
         {
             var resultPath = currentExercicePath + "Jitter.txt";
             if (!File.Exists(resultPath))
@@ -113,13 +126,63 @@ namespace MyOrthoClient.Controllers
 
             this.connector.GetResult(scriptPath);
 
-            double result;
-            if(double.TryParse(DataExtractor.GetInstance().GetFileSingleValue(resultPath), out result))
-            {
-                return result;
+            return DataExtractor.GetInstance().GetJitterValues(resultPath);
+        }
+
+        private void EvaluateExercice(string wavPath)
+        {
+            var score = 90;
+
+            if (this.CurrentActivity.F0_exactEvaluated) {
+
             }
 
-            return 0;
+            if (this.CurrentActivity.F0_stableEvaluated) {
+
+            }
+
+            if (this.CurrentActivity.Intensite_stableEvaluated) {
+
+            }
+
+            if (this.CurrentActivity.Courbe_f0_exacteEvaluated) {
+
+            }
+
+            var jitters = CalculateJitter(wavPath);
+            if (this.CurrentActivity.Duree_exacteEvaluated) {
+                this.CurrentActivity.Duree_exacte = (int)Math.Round(jitters.Select(x => x.EndTime).Max() - jitters.Select(x => x.StartTime).Min());
+            }
+
+            if (this.CurrentActivity.JitterEvaluated)
+            {
+                this.CurrentActivity.Jitter = jitters.OrderByDescending(x => x.EndTime - x.StartTime).First().Jitter;
+            }
+
+            string imagePath;
+            if (score < 60)
+            {
+                imagePath = "Ressources\\FailedFace.png";
+            }
+            else if (score < 80)
+            {
+                imagePath = "Ressources\\PassedFace.png";
+            }
+            else
+            {
+                imagePath = "Ressources\\SucceededFace.png";
+            }
+
+            Task.Factory.StartNew(() =>
+            {
+                //Update Text on the UI thread 
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Input,
+               new Action(() => {
+                   var splash = new SplashScreen(imagePath);
+                   splash.Show(false);
+                   splash.Close(new TimeSpan(0, 0, 5));
+               }));
+            });
         }
         
     }

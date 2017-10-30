@@ -29,7 +29,6 @@ namespace MyOrthoClient.Controllers
         double moyY_Ybar = 0;
         double moyXin_Xinbar = 0;
         double moyYin_Yinbar = 0;
-        double[] resultat = { 0.0, 0.0, 0.0, 0.0 };
         double covariance = 0;
         double covariancein = 0;
 
@@ -92,7 +91,7 @@ namespace MyOrthoClient.Controllers
             return covariance / len;
         }
 
-        public double[] CalculateCorrelation(ICollection<DataLineItem> expected, ICollection<DataLineItem> exercise)
+        public CorrelationModel CalculateCorrelation(ICollection<DataLineItem> expected, ICollection<DataLineItem> exercise)
         {
             foreach (var lineItem in expected)
             {   
@@ -188,20 +187,17 @@ namespace MyOrthoClient.Controllers
             CCCin = (2 * covariancein) / (xin_var + yin_var + (Math.Pow((Xin_moy - yin_moy), 2)));
             PCCin = covariancein / ((Math.Sqrt(xin_var)) * (Math.Sqrt(yin_var)));
 
-            //formattage des valeurs pour avoir seulement deux decimal après virgule
-
-            PCC = Convert.ToDouble(PCC.ToString("##.#####"));
-            PCCin = Convert.ToDouble(PCCin.ToString("##.#####"));
-            CCCin = Convert.ToDouble(CCCin.ToString("##.#####"));
-            CCC = Convert.ToDouble(CCC.ToString("##.#####"));
-            resultat[0] = CCC;
-            resultat[1] = PCC;
-            resultat[2] = CCCin;
-            resultat[3] = PCCin;
+            var results = new CorrelationModel
+            {
+                CCC = this.CCC,
+                PCC = this.PCC,
+                CCCin = this.CCCin,
+                PCCin = this.PCCin
+            };
 
 
             Console.Out.WriteLine("CCC = " + CCC + "   PCC = " + PCC + " CCCin = " + CCCin + "   PCCin = " + PCCin);
-            return resultat;
+            return results;
         }
 
 

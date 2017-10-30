@@ -22,7 +22,7 @@ namespace MyOrthoClient.Controllers
             return instance;
         }
 
-        public ICollection<DataLineItem> GetFileValues(string path)
+        public ICollection<DataLineItem> GetIntensityFrequencyValues(string path)
         {
             var list = new List<DataLineItem>();
 
@@ -32,32 +32,47 @@ namespace MyOrthoClient.Controllers
                 var result = ValidateValue(line);
                 if(result != null)
                 {
-                    list.Add(result);
+                    list.Add(new DataLineItem()
+                    {
+                        time = double.Parse(result[0]),
+                        Intensity = double.Parse(result[1]),
+                        pitch = double.Parse(result[2])
+                    });
                 }
             }
 
             return list;
         }
 
-        public string GetFileSingleValue(string path)
+        public ICollection<JitterIntervalItem> GetJitterValues(string path)
         {
-            return File.ReadAllText(path).Trim(new char[] { '\r', '\n', '%', ' ' });
+            var list = new List<JitterIntervalItem>();
+
+            var lines = File.ReadLines(path);
+            foreach (string line in lines)
+            {
+                var result = ValidateValue(line);
+                if (result != null)
+                {
+                    list.Add(new JitterIntervalItem()
+                    {
+                        StartTime = double.Parse(result[0]),
+                        EndTime = double.Parse(result[1]),
+                        Jitter = double.Parse(result[2])
+                    });
+                }
+            }
+
+            return list;
         }
 
-        private DataLineItem ValidateValue(string line)
+        private string[] ValidateValue(string line)
         {
             if (line.Contains("undefined"))
             {
                 return null;
             }
-            var values = line.Split(new char[]{ ' ' });
-
-            return new DataLineItem()
-            {
-                time = double.Parse(values[0]),
-                Intensity = double.Parse(values[1]),
-                pitch = double.Parse(values[2])
-            };
+            return line.Split(new char[]{ ' ' });
         }
     }
 }

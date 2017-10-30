@@ -32,6 +32,7 @@ namespace MyOrthoClient.Models
         public bool Intensite_stableEvaluated { get; set; }
         public int Courbe_f0_exacte { get; set; }
         public bool Courbe_f0_exacteEvaluated { get; set; }
+        public int Duree_expected { get; set; }
         public int Duree_exacte { get; set; }
         public bool Duree_exacteEvaluated { get; set; }
         public double Jitter { get; set; }
