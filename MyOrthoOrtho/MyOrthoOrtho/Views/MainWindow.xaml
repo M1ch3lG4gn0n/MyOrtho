@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MyOrthoOrtho.Views"
         xmlns:controls="clr-namespace:MyOrthoOrtho.Views.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="916" Width="1137">
+        Title="MainWindow" Height="1000" Width="1150">
     
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
@@ -16,8 +16,8 @@
                 <Button x:Name="btnHelp" Click="OpenHelp" Content="Aide" />
             </ToolBar>
         </ToolBarTray>
-        <controls:CtrlSuivi x:Name="ctrlSuivi" Visibility="Hidden"/>
-        <controls:CtrlPreparation x:Name="ctrlPreparation" Visibility="Hidden"/>
+        <controls:CtrlSuivi x:Name="ctrlSuivi" Width="1140" Visibility="Collapsed"/>
+        <controls:CtrlPreparation x:Name="ctrlPreparation" Width="1140" Visibility="Collapsed"/>
     </DockPanel>
     
 </Window>
