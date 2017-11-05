@@ -72,7 +72,7 @@ namespace MyOrthoOrtho.Views.Controls
                     SuiviVM newSuiviVM = new SuiviVM
                     {
                         Example_wav_path = currentDir + ex.Exercice_wav_file_name,
-                        Result_wav_path = currentDir + ex.,
+                        //Result_wav_path = currentDir + ex.,
                         Name = "Exercice 1",
                         PitchMin = 70,
                         PitchMax = 800,
