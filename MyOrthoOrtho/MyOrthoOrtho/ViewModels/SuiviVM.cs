@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MyOrthoOrtho.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.DataVisualization.Charting;
 
-namespace MyOrthoOrtho.Models
+namespace MyOrthoOrtho.ViewModels
 {
     class SuiviVM : VMBase
     {

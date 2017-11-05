@@ -1,7 +1,9 @@
 ﻿using MyOrthoOrtho.Controllers;
 using MyOrthoOrtho.Models;
+using MyOrthoOrtho.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace MyOrthoOrtho.Views.Controls
 {
@@ -37,6 +41,51 @@ namespace MyOrthoOrtho.Views.Controls
         {
             string currentDir = Environment.CurrentDirectory;
             activityListInstance.ClearItems();
+
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".xml";
+            
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> fileSelected = dlg.ShowDialog();
+
+            if (fileSelected == true)
+            {
+                string data;
+                var streamReader = new StreamReader(dlg.FileName, Encoding.UTF8);
+                data = streamReader.ReadToEnd();
+
+
+                ListeResultatsModel result = new ListeResultatsModel();
+
+                var serializer = new XmlSerializer(typeof(ListeResultatsModel));
+
+                var stream = new StringReader(data);
+                var reader = XmlReader.Create(stream);
+                {
+                    result = (ListeResultatsModel)serializer.Deserialize(reader);
+                }
+               foreach(ExerciceResultat ex in result.Liste_exercices_resultats)
+                {
+                    SuiviVM newSuiviVM = new SuiviVM
+                    {
+                        Example_wav_path = currentDir + ex.Exercice_wav_file_name,
+                        Result_wav_path = currentDir + ex.,
+                        Name = "Exercice 1",
+                        PitchMin = 70,
+                        PitchMax = 800,
+                        IntensityThreshold = 40
+                    };
+
+                    activityListInstance.Add(newSuiviVM);
+                }
+
+            }
+
+
+            /*
 
             //TODO: Activities dummies import 
             SuiviVM activityEx1 = new SuiviVM
@@ -68,9 +117,10 @@ namespace MyOrthoOrtho.Views.Controls
             };
             //
 
-            activityListInstance.Add(activityEx1);
-            activityListInstance.Add(activityEx2);
-            activityListInstance.Add(activityEx3);
+                activityListInstance.Add(activityEx1);
+                activityListInstance.Add(activityEx2);
+                activityListInstance.Add(activityEx3);
+                */
         }
 
 
