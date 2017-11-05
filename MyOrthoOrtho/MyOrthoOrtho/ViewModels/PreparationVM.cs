@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.DataVisualization.Charting;
+using MyOrthoOrtho.Models;
 
-namespace MyOrthoOrtho.Models
+namespace MyOrthoOrtho.ViewModels
 {
     class PreparationVM : VMBase
     {

@@ -1,11 +1,12 @@
 ﻿using MyOrthoOrtho.Controllers;
+using MyOrthoOrtho.ViewModels;
 using MyOrthoOrtho.Models;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
-
+using System.IO;
 
 namespace MyOrthoOrtho.Views.Controls
 {
@@ -14,7 +15,8 @@ namespace MyOrthoOrtho.Views.Controls
     /// </summary>
     public partial class CtrlPreparation : UserControl
     {
-        private PreparationExecuter ac;
+        private PreparationExecuter pe;
+        WAVPlayerRecorder RecordPlayer;
 
         public CtrlPreparation()
         {
@@ -35,18 +37,18 @@ namespace MyOrthoOrtho.Views.Controls
 
             activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
             activity.SetResultValue(values => SetChartLine((LineSeries)PitchChart.Series[1], (LineSeries)IntensityChart.Series[1], values));
-            ac = new PreparationExecuter(activity);
+            pe = new PreparationExecuter(activity);
         }
 
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
         {
-            ac.StartPlaybackExemple();
+            pe.StartPlaybackExemple();
 
         }
         private void BtnArreter_Click(object sender, RoutedEventArgs e)
         {
-            ac.StopPlayback();
+            pe.StopPlayback();
         }
 
         private void btnImporterExercice_Click(object sender, RoutedEventArgs e)
@@ -65,11 +67,26 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void BtnDemarrer_Click(object sender, RoutedEventArgs e)
         {
-            ac.StartRecord();
+            RecordPlayer = new WAVPlayerRecorder();
+            var exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\enregistrement\\";
+            if (!Directory.Exists(exerciceFolderPath))
+            {
+                Directory.CreateDirectory(exerciceFolderPath);
+            }
+            string currentExerciceFilePath = (exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+            RecordPlayer.StartRecord(currentExerciceFilePath);
         }
-        private void BtnTerminer_Click(object sender, RoutedEventArgs e)
+        private async void BtnTerminer_Click(object sender, RoutedEventArgs e)
         {
-            ac.StopRecord();
+            var exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\enregistrement\\";
+            string filename = (exerciceFolderPath + "resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+            if (!RecordPlayer.IsRecording)
+            {
+                return;
+            }
+
+            var wavPath = await RecordPlayer.StopRecord();
+            txtFileName.Text = wavPath;
         }
 
         private void SetChartLine(LineSeries frequency, LineSeries pitch, ICollection<DataLineItem> values)

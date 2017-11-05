@@ -1,0 +1,67 @@
+<Resultats>
+	<Date_sauvegarde>
+		20171029162325
+	</Date_sauvegarde>
+	<Liste_exercices_resultats>
+		<ExerciceResultat>
+			<Date>
+				20171029121314
+			</Date>
+			<Name>
+				Exercice 1
+			</Name>
+			<Exercice_wav_file_name>
+				exercice1.wav
+			</Exercice_wav_file_name>
+			<Exercice_praat_file_name>
+				exercice1_praat_result_20171029121314.txt
+			</Exercice_praat_file_name>
+			<Resultat_wav_file_name>
+				resultat1_20171029121314.wav
+			</Resultat_wav_file_name>
+			<Resultat_praat_file_name>
+				resultat1_praat_result_20171029121314.txt
+			</Resultat_praat_file_name>
+		</ExerciceResultat>
+		<ExerciceResultat>
+			<Date>
+				20171029121141
+			</Date>
+			<Name>
+				Exercice 2
+			</Name>
+			<Exercice_wav_file_name>
+				exercice2.wav
+			</Exercice_wav_file_name>
+			<Exercice_praat_file_name>
+				exercice2_praat_result_20171029121141.txt
+			</Exercice_praat_file_name>
+			<Resultat_wav_file_name>
+				resultat2__20171029121141
+			</Resultat_wav_file_name>
+			<Resultat_praat_file_name>
+				resultat2_praat_result_20171029121141.txt
+			</Resultat_praat_file_name>
+		</ExerciceResultat>
+		<ExerciceResultat>
+			<Date>
+				20171029121258
+			</Date>
+			<Name>
+				Exercice 3
+			</Name>
+			<Exercice_wav_file_name>
+				exercice3.wav
+			</Exercice_wav_file_name>
+			<Exercice_praat_file_name>
+				exercice3_praat_result_20171029121258.txt
+			</Exercice_praat_file_name>
+			<Resultat_wav_file_name>
+				resultat3_20171029121258.wav
+			</Resultat_wav_file_name>
+			<Resultat_praat_file_name>
+				resultat3_praat_result_20171029121258.txt
+			</Resultat_praat_file_name>
+		</ExerciceResultat>
+	</Liste_exercices_resultats>
+</Resultats>

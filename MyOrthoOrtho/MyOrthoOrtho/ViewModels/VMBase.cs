@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOrthoOrtho.Models
+namespace MyOrthoOrtho.ViewModels
 {
     public class VMBase : INotifyPropertyChanged
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOrthoOrtho.Models
+namespace MyOrthoOrtho.ViewModels
 {
     class ListSuiviVM
     {

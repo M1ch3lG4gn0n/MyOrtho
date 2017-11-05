@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using MyOrthoOrtho.Models;
+using MyOrthoOrtho.ViewModels;
 
 namespace MyOrthoOrtho.Controllers
 {
@@ -43,5 +43,7 @@ namespace MyOrthoOrtho.Controllers
             }*/
 
         }
+
+
     }
 }

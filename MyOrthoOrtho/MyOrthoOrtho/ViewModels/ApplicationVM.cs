@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
-namespace MyOrthoOrtho.Models
+namespace MyOrthoOrtho.ViewModels
 {
     public class ApplicationVM : VMBase
     {

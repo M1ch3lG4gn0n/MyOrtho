@@ -1,4 +1,4 @@
-﻿using MyOrthoOrtho.Models;
+﻿using MyOrthoOrtho.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
