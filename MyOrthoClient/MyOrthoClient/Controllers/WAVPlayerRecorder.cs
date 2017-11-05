@@ -21,6 +21,7 @@ namespace MyOrthoClient.Controllers
         private string fileName = "";
         private System.Media.SoundPlayer player;
         private Task playbackThread;
+        private CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         [DllImport("winmm.dll")]
         private static extern long mciSendString(
@@ -42,15 +43,20 @@ namespace MyOrthoClient.Controllers
             player = new System.Media.SoundPlayer(wavPath);
             
             player.Play();
-
+            /*
             IWaveSource wavSource = new WaveFileReader(wavPath);
             TimeSpan totalTime = wavSource.GetLength();
 
             playbackThread = Task.Run(() =>
             {
-                Thread.Sleep(totalTime);
-                playDone();
-            });
+                var token = tokenSource.Token;
+
+                var cancelled = token.WaitHandle.WaitOne(TimeSpan.FromSeconds(totalTime.TotalSeconds));
+
+                if (cancelled) { }
+                else
+                    playDone();
+            });*/
             
            /* string playCommand = "Open \"" + currentWav + "\" type waveaudio alias example1";
             mciSendString(playCommand, null, 0, IntPtr.Zero);
@@ -69,8 +75,7 @@ namespace MyOrthoClient.Controllers
                 //playbackThread.Dispose();
                 isPlaying = false;
             }
-            
-
+            tokenSource.Cancel();
         }
 
         public void StartRecord(string filename)
