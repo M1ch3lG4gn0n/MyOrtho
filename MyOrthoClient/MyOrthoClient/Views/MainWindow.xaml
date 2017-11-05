@@ -1,6 +1,7 @@
 ﻿<Window x:Class="MyOrthoClient.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:gif="http://wpfanimatedgif.codeplex.com"
     Title="MyOrtho" Height="916" Width="1137" xmlns:my="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:models="clr-namespace:MyOrthoClient.Models">
 
@@ -18,13 +19,13 @@
                                                 ItemsSource="{Binding [0]}"
                                                 IsSelectionEnabled="True">
 
-                                                <my:LineSeries.DataPointStyle>
-                                                    <Style TargetType="my:LineDataPoint">
-                                                        <Setter Property="Background" Value="Red"/>
-                                                        <Setter Property="Template" Value="{x:Null}"/>
-                                                    </Style>
-                                                </my:LineSeries.DataPointStyle>
-                </my:LineSeries>
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Red"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
+            </my:LineSeries>
 
             <my:LineSeries Name="PitchRésultat"
                                                 Title="Résultat"  
@@ -33,12 +34,12 @@
                                                 ItemsSource="{Binding [1]}"
                                                 IsSelectionEnabled="True">
 
-                                                <my:LineSeries.DataPointStyle>
-                                                    <Style TargetType="my:LineDataPoint">
-                                                    <Setter Property="Background" Value="Blue"/>
-                                                    <Setter Property="Template" Value="{x:Null}"/>
-                                                </Style>
-                                                </my:LineSeries.DataPointStyle>
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Blue"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
             </my:LineSeries>
         </my:Chart>
         <my:Chart Name="IntensityChart"
@@ -52,27 +53,27 @@
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [0]}"
                                                 IsSelectionEnabled="True">
-                
-                                                <my:LineSeries.DataPointStyle>
-                                                    <Style TargetType="my:LineDataPoint">
-                                                        <Setter Property="Background" Value="Red"/>
-                                                        <Setter Property="Template" Value="{x:Null}"/>
-                                                    </Style>
-                                                </my:LineSeries.DataPointStyle>
+
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Red"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
             </my:LineSeries>
-                <my:LineSeries Name="IntensityRésultat" 
+            <my:LineSeries Name="IntensityRésultat" 
                                                 Title="Résultat"  
                                                 DependentValuePath="Value" 
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [1]}"
                                                 IsSelectionEnabled="True">
 
-                                                <my:LineSeries.DataPointStyle>
-                                                    <Style TargetType="my:LineDataPoint">
-                                                        <Setter Property="Background" Value="Blue"/>
-                                                        <Setter Property="Template" Value="{x:Null}"/>
-                                                    </Style>
-                                                </my:LineSeries.DataPointStyle>
+                <my:LineSeries.DataPointStyle>
+                    <Style TargetType="my:LineDataPoint">
+                        <Setter Property="Background" Value="Blue"/>
+                        <Setter Property="Template" Value="{x:Null}"/>
+                    </Style>
+                </my:LineSeries.DataPointStyle>
             </my:LineSeries>
         </my:Chart>
         <Button x:Name="BtnImporter" Content="Importer des&#xD;&#xA;exercices" HorizontalAlignment="left" Margin="248,35,0,0" VerticalAlignment="Top" Width="100" Height="50"
@@ -85,7 +86,7 @@
                 Click="BtnDemarrer_Click"/>
         <Button x:Name="BtnTerminer" Content="Terminer&#xD;&#xA;l'exercice" HorizontalAlignment="left" Margin="418,105,0,0" VerticalAlignment="Top" Width="100" Height="50"
                 Click="BtnTerminer_Click"/>
-        
+
         <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="370" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -97,5 +98,6 @@
         </ListBox>
         <Button Name="BtnEcouter" Click="BtnEcouter_Click" Content="Écouter mon&#xD;&#xA;enregistrement" HorizontalAlignment="Left" Margin="589,35,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
         <TextBox Name="JitterTxt" Text="{Binding SelectedItemJitter}" HorizontalAlignment="Left" Height="24" Margin="589,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Image Name="feedbackGif" Margin="961,35,48,766" Stretch="Fill" gif:ImageBehavior.RepeatBehavior="Forever" />
     </Grid>
 </Window>

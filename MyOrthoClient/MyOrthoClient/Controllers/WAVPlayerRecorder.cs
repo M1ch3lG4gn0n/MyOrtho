@@ -1,27 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 using System.Runtime.InteropServices;
+using System.Windows.Media;
 using System.Windows;
-using System.Windows.Interop;
-using System.IO;
-using System.Threading;
-using CSCore;
-using CSCore.Codecs.WAV;
 
 namespace MyOrthoClient.Controllers
 {
-    class WAVPlayerRecorder
+    public class WAVPlayerRecorder : IObserver<bool>
     {
-        private bool isRecording = false;
-        private bool isPlaying = false;
-        private string fileName = "";
-        private System.Media.SoundPlayer player;
-        private Task playbackThread;
-        private CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private bool _isRecording = false;
+        private bool _isPlaying;
+        private Action<bool> _playingAction;
+        private string _fileName = "";
+        private MediaPlayer _player;
 
         [DllImport("winmm.dll")]
         private static extern long mciSendString(
@@ -31,60 +22,52 @@ namespace MyOrthoClient.Controllers
             IntPtr winHandle);
         
 
-        public WAVPlayerRecorder()
+        public WAVPlayerRecorder(Action<bool> playingAction)
         {
+            _playingAction = playingAction;
         }
 
-        public async void StartPlayback(string wavPath, Action playDone)
+        public void StartPlayback(string wavPath)
         {
             StopPlayback();
 
-            isPlaying = true;
-            player = new System.Media.SoundPlayer(wavPath);
-            
-            player.Play();
-            /*
-            IWaveSource wavSource = new WaveFileReader(wavPath);
-            TimeSpan totalTime = wavSource.GetLength();
+            _isPlaying = true;
+            _playingAction(true);
 
-            playbackThread = Task.Run(() =>
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                var token = tokenSource.Token;
+                _player = new MediaPlayer();
+                _player.Open(new Uri(wavPath, UriKind.Absolute));
+                _player.Volume = 1.0;
+                _player.IsMuted = false;
+                _player.Position = TimeSpan.FromMilliseconds(0);
+                _player.Play();
+                _player.MediaEnded += Player_MediaEnded;
+            }));
 
-                var cancelled = token.WaitHandle.WaitOne(TimeSpan.FromSeconds(totalTime.TotalSeconds));
-
-                if (cancelled) { }
-                else
-                    playDone();
-            });*/
             
-           /* string playCommand = "Open \"" + currentWav + "\" type waveaudio alias example1";
-            mciSendString(playCommand, null, 0, IntPtr.Zero);
-
-            playCommand = "Play " + currentWav + " notify";
-            mciSendString(playCommand, null, 0, new WindowInteropHelper(Application.Current.MainWindow).Handle);*/
-
         }
-        
+
+        private void Player_MediaEnded(object sender, EventArgs e)
+        {
+            _isPlaying = false;
+            _playingAction(false);
+        }
 
         public void StopPlayback()
         {
-            if (isPlaying)
+            if (_isPlaying)
             {
-                player.Stop();
-                //playbackThread.Dispose();
-                isPlaying = false;
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => _player.Stop()));
+                _playingAction(false);
             }
-            tokenSource.Cancel();
         }
 
         public void StartRecord(string filename)
         {
-            //Record into RECORD_FOLDER
-            isRecording = true;
-            this.fileName = filename;
+            _isRecording = true;
+            _fileName = filename;
             long[] code =new long[3];
-            int length = 0;
             
             code[0] = mciSendString("open new Type waveaudio Alias recsound", null, 0, IntPtr.Zero);
 
@@ -93,12 +76,10 @@ namespace MyOrthoClient.Controllers
             code[2] = 0;
         }
 
-
-
-        public async Task<string> StopRecord()
+        public string StopRecord()
         {
-            isRecording = false;
-            string completePath =  this.fileName + ".wav";
+            _isRecording = false;
+            string completePath =  _fileName + ".wav";
             int length = 0;
             long[] code = new long[3];
            
@@ -108,14 +89,18 @@ namespace MyOrthoClient.Controllers
             code[1] = mciSendString("close recsound", null, 0, IntPtr.Zero);
 
             code[2] = 0;
-            //return Task.FromResult<string>(RECORD_FORLDER + FILENAME + DateTime.Now.ToLongDateString());
-            return (completePath);
+            return completePath;
         }
 
+        public void OnCompleted() { }
+        public void OnError(Exception error) { }
+        public void OnNext(bool value)
+        {
+            _playingAction(value);
+        }
 
-
-        public bool IsRecording => isRecording;
+        public bool IsRecording => _isRecording;
+        
     }
 
-   
 }

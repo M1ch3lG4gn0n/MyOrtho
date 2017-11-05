@@ -19,14 +19,26 @@ namespace MyOrthoClient.Controllers
         private string lastExerciceWavPath;
         private string exerciceFolderPath;
         private string currentExercicePath;
+        private Action<string> setFeedback;
 
-        public ActivityExecuter(ActivityVM currentActivity)
+        public ActivityExecuter(ActivityVM currentActivity, Action<bool> playingAction, Action<string> setFeedback)
         {
-            this.Player = new WAVPlayerRecorder();
+            this.Player = new WAVPlayerRecorder(new Action<bool>(x =>
+            {
+                playingAction(x);
+                if (x)
+                {
+                    this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\playing.gif");
+                }else
+                {
+                    this.setFeedback("");
+                }
+            }));
             this.CurrentActivity = currentActivity;
             this.scripting = new PraatScripting(currentActivity.Name);
             this.connector = PraatConnector.GetConnector();
             this.analyser = new SoundAnalyser();
+            this.setFeedback = setFeedback;
             this.exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + this.CurrentActivity.Name+ "\\";
             if (!Directory.Exists(this.exerciceFolderPath))
             {
@@ -34,12 +46,20 @@ namespace MyOrthoClient.Controllers
             }
             currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path));
+            Task.Run(() =>
+            {
+                this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\Loading.gif");
+                this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path);
+                this.setFeedback("");
+            });
         }
 
-        public void StartPlayback(Action playDone)
+        public void StartPlayback()
         {
-            Task.Run(() => Player.StartPlayback(this.CurrentActivity.Example_wav_path, playDone));
+            Task.Run(() =>
+            {
+                Player.StartPlayback(this.CurrentActivity.Example_wav_path);
+            });
         }
 
         public void StopPlayback()
@@ -54,6 +74,8 @@ namespace MyOrthoClient.Controllers
                 return;
             }
 
+            this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\rec.gif");
+
             this.CurrentActivity.Results = new List<DataLineItem>();
             this.CurrentActivity.Jitter = 0;
 
@@ -61,34 +83,40 @@ namespace MyOrthoClient.Controllers
             Player.StartRecord(currentExercicePath);
         }
 
-        public async void StopRecord()
+        public void StopRecord()
         {
             if (!Player.IsRecording)
             {
                 return;
             }
 
-            var wavPath = lastExerciceWavPath = await Player.StopRecord();
+            var wavPath = lastExerciceWavPath = Player.StopRecord();
+
+            this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\Loading.gif");
 
             this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath);
 
             this.AnalyzeSample(CurrentActivity.Exercice, CurrentActivity.Results);
 
             this.EvaluateExercice(wavPath);
+
+            this.setFeedback("");
         }
 
-        public void StartLastExercicePlayblack(Action playDone)
+        public void StartLastExercicePlayblack()
         {
             if (!string.IsNullOrEmpty(this.lastExerciceWavPath))
             {
-                Task.Run(() => Player.StartPlayback(this.lastExerciceWavPath, playDone));
+                Task.Run(() =>
+                {
+                    Player.StartPlayback(this.lastExerciceWavPath);
+                });
             }
         }
 
         private void AnalyzeSample(ICollection<DataLineItem> baseline, ICollection<DataLineItem> values)
         {
             var correlation = analyser.CalculateCorrelation(baseline, values);
-            
         }
 
         private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath)
