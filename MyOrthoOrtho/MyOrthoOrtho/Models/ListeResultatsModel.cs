@@ -8,12 +8,13 @@ using System.Xml.Serialization;
 namespace MyOrthoOrtho.Models
 {
     [XmlType("Resultats")]
-    class ListeResultatsModel
+    public class ListeResultatsModel
     {
         public ListeResultatsModel()
         {
             Liste_exercices_resultats = new List<ExerciceResultat>();
         }
+
         [XmlElement("Date_sauvegarde")]
         public string Date_sauvegarde { get; set; }
 

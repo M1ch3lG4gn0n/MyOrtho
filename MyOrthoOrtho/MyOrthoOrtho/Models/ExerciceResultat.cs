@@ -10,10 +10,7 @@ namespace MyOrthoOrtho.Models
 
     public class ExerciceResultat
     {
-        public ExerciceResultat()
-        {
-            
-        }
+       
         [XmlElement("Date")]
         public string Date { get; set; }
 
@@ -26,16 +23,20 @@ namespace MyOrthoOrtho.Models
         [XmlElement("Exercice_praat_file_name")]
         public string Exercice_praat_file_name { get; set; }
 
-        [XmlElement("PitchMin")]
+        [XmlElement("Resultat_wav_file_name")]
+        public string Resultat_wav_file_name { get; set; }
+
+        [XmlElement("Resultat_praat_file_name")]
+        public string Resultat_praat_file_name { get; set; }
+
+        [XmlElement("Pitch_min")]
         public int PitchMin { get; set; }
 
-        [XmlElement("PitchMax")]
+        [XmlElement("Pitch_max")]
         public int PitchMax { get; set; }
 
-        [XmlElement("IntensityThreshold")]
+        [XmlElement("Intensity_threshold")]
         public int IntensityThreshold { get; set; }
-
-        [XmlElement("DureeExacte")]
-        public int DureeExacte { get; set; }
+        
     }
 }

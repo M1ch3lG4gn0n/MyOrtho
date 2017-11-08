@@ -72,11 +72,11 @@ namespace MyOrthoOrtho.Views.Controls
                     SuiviVM newSuiviVM = new SuiviVM
                     {
                         Example_wav_path = currentDir + ex.Exercice_wav_file_name,
-                        Result_wav_path = currentDir + ex.,
-                        Name = "Exercice 1",
-                        PitchMin = 70,
-                        PitchMax = 800,
-                        IntensityThreshold = 40
+                        Result_wav_path = currentDir + ex.Resultat_wav_file_name,
+                        Name = ex.Name,
+                        PitchMin = ex.PitchMin,
+                        PitchMax = ex.PitchMax,
+                        IntensityThreshold = ex.IntensityThreshold
                     };
 
                     activityListInstance.Add(newSuiviVM);
