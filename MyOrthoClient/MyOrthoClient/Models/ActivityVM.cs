@@ -14,10 +14,6 @@ namespace MyOrthoClient.Models
         private Action<ICollection<DataLineItem>> _setExercise;
         private ICollection<DataLineItem> _results;
         private Action<ICollection<DataLineItem>> _setResult;
-        private LineSeries _frequencyExpected;
-        private LineSeries _frequencyResult;
-        private LineSeries _pitchExpected;
-        private LineSeries _pitchResult;
 
         public string Name { get; set; }
         public string Example_wav_path { get; set; }
