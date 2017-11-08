@@ -54,25 +54,32 @@ namespace MyOrthoOrtho.Views.Controls
             if (fileSelected == true)
             {
                 string data;
+                //Create a StreamReader to read selected xml file
                 var streamReader = new StreamReader(dlg.FileName, Encoding.UTF8);
+
+                //Trim and clean the read data to ease parsing
                 data = streamReader.ReadToEnd();
+                data.Trim();
+                data = data.Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty);
 
-
+                //create instance of our model
                 ListeResultatsModel result = new ListeResultatsModel();
 
+                //Setup our xml serializer and read xml data into our class
                 var serializer = new XmlSerializer(typeof(ListeResultatsModel));
-
                 var stream = new StringReader(data);
                 var reader = XmlReader.Create(stream);
                 {
                     result = (ListeResultatsModel)serializer.Deserialize(reader);
                 }
+
+                //create an object of type SuiviVM from the collected data
                foreach(ExerciceResultat ex in result.Liste_exercices_resultats)
                 {
                     SuiviVM newSuiviVM = new SuiviVM
                     {
-                        Example_wav_path = currentDir + ex.Exercice_wav_file_name,
-                        Result_wav_path = currentDir + ex.Resultat_wav_file_name,
+                        Example_wav_path = currentDir + @"\Ressources\" + ex.Exercice_wav_file_name,
+                        Result_wav_path = currentDir + @"\Ressources\" + ex.Resultat_wav_file_name,
                         Name = ex.Name,
                         PitchMin = ex.PitchMin,
                         PitchMax = ex.PitchMax,

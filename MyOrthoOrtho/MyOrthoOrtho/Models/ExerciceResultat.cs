@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace MyOrthoOrtho.Models
 {
-
+    [XmlType("ExerciceResultat")]
     public class ExerciceResultat
     {
        

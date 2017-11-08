@@ -1,8 +1,5 @@
 <Resultats>
-	<Date_sauvegarde>
-		20171029162325
-	</Date_sauvegarde>
-	<Liste_exercices_resultats>
+	<Date_sauvegarde>20171029162325</Date_sauvegarde>
 		<ExerciceResultat>
 			<Date>
 				20171029121314
@@ -51,6 +48,15 @@
 			<Resultat_praat_file_name>
 				resultat2_praat_result_20171029121141.txt
 			</Resultat_praat_file_name>
+      <Pitch_min>
+        70
+      </Pitch_min>
+      <Pitch_max>
+        800
+      </Pitch_max>
+      <Intensity_threshold>
+        40
+      </Intensity_threshold>
 		</ExerciceResultat>
 		<ExerciceResultat>
 			<Date>
@@ -71,6 +77,14 @@
 			<Resultat_praat_file_name>
 				resultat3_praat_result_20171029121258.txt
 			</Resultat_praat_file_name>
+      <Pitch_min>
+        70
+      </Pitch_min>
+      <Pitch_max>
+        800
+      </Pitch_max>
+      <Intensity_threshold>
+        40
+      </Intensity_threshold>
 		</ExerciceResultat>
-	</Liste_exercices_resultats>
 </Resultats>
