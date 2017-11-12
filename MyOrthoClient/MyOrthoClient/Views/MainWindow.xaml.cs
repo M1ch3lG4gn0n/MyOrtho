@@ -140,8 +140,8 @@ namespace MyOrthoClient
         {
             var currentActivityIndex = ListActivities.SelectedIndex;
             var activity = activityListInstance.GetActivity(currentActivityIndex);
-            activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
-            activity.SetResultValue(values => SetChartLine((LineSeries)PitchChart.Series[1], (LineSeries)IntensityChart.Series[1], values));
+            activity.SetExerciseValue(values => SetChartLine((LineSeries)IntensityChart.Series[0], (LineSeries)PitchChart.Series[0], values));
+            activity.SetResultValue(values => SetChartLine((LineSeries)IntensityChart.Series[1], (LineSeries)PitchChart.Series[1], values));
             ac = new ActivityExecuter(activity, OnPlayingEnablingButton, SetFeedbackGif);
             BtnDemarrer.IsEnabled = true;
             BtnLire.IsEnabled = true;
@@ -154,8 +154,8 @@ namespace MyOrthoClient
             int i = 0;
             foreach (var lineItem in values)
             {
-                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.Intensity);
-                pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.time, lineItem.pitch);
+                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.Time, lineItem.Intensity);
+                pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.Time, lineItem.Pitch);
             }
             this.Dispatcher.Invoke(() =>
             {

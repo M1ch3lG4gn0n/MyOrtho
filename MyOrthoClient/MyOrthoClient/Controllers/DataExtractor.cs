@@ -34,9 +34,9 @@ namespace MyOrthoClient.Controllers
                 {
                     list.Add(new DataLineItem()
                     {
-                        time = double.Parse(result[0]),
-                        Intensity = double.Parse(result[1]),
-                        pitch = double.Parse(result[2])
+                        Time = double.Parse(result[0]),
+                        Pitch = double.Parse(result[1]),
+                        Intensity = double.Parse(result[2])
                     });
                 }
             }
@@ -68,6 +68,7 @@ namespace MyOrthoClient.Controllers
 
         private string[] ValidateValue(string line)
         {
+            //TODO Interpoler les valeurs
             if (line.Contains("undefined"))
             {
                 return null;

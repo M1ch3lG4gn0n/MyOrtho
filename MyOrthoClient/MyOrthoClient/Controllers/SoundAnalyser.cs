@@ -95,13 +95,13 @@ namespace MyOrthoClient.Controllers
         {
             foreach (var lineItem in expected)
             {   
-                x.Add(lineItem.Intensity);
-                xin.Add(lineItem.pitch);
+                x.Add(lineItem.Pitch);
+                xin.Add(lineItem.Intensity);
             }
             foreach (var lineItem in exercise)
             {
-                y.Add(lineItem.Intensity);
-                yin.Add(lineItem.pitch);
+                y.Add(lineItem.Pitch);
+                yin.Add(lineItem.Intensity);
             }
 
             double[] Xsample = new double[x.Count];
