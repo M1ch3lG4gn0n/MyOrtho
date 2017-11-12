@@ -44,26 +44,16 @@ namespace MyOrthoClient.Controllers
             return list;
         }
 
-        public ICollection<JitterIntervalItem> GetJitterValues(string path)
+        public double GetJitterValue(string path)
         {
-            var list = new List<JitterIntervalItem>();
-
-            var lines = File.ReadLines(path);
-            foreach (string line in lines)
+            var text = File.ReadAllText(path);
+            var result = ValidateValue(text);
+            double value = 0;
+            if (result != null && double.TryParse(text.Split(new char[] { '%' })[0], out value))
             {
-                var result = ValidateValue(line);
-                if (result != null)
-                {
-                    list.Add(new JitterIntervalItem()
-                    {
-                        StartTime = double.Parse(result[0]),
-                        EndTime = double.Parse(result[1]),
-                        Jitter = double.Parse(result[2])
-                    });
-                }
+                return value;
             }
-
-            return list;
+            return value;
         }
 
         private string[] ValidateValue(string line)

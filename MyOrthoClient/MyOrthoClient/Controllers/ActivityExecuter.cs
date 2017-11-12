@@ -137,7 +137,7 @@ namespace MyOrthoClient.Controllers
             return DataExtractor.GetInstance().GetIntensityFrequencyValues(resultPath);
         }
 
-        private ICollection<JitterIntervalItem> CalculateJitter(string wavPath)
+        private double CalculateJitter(string wavPath)
         {
             var resultPath = currentExercicePath + "Jitter.txt";
             if (!File.Exists(resultPath))
@@ -152,12 +152,12 @@ namespace MyOrthoClient.Controllers
 
             this.connector.GetResult(scriptPath);
 
-            return DataExtractor.GetInstance().GetJitterValues(resultPath);
+            return DataExtractor.GetInstance().GetJitterValue(resultPath);
         }
 
         private void EvaluateExercice(string wavPath)
         {
-            var score = 90;
+            var score = 0;
 
             if (this.CurrentActivity.F0_exactEvaluated) {
 
@@ -175,14 +175,14 @@ namespace MyOrthoClient.Controllers
 
             }
 
-            var jitters = CalculateJitter(wavPath);
+            
             if (this.CurrentActivity.Duree_exacteEvaluated) {
-                this.CurrentActivity.Duree_exacte = (int)Math.Round(jitters.Select(x => x.EndTime).Max() - jitters.Select(x => x.StartTime).Min());
+                
             }
-
+            
             if (this.CurrentActivity.JitterEvaluated)
             {
-                this.CurrentActivity.Jitter = jitters.OrderByDescending(x => x.EndTime - x.StartTime).First().Jitter;
+                this.CurrentActivity.Jitter = CalculateJitter(wavPath);
             }
 
             string imagePath;
