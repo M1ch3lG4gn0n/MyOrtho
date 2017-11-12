@@ -9,6 +9,7 @@ using MyOrthoClient.Controllers;
 using System.Windows.Threading;
 using WpfAnimatedGif;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 
 namespace MyOrthoClient
 {
@@ -47,7 +48,17 @@ namespace MyOrthoClient
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
-            BtnImporter.IsEnabled = false;
+            /*string path = "";
+            OpenFileDialog file = new OpenFileDialog();
+            if (file.ShowDialog() != null)
+            {
+                path = file.FileName;
+            }
+
+            FileHelper.FileReader fileReader = new FileHelper.FileReader();
+            fileReader.zipToExerciceList(path);*/
+
+            
             string currentDir = Environment.CurrentDirectory;
             activityListInstance.ClearItems();
 
