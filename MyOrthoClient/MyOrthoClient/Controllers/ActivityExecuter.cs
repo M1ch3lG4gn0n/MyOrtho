@@ -101,6 +101,8 @@ namespace MyOrthoClient.Controllers
             this.EvaluateExercice(wavPath);
 
             this.setFeedback("");
+
+
         }
 
         public void StartLastExercicePlayblack()
