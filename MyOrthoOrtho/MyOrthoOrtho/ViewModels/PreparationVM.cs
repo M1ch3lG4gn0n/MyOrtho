@@ -72,9 +72,13 @@ namespace MyOrthoOrtho.ViewModels
             availableExercices.Clear();
         }
 
-        public void Add(Exercice item)
+        public void AddAvailable(Exercice item)
         {
             availableExercices.Add(item);
+        }
+        public void AddSelected(Exercice item)
+        {
+            selectedExercices.Add(item);
         }
 
         public PreparationVM() {

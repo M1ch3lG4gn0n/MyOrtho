@@ -35,9 +35,8 @@ namespace MyOrthoOrtho.Views.Controls
         public CtrlPreparation()
         {
             InitializeComponent();
-
             ImportExistingExercices();
-
+            DataContext = activityInstance;
         }
         
         private void ImportExistingExercices()
@@ -68,7 +67,7 @@ namespace MyOrthoOrtho.Views.Controls
                             exercice = (Exercice)serializer.Deserialize(reader);
                         }
 
-                        activityInstance.Add(exercice);
+                        activityInstance.AddAvailable(exercice);
 
                     }   
                 }
@@ -131,6 +130,11 @@ namespace MyOrthoOrtho.Views.Controls
         private void ListSelected_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+        
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            ImportExistingExercices();
         }
     }
 }
