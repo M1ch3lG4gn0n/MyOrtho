@@ -91,43 +91,7 @@ namespace MyOrthoOrtho.Views.Controls
 
             }
 
-
-            /*
-
-            //TODO: Activities dummies import 
-            SuiviVM activityEx1 = new SuiviVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex1.wav",
-                Result_wav_path = currentDir + @"\Ressources\re1.wav",
-                Name = "Exercice 1",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40
-            };
-            SuiviVM activityEx2 = new SuiviVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex2.wav",
-                Result_wav_path = currentDir + @"\Ressources\re2.wav",
-                Name = "Exercice 2",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40
-            };
-            SuiviVM activityEx3 = new SuiviVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex3.wav",
-                Result_wav_path = currentDir + @"\Ressources\re3.wav",
-                Name = "Exercice 3",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40
-            };
-            //
-
-                activityListInstance.Add(activityEx1);
-                activityListInstance.Add(activityEx2);
-                activityListInstance.Add(activityEx3);
-                */
+            
         }
 
 

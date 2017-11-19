@@ -6,13 +6,14 @@
              xmlns:local="clr-namespace:MyOrthoOrtho.Views.Controls"
              mc:Ignorable="d" 
              xmlns:my="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-             d:DesignHeight="916" d:DesignWidth="1137">
-    <Grid Height="921" Margin="0,0,-30,-5">
+             d:DesignHeight="768" d:DesignWidth="1366">
+    <Grid Height="738" Width="1336" Margin="0,0,-30,-5">
         <my:Chart Name="PitchChart"
                                        Title="Pitch" 
                                        VerticalAlignment="Top" 
-                                       Margin="248,86,168,0" 
-                                       Height="362">
+                                       Margin="25,389,0,0" 
+                                       Height="300"
+                                       Width="630" HorizontalAlignment="Left">
             <my:LineSeries Name="PitchAttendue"
                                                 Title="Attendue"  
                                                 DependentValuePath="Value" 
@@ -46,8 +47,8 @@
         <my:Chart Name="IntensityChart"
                                        Title="Intensité" 
                                        VerticalAlignment="Top" 
-                                       Margin="248,453,168,0" 
-                                       Height="363">
+                                       Margin="0,389,25,0" 
+                                       Height="300" HorizontalAlignment="Right" Width="630">
             <my:LineSeries Name="IntensityAttendue"
                                                 Title="Attendue"  
                                                 DependentValuePath="Value" 
@@ -77,13 +78,13 @@
                 </my:LineSeries.DataPointStyle>
             </my:LineSeries>
         </my:Chart>
-        <Button x:Name="BtnImporter" Content="Importer les résultats" HorizontalAlignment="left" Margin="248,35,0,0" VerticalAlignment="Top" Width="133" Height="29"
+        <Button x:Name="BtnImporter" Content="Importer les résultats" HorizontalAlignment="left" Margin="25,10,0,0" VerticalAlignment="Top" Width="191" Height="20"
                 Click="BtnImporter_Click"/>
-        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="454,35,0,0" VerticalAlignment="Top" Width="105" Height="29"
+        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="236,38,0,0" VerticalAlignment="Top" Width="133" Height="20"
                 Click="BtnLire_Click"/>
-        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="762,35,0,0" VerticalAlignment="Top" Width="104" Height="31"
+        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="236,88,0,0" VerticalAlignment="Top" Width="133" Height="20"
                 Click="BtnArreter_Click"/>
-        <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="370" Margin="10,35,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
+        <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="330" Margin="25,30,0,0" VerticalAlignment="Top" Width="191" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -92,6 +93,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Écouter l'enregistrement" HorizontalAlignment="Left" Margin="582,35,0,0" VerticalAlignment="Top" Width="159" Height="29" Click="BtnLireResult_Click"/>
+        <Button Content="Lire l'enregistrement" HorizontalAlignment="Left" Margin="236,62,0,0" VerticalAlignment="Top" Width="133" Height="20" Click="BtnLireResult_Click"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="330" Margin="392,30,0,0" Stroke="Black" VerticalAlignment="Top" Width="919"/>
     </Grid>
 </UserControl>

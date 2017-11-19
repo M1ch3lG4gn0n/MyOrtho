@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.DataVisualization.Charting;
 using MyOrthoOrtho.Models;
+using System.Collections.ObjectModel;
 
 namespace MyOrthoOrtho.ViewModels
 {
     class PreparationVM : VMBase
     {
+        public ObservableCollection<Exercice> availableExercices;
+        public ObservableCollection<Exercice> selectedExercices;
 
         private ICollection<DataLineItem> _exercice;
         private Action<ICollection<DataLineItem>> _setExercise;
@@ -62,9 +65,22 @@ namespace MyOrthoOrtho.ViewModels
                 this._results = value;
                 this._setResult(value);
             }
-        }      
+        }
 
-        public PreparationVM() { }
+        public void ClearAvailable()
+        {
+            availableExercices.Clear();
+        }
+
+        public void Add(Exercice item)
+        {
+            availableExercices.Add(item);
+        }
+
+        public PreparationVM() {
+            availableExercices = new ObservableCollection<Exercice>();
+            selectedExercices = new ObservableCollection<Exercice>();
+        }
 
         public override string ToString()
         {
