@@ -109,6 +109,8 @@
     <Compile Include="Views\FlatResult.xaml.cs">
       <DependentUpon>FlatResult.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExerciceResultat.cs" />
+    <Compile Include="Models\ListeResultatsModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

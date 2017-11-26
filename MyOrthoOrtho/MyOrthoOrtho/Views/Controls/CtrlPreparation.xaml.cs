@@ -1,12 +1,24 @@
 ﻿using MyOrthoOrtho.Controllers;
-using MyOrthoOrtho.ViewModels;
 using MyOrthoOrtho.Models;
+using MyOrthoOrtho.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
-using System.IO;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace MyOrthoOrtho.Views.Controls
 {
@@ -16,28 +28,56 @@ namespace MyOrthoOrtho.Views.Controls
     public partial class CtrlPreparation : UserControl
     {
         private PreparationExecuter pe;
+        PreparationVM activityInstance = new PreparationVM();
         WAVPlayerRecorder RecordPlayer;
+        static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
 
         public CtrlPreparation()
         {
             InitializeComponent();
+            DataContext = activityInstance;
+            ImportExistingExercices();
         }
-
-        private void BtnCreerExercice_Click(object sender, RoutedEventArgs e)
+        
+        private void ImportExistingExercices()
         {
-            PreparationVM activity = new PreparationVM
+            
+            activityInstance.ClearAvailable();
+            string data;
+            if (Directory.Exists(EXERCICES_FOLDER))
             {
-                Example_wav_path = txtFileName.Text,
-                Name = txtName.Text,
-                PitchMin = Convert.ToInt32(txtPitchMin.Text),
-                PitchMax = Convert.ToInt32(txtPitchMax.Text),
-                IntensityThreshold = Convert.ToInt32(txtIntensityThreshold.Text),
-                Duree_expected = Convert.ToInt32(txtDuration.Text)
-            };
+                foreach (string filePath in Directory.GetFiles(EXERCICES_FOLDER))
+                {
+                    if (System.IO.Path.GetExtension(filePath) == ".xml")
+                    {
+                        var streamReader = new StreamReader(filePath, Encoding.UTF8);
+                        //Trim and clean the read data to ease parsing
+                        data = streamReader.ReadToEnd();
+                        data.Trim();
+                        data = data.Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty);
 
-            activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
-            activity.SetResultValue(values => SetChartLine((LineSeries)PitchChart.Series[1], (LineSeries)IntensityChart.Series[1], values));
-            pe = new PreparationExecuter(activity);
+                        //create instance of our model
+                        Exercice exercice = new Exercice();
+
+                        //Setup our xml serializer and read xml data into our class
+                        var serializer = new XmlSerializer(typeof(Exercice));
+                        var stream = new StringReader(data);
+                        var reader = XmlReader.Create(stream);
+                        {
+                            exercice = (Exercice)serializer.Deserialize(reader);
+                        }
+
+                        activityInstance.AddAvailable(exercice);
+
+                    }   
+                }
+            }
+            else
+            {
+                //TODO: message indiquand qu'aucun exercice n'existe dans l'application
+            }
+            
+            
         }
 
 
@@ -50,21 +90,7 @@ namespace MyOrthoOrtho.Views.Controls
         {
             pe.StopPlayback();
         }
-
-        private void btnImporterExercice_Click(object sender, RoutedEventArgs e)
-        {
-            var fileDialog = new Microsoft.Win32.OpenFileDialog
-            {
-                DefaultExt = ".wav",
-                Filter = "WAV File (.wav)|*.wav"
-            };
-            if (fileDialog.ShowDialog() == true)
-            {
-                string filename = fileDialog.FileName;
-                txtFileName.Text = filename;
-            }
-        }
-
+        
         private void BtnDemarrer_Click(object sender, RoutedEventArgs e)
         {
             RecordPlayer = new WAVPlayerRecorder();
@@ -76,18 +102,7 @@ namespace MyOrthoOrtho.Views.Controls
             string currentExerciceFilePath = (exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
             RecordPlayer.StartRecord(currentExerciceFilePath);
         }
-        private async void BtnTerminer_Click(object sender, RoutedEventArgs e)
-        {
-            var exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\enregistrement\\";
-            string filename = (exerciceFolderPath + "resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
-            if (!RecordPlayer.IsRecording)
-            {
-                return;
-            }
-
-            var wavPath = await RecordPlayer.StopRecord();
-            txtFileName.Text = wavPath;
-        }
+       
 
         private void SetChartLine(LineSeries frequency, LineSeries pitch, ICollection<DataLineItem> values)
         {
@@ -104,6 +119,22 @@ namespace MyOrthoOrtho.Views.Controls
                 frequency.ItemsSource = frequencyLineArray;
                 pitch.ItemsSource = pitchLineArray;
             });
+        }
+        
+
+        private void ListAvailable_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListSelected_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            ImportExistingExercices();
         }
     }
 }

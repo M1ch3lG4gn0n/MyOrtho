@@ -7,9 +7,10 @@ using System.Xml.Serialization;
 
 namespace MyOrthoOrtho.Models
 {
-    [XmlType("Exercice")]
-    public class Exercice
+    [XmlType("ExerciceResultat")]
+    public class ExerciceResultat
     {
+
         [XmlElement("Date")]
         public string Date { get; set; }
 
@@ -22,6 +23,12 @@ namespace MyOrthoOrtho.Models
         [XmlElement("Exercice_praat_file_name")]
         public string Exercice_praat_file_name { get; set; }
 
+        [XmlElement("Resultat_wav_file_name")]
+        public string Resultat_wav_file_name { get; set; }
+
+        [XmlElement("Resultat_praat_file_name")]
+        public string Resultat_praat_file_name { get; set; }
+
         [XmlElement("Pitch_min")]
         public int PitchMin { get; set; }
 
@@ -31,9 +38,5 @@ namespace MyOrthoOrtho.Models
         [XmlElement("Intensity_threshold")]
         public int IntensityThreshold { get; set; }
 
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

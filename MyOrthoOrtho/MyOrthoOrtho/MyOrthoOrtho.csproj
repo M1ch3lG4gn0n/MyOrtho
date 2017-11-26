@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\PraatHelper.cs" />
+    <Compile Include="Controllers\CreationExecuter.cs" />
     <Compile Include="Controllers\PreparationExecuter.cs" />
     <Compile Include="Controllers\SuiviExecuter.cs" />
     <Compile Include="Models\ConfigurationFileModel.cs" />
@@ -69,9 +70,13 @@
     <Compile Include="Models\ListeResultatsModel.cs" />
     <Compile Include="ViewModels\ApplicationVM.cs" />
     <Compile Include="ViewModels\ListSuiviVM.cs" />
+    <Compile Include="ViewModels\CreationVM.cs" />
     <Compile Include="ViewModels\SuiviVM.cs" />
     <Compile Include="ViewModels\PreparationVM.cs" />
     <Compile Include="ViewModels\VMBase.cs" />
+    <Compile Include="Views\Controls\CtrlCreation.xaml.cs">
+      <DependentUpon>CtrlCreation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\CtrlPreparation.xaml.cs">
       <DependentUpon>CtrlPreparation.xaml</DependentUpon>
     </Compile>
@@ -91,6 +96,10 @@
     <Compile Include="Controllers\PraatConnector.cs" />
     <Compile Include="Controllers\PraatScripting.cs" />
     <Compile Include="Controllers\WAVPlayerRecorder.cs" />
+    <Page Include="Views\Controls\CtrlCreation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Controls\CtrlPreparation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -138,6 +147,7 @@
     <Content Include="Ressources\exercice1.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Ressources\Rec.png" />
     <Content Include="Ressources\resultat1_20171029121314.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

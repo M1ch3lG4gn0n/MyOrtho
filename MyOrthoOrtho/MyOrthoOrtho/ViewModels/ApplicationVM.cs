@@ -9,7 +9,8 @@ namespace MyOrthoOrtho.ViewModels
 {
     public class ApplicationVM : VMBase
     {
-        SuiviVM VMPageSuivi = new SuiviVM();
-        PreparationVM VMPagePreparation = new PreparationVM();
+        //SuiviVM VMPageSuivi = new SuiviVM();
+        //PreparationVM VMPagePreparation = new PreparationVM();
+
     }
 }

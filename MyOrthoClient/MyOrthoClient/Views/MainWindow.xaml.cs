@@ -9,6 +9,7 @@ using MyOrthoClient.Controllers;
 using System.Windows.Threading;
 using WpfAnimatedGif;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 
 namespace MyOrthoClient
 {
@@ -47,7 +48,7 @@ namespace MyOrthoClient
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
-            /*string path = "";
+            string path = "";
             OpenFileDialog file = new OpenFileDialog();
             if (file.ShowDialog() != null)
             {
@@ -55,48 +56,8 @@ namespace MyOrthoClient
             }
 
             FileHelper.FileReader fileReader = new FileHelper.FileReader();
-            fileReader.zipToExerciceList(path);*/
-
-            
-            string currentDir = Environment.CurrentDirectory;
-            activityListInstance.ClearItems();
-
-            //TODO: Activities dummies import 
-            ActivityVM activityEx1 = new ActivityVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex1.wav",
-                Name = "Exercice 1",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40,
-                F0_exactEvaluated = true,
-                F0_stableEvaluated = true,
-                Intensite_stableEvaluated = true,
-                Duree_exacteEvaluated = true,
-                JitterEvaluated = true
-            };
-            ActivityVM activityEx2 = new ActivityVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex2.wav",
-                Name = "Exercice 2",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40,
-                Courbe_f0_exacteEvaluated = true
-            };
-            ActivityVM activityEx3 = new ActivityVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex3.wav",
-                Name = "Exercice 3",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40
-            };
-            //
-
-            activityListInstance.Add(activityEx1);
-            activityListInstance.Add(activityEx2);
-            activityListInstance.Add(activityEx3);
+            fileReader.zipToExerciceList(path, activityListInstance);
+                        
         }
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)

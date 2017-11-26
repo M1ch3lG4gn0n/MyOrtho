@@ -36,12 +36,20 @@ namespace MyOrthoOrtho.Views
         {
             ctrlSuivi.Visibility = Visibility.Collapsed;
             ctrlPreparation.Visibility = Visibility.Visible;
+            ctrlCreation.Visibility = Visibility.Collapsed;
         }
 
         private void Navigate_Suivi(object sender, RoutedEventArgs e)
         {
             ctrlPreparation.Visibility = Visibility.Collapsed;
             ctrlSuivi.Visibility = Visibility.Visible;
+            ctrlCreation.Visibility = Visibility.Collapsed;
+        }
+        private void Navigate_Creation(object sender, RoutedEventArgs e)
+        {
+            ctrlPreparation.Visibility = Visibility.Collapsed;
+            ctrlSuivi.Visibility = Visibility.Collapsed;
+            ctrlCreation.Visibility = Visibility.Visible;
         }
 
         private void OpenHelp(object sender, RoutedEventArgs e)
