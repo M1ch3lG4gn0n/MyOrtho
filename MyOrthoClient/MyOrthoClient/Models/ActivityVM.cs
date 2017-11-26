@@ -77,6 +77,9 @@ namespace MyOrthoClient.Models
             if(this._exercice != null)
             {
                 this._setExercise(this._exercice);
+            }else
+            {
+                this._setExercise(new List<DataLineItem>());
             }
         }
 
@@ -86,6 +89,9 @@ namespace MyOrthoClient.Models
             if(this._results != null)
             {
                 this._setResult(this._results);
+            }else
+            {
+                this._setResult(new List<DataLineItem>());
             }
         }
     }
