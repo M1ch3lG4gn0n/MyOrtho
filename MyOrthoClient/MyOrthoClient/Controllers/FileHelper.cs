@@ -68,6 +68,9 @@ namespace MyOrthoClient.Controllers
                         Duree_exacteEvaluated = Convert.ToBoolean(activity.Descendants("Duree_exacteEvaluated").First().Value),
                         JitterEvaluated = Convert.ToBoolean(activity.Descendants("JitterEvaluated").First().Value)
                     };
+                    ICollection<DataLineItem> points = activity.Descendants("point").Select(x => new DataLineItem { Time = double.Parse(x.Descendants("time").First().Value), Intensity = double.Parse(x.Descendants("frequency").First().Value), Pitch = double.Parse(x.Descendants("pitch").First().Value) }).ToList();
+                    newSuiviVM.Exercice = points;
+
                     activityList.Add(newSuiviVM);
                 }
             }

@@ -42,7 +42,10 @@ namespace MyOrthoClient.Models
             set
             {
                 this._exercice = value;
-                this._setExercise(value);
+                if(_setExercise != null)
+                {
+                    this._setExercise(value);
+                }
             }
         }
         public ICollection<DataLineItem> Results
@@ -54,7 +57,10 @@ namespace MyOrthoClient.Models
             set
             {
                 this._results = value;
-                this._setResult(value);
+                if(this._setResult != null)
+                {
+                    this._setResult(value);
+                }
             }
         }      
 
@@ -68,11 +74,19 @@ namespace MyOrthoClient.Models
         public void SetExerciseValue(Action<ICollection<DataLineItem>> action)
         {
             _setExercise = action;
+            if(this._exercice != null)
+            {
+                this._setExercise(this._exercice);
+            }
         }
 
         public void SetResultValue(Action<ICollection<DataLineItem>> action)
         {
             _setResult = action;
+            if(this._results != null)
+            {
+                this._setResult(this._results);
+            }
         }
     }
 }

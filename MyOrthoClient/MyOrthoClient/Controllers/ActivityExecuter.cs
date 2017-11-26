@@ -45,13 +45,13 @@ namespace MyOrthoClient.Controllers
                 Directory.CreateDirectory(this.exerciceFolderPath);
             }
             currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
-
+            /*
             Task.Run(() =>
             {
                 this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.LoadingGifPath);
                 this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path);
                 this.setFeedback("");
-            });
+            });*/
         }
 
         public void StartPlayback()
