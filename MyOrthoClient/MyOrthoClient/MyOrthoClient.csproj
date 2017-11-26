@@ -73,6 +73,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\ResultBase.cs" />
+    <Page Include="Views\CurveResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FlatResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,11 +96,19 @@
     <Compile Include="Controllers\GraphicModule.cs" />
     <Compile Include="Controllers\PraatConnector.cs" />
     <Compile Include="Controllers\PraatScripting.cs" />
+    <Compile Include="Controllers\RessourceService.cs" />
+    <Compile Include="Controllers\ScoreProvider.cs" />
     <Compile Include="Controllers\SoundAnalyser.cs" />
     <Compile Include="Controllers\WAVPlayerRecorder.cs" />
     <Compile Include="Models\ActivityVM.cs" />
     <Compile Include="Models\CorrelationModel.cs" />
     <Compile Include="Models\DataLineItem.cs" />
+    <Compile Include="Views\CurveResult.xaml.cs">
+      <DependentUpon>CurveResult.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FlatResult.xaml.cs">
+      <DependentUpon>FlatResult.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -130,6 +147,12 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Ressources\FailedFace - Copy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\PassedFace - Copy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Ressources\playing.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -137,6 +160,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Ressources\rec.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\SucceededFace - Copy.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Ressources\FailedFace.png">

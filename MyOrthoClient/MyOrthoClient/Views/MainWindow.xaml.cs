@@ -9,7 +9,6 @@ using MyOrthoClient.Controllers;
 using System.Windows.Threading;
 using WpfAnimatedGif;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32;
 
 namespace MyOrthoClient
 {
@@ -69,7 +68,12 @@ namespace MyOrthoClient
                 Name = "Exercice 1",
                 PitchMin = 70,
                 PitchMax = 800,
-                IntensityThreshold = 40
+                IntensityThreshold = 40,
+                F0_exactEvaluated = true,
+                F0_stableEvaluated = true,
+                Intensite_stableEvaluated = true,
+                Duree_exacteEvaluated = true,
+                JitterEvaluated = true
             };
             ActivityVM activityEx2 = new ActivityVM
             {
@@ -77,7 +81,8 @@ namespace MyOrthoClient
                 Name = "Exercice 2",
                 PitchMin = 70,
                 PitchMax = 800,
-                IntensityThreshold = 40
+                IntensityThreshold = 40,
+                Courbe_f0_exacteEvaluated = true
             };
             ActivityVM activityEx3 = new ActivityVM
             {
@@ -128,7 +133,13 @@ namespace MyOrthoClient
             {
                 //Update Text on the UI thread 
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Input,
-               new Action(() => { JitterTxt.Text = SelectedItemJitter; }));
+               new Action(() =>
+               {
+                   JitterTxt.Text = SelectedItemJitter;
+                   var currentActivityIndex = ListActivities.SelectedIndex;
+                   var activity = activityListInstance.GetActivity(currentActivityIndex);
+                   this.Results.Content = activity.Courbe_f0_exacteEvaluated? new Views.CurveResult(activity) : (System.Windows.Controls.UserControl)new Views.FlatResult(activity);
+               }));
             });
 
             BtnDemarrer.IsEnabled = true;

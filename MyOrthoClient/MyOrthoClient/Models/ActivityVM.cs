@@ -7,7 +7,7 @@ using System.Windows.Controls.DataVisualization.Charting;
 
 namespace MyOrthoClient.Models
 {
-    class ActivityVM
+    public class ActivityVM
     {
 
         private ICollection<DataLineItem> _exercice;

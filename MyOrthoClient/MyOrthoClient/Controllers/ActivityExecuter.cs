@@ -28,7 +28,7 @@ namespace MyOrthoClient.Controllers
                 playingAction(x);
                 if (x)
                 {
-                    this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\playing.gif");
+                    this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.PlayingGifPath);
                 }else
                 {
                     this.setFeedback("");
@@ -48,7 +48,7 @@ namespace MyOrthoClient.Controllers
 
             Task.Run(() =>
             {
-                this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\Loading.gif");
+                this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.LoadingGifPath);
                 this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path);
                 this.setFeedback("");
             });
@@ -74,7 +74,7 @@ namespace MyOrthoClient.Controllers
                 return;
             }
 
-            this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\rec.gif");
+            this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.RecordingGifPath);
 
             this.CurrentActivity.Results = new List<DataLineItem>();
             this.CurrentActivity.Jitter = 0;
@@ -92,7 +92,7 @@ namespace MyOrthoClient.Controllers
 
             var wavPath = lastExerciceWavPath = Player.StopRecord();
 
-            this.setFeedback(Environment.CurrentDirectory + "\\Ressources\\Loading.gif");
+            this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.LoadingGifPath);
 
             this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath);
 
@@ -158,46 +158,66 @@ namespace MyOrthoClient.Controllers
         private void EvaluateExercice(string wavPath)
         {
             var score = 0;
+            var random = new Random();
+            var count = 0;
 
-            if (this.CurrentActivity.F0_exactEvaluated) {
-
+            if (this.CurrentActivity.F0_exactEvaluated)
+            {
+                count++;
+                var value = random.Next(0, 100);
+                this.CurrentActivity.F0_exact = value;
+                score += value;
             }
 
-            if (this.CurrentActivity.F0_stableEvaluated) {
-
+            if (this.CurrentActivity.F0_stableEvaluated)
+            {
+                count++;
+                var value = random.Next(0, 100);
+                this.CurrentActivity.F0_stable = value;
+                score += value;
             }
 
-            if (this.CurrentActivity.Intensite_stableEvaluated) {
-
+            if (this.CurrentActivity.Intensite_stableEvaluated)
+            {
+                count++;
+                var value = random.Next(0, 100);
+                this.CurrentActivity.Intensite_stable = value;
+                score += value;
             }
 
-            if (this.CurrentActivity.Courbe_f0_exacteEvaluated) {
-
+            if (this.CurrentActivity.Courbe_f0_exacteEvaluated)
+            {
+                count++;
+                var value = random.Next(0, 100);
+                this.CurrentActivity.Courbe_f0_exacte = value;
+                score += value;
             }
 
             
-            if (this.CurrentActivity.Duree_exacteEvaluated) {
-                
+            if (this.CurrentActivity.Duree_exacteEvaluated)
+            {
+                count++;
+                var value = random.Next(0, 100);
+                this.CurrentActivity.Duree_exacte = value;
+                score += value;
             }
             
             if (this.CurrentActivity.JitterEvaluated)
             {
-                this.CurrentActivity.Jitter = CalculateJitter(wavPath);
+                count++;
+                var value = CalculateJitter(wavPath);
+                this.CurrentActivity.Jitter = value;
+                score += ScoreProvider.EvaluateJitter(value);
             }
 
-            string imagePath;
-            if (score < 60)
+            if(count == 0)
             {
-                imagePath = "Ressources\\FailedFace.png";
+                return;
             }
-            else if (score < 80)
-            {
-                imagePath = "Ressources\\PassedFace.png";
-            }
-            else
-            {
-                imagePath = "Ressources\\SucceededFace.png";
-            }
+
+            score = score / count;
+
+            string imagePath = ScoreProvider.ImageResult(score);
 
             Task.Factory.StartNew(() =>
             {
