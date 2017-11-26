@@ -21,6 +21,10 @@ namespace MyOrthoOrtho.Controllers
             {
                 Directory.CreateDirectory(localAppData);
             }
+            if (!Directory.Exists(tempAppData))
+            {
+                Directory.CreateDirectory(tempAppData);
+            }
         }
 
         public string WriteIntensityFrequencyScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath)
@@ -36,10 +40,27 @@ namespace MyOrthoOrtho.Controllers
 
             var script = string.Format(intensityFrenquencyScript, wavPath, pitchMin, pitchMax, intensityThreshold, resultPath);
             var path = string.Format(localAppData + "\\{0}.praat", Guid.NewGuid().ToString("N"));
-            var path2 = localAppData + "\\" + exerciceName + DateTime.Now.ToString() + ".praat";
+            //var path = (tempAppData + "\\" + exerciceName + DateTime.Now.ToString("yyyyMMddHHmmss") + ".praat").Replace(' ', '_');
             File.WriteAllText(path, script);
-
             return path;
+        }
+
+        public string WriteIntensityFrequencyScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath, string targetPath)
+        {
+            if (!File.Exists(wavPath))
+            {
+                throw new FileNotFoundException("Wav file not found");
+            }
+            if (!File.Exists(resultPath))
+            {
+                throw new FileNotFoundException("Result file not found");
+            }
+
+            var script = string.Format(intensityFrenquencyScript, wavPath, pitchMin, pitchMax, intensityThreshold, resultPath);
+            //var path = string.Format(localAppData + "\\{0}.praat", Guid.NewGuid().ToString("N"));
+            //var path = (tempAppData + "\\" + "TempScript" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".praat").Replace(' ', '_');
+            File.WriteAllText(targetPath, script);
+            return targetPath;
         }
 
         public string WriteJitterScript(string wavPath, int pitchMin, int pitchMax, string resultPath)
@@ -54,7 +75,7 @@ namespace MyOrthoOrtho.Controllers
             }
 
             var script = string.Format(jitterScript, wavPath, pitchMin, pitchMax, resultPath);
-            var path = string.Format(localAppData + "\\{0}.praat", Guid.NewGuid().ToString("N"));
+            var path = string.Format(tempAppData + "\\{0}.praat", Guid.NewGuid().ToString("N"));
 
             File.WriteAllText(path, script);
 

@@ -20,6 +20,8 @@ namespace MyOrthoOrtho.Views.Controls
         static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
         static string TEMP_PATH = Path.GetTempPath() + "MyOrtho";
 
+        string recordStartDate;
+
         string currentExerciceFilePath;
         string currentExerciceFileName;
 
@@ -35,7 +37,7 @@ namespace MyOrthoOrtho.Views.Controls
         private void BtnCreerExercice_Click(object sender, RoutedEventArgs e)
         {
             //TODO: enregistrer le fichier comme exercice
-
+            
 
         }
 
@@ -71,7 +73,8 @@ namespace MyOrthoOrtho.Views.Controls
             {
                 Directory.CreateDirectory(TEMP_PATH);
             }
-            currentExerciceFileName = "\\TempRecording_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            recordStartDate = DateTime.Now.ToString("yyyyMMddHHmmss");
+            currentExerciceFileName = "\\TempRecording_" + recordStartDate;
             currentExerciceFilePath = (TEMP_PATH + currentExerciceFileName);
             
 
@@ -84,6 +87,7 @@ namespace MyOrthoOrtho.Views.Controls
         private async void BtnTerminer_Click(object sender, RoutedEventArgs e)
         {
             var wavPath = await RecordPlayer.StopRecord();
+            tempExerciceWavPath = wavPath;
             txtFileName.Text = wavPath;
             imgRec.Visibility = Visibility.Hidden;
             UpdateChartsAndActivity();
@@ -97,7 +101,7 @@ namespace MyOrthoOrtho.Views.Controls
             CreationVM activity = new CreationVM
             {
                 Example_wav_path = txtFileName.Text,
-                Date = DateTime.Now.ToString("yyyyMMddHHmmss"),
+                Date = recordStartDate,
                 Name = txtName.Text,
                 PitchMin = Convert.ToInt32(txtPitchMin.Text),
                 PitchMax = Convert.ToInt32(txtPitchMax.Text),

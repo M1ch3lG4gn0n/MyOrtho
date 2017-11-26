@@ -17,9 +17,9 @@ namespace MyOrthoOrtho.Controllers
             scripter = new PraatScripting(activityName);
         }
 
-        public string WriteIntensityFrequencyScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath)
+        public string WriteIntensityFrequencyScript(string wavPath, int pitchMin, int pitchMax, int intensityThreshold, string resultPath, string targetPath)
         {
-            return scripter.WriteIntensityFrequencyScript(wavPath, pitchMin, pitchMax, intensityThreshold, resultPath);
+            return scripter.WriteIntensityFrequencyScript(wavPath, pitchMin, pitchMax, intensityThreshold, resultPath, targetPath);
         }
 
         public void GetResult(string script)

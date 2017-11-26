@@ -147,7 +147,9 @@
     <Content Include="Ressources\exercice1.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Ressources\Rec.png" />
+    <Resource Include="Ressources\Rec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Ressources\resultat1_20171029121314.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -157,7 +159,7 @@
     <Resource Include="Ressources\resultat2_praat_result_20171029121141.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Ressources\resultat2__20171029121141.wav">
+    <Content Include="Ressources\resultat2_20171029121141.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Ressources\resultat3_20171029121258.wav">

@@ -108,5 +108,24 @@ namespace MyOrthoOrtho.Controllers
             return DataExtractor.GetInstance().GetFileValues(resultPath);
         }
 
+        private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath, string targetPath)
+        {
+            //var resultPath = currentExercicePath + ".txt";
+
+            if (!File.Exists(resultPath))
+            {
+                File.Create(resultPath).Close();
+            }
+            else
+            {
+                File.WriteAllText(resultPath, string.Empty);
+            }
+            var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath, targetPath);
+
+            this.connector.GetResult(scriptPath);
+
+            return DataExtractor.GetInstance().GetFileValues(resultPath);
+        }
+
     }
 }

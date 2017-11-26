@@ -11,14 +11,16 @@ namespace MyOrthoOrtho.Controllers
 {
     class CreationExecuter
     {
-        static string TEMP_PATH = Path.GetTempPath() + "MyOrtho";
+        static string TEMP_PATH = Path.GetTempPath() + "MyOrtho\\";
         private WAVPlayerRecorder Player;
         private CreationVM CurrentActivity;
         private PraatScripting scripting;
         private PraatConnector connector;
-        private string lastExerciceWavPath;
-        private string currentExercicePath;
         private string tempRecordingsLocation;
+
+        string TempExWavPath { get; set; }
+        string TempExPraatPath { get; set; }
+        
 
         public CreationExecuter(CreationVM currentActivity)
         {
@@ -26,17 +28,22 @@ namespace MyOrthoOrtho.Controllers
             this.CurrentActivity = currentActivity;
             this.scripting = new PraatScripting(currentActivity.Name);
             this.connector = PraatConnector.GetConnector();
-            this.currentExercicePath = CurrentActivity.Example_wav_path;
-            this.tempRecordingsLocation = TEMP_PATH + "\\" + this.CurrentActivity.Name;
-            if (!Directory.Exists(this.tempRecordingsLocation))
+
+            TempExWavPath = CurrentActivity.Example_wav_path;
+
+            this.tempRecordingsLocation = TEMP_PATH;
+            if (!Directory.Exists(TEMP_PATH))
             {
-                Directory.CreateDirectory(this.tempRecordingsLocation);
+                Directory.CreateDirectory(TEMP_PATH);
             }
+            
+                string currentExerciceFilePath = (TEMP_PATH + "TempPraatResults_" + currentActivity.Date + ".txt");
+                string praatScriptTargetPath = (TEMP_PATH + "TempScript_" + currentActivity.Date + ".praat");
+            //string currentExerciceFilePath2 = (this.tempRecordingsLocation + "_" + CurrentActivity.Date + ".txt");
 
-            //File.Copy(CurrentActivity.Example_wav_path, tempRecordingsLocation + CurrentActivity.Name, true);
-            string currentExerciceFilePath = (this.tempRecordingsLocation + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
-
-            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath));
+            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath, praatScriptTargetPath));
+            
+            
         }
 
         public void StartPlaybackExemple()
@@ -50,7 +57,7 @@ namespace MyOrthoOrtho.Controllers
             Player.StopPlayback();
         }
         
-        private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath)
+        private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath, string targetPath)
         {
             //var resultPath = currentExercicePath + ".txt";
 
@@ -62,7 +69,8 @@ namespace MyOrthoOrtho.Controllers
             {
                 File.WriteAllText(resultPath, string.Empty);
             }
-            var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath);
+
+            var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath, targetPath);
 
             this.connector.GetResult(scriptPath);
 
