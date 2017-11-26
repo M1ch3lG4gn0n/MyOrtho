@@ -18,8 +18,8 @@ namespace MyOrthoOrtho.Controllers
         private PraatConnector connector;
         private string tempRecordingsLocation;
 
-        string TempExWavPath { get; set; }
-        string TempExPraatPath { get; set; }
+        public string TempExWavPath { get; set; }
+        public string TempExPraatResultsPath { get; set; }
         
 
         public CreationExecuter(CreationVM currentActivity)
@@ -73,6 +73,8 @@ namespace MyOrthoOrtho.Controllers
             var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath, targetPath);
 
             this.connector.GetResult(scriptPath);
+
+            TempExPraatResultsPath = resultPath;
 
             return DataExtractor.GetInstance().GetFileValues(resultPath);
         }

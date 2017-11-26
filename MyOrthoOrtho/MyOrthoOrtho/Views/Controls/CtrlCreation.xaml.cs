@@ -26,7 +26,7 @@ namespace MyOrthoOrtho.Views.Controls
         string currentExerciceFileName;
 
         string tempExerciceWavPath;
-        string tempExercicePraatPath;
+        string tempExercicePraatResultsPath;
 
         public CtrlCreation()
         {
@@ -37,7 +37,48 @@ namespace MyOrthoOrtho.Views.Controls
         private void BtnCreerExercice_Click(object sender, RoutedEventArgs e)
         {
             //TODO: enregistrer le fichier comme exercice
-            
+
+            tempExercicePraatResultsPath = ce.TempExPraatResultsPath;
+
+            string xmlFileName = (txtName.Text + "_" + recordStartDate + ".xml").Replace(' ', '_');
+            string wavFileName = (txtName.Text + "_recording_" + recordStartDate + ".wav").Replace(' ', '_');
+            string txtFileName = (txtName.Text + "_praat_" + recordStartDate + ".txt").Replace(' ', '_');
+
+            string targetXMLPath = EXERCICES_FOLDER + "\\" + xmlFileName;
+            string savedWavPath = EXERCICES_FOLDER + "\\" + wavFileName;
+            string savedPraatResultsPath = EXERCICES_FOLDER + "\\" + txtFileName;
+
+            int pitchMin = 0;
+            int pitchMax = 0;
+            int intensityThreshold = 0;
+
+            int.TryParse(txtPitchMax.Text, out pitchMax);
+            int.TryParse(txtPitchMin.Text, out pitchMin);
+            int.TryParse(txtIntensityThreshold.Text, out intensityThreshold);
+
+            File.Copy(tempExerciceWavPath, savedWavPath);
+            File.Copy(tempExercicePraatResultsPath, savedPraatResultsPath);
+
+            Exercice nouvelExercice = new Exercice
+            {
+                Date = recordStartDate,
+                Name = txtName.Text,
+                Exercice_wav_file_name = wavFileName,
+                Exercice_praat_file_name = txtFileName,
+                PitchMax = pitchMax,
+                PitchMin = pitchMin,
+                IntensityThreshold = intensityThreshold
+            };
+
+
+            System.Xml.Serialization.XmlSerializer writer =
+            new System.Xml.Serialization.XmlSerializer(typeof(Exercice));
+
+            var path = targetXMLPath;
+            FileStream file = File.Create(targetXMLPath);
+
+            writer.Serialize(file, nouvelExercice);
+            file.Close();
 
         }
 
@@ -111,6 +152,8 @@ namespace MyOrthoOrtho.Views.Controls
 
             activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
             ce = new CreationExecuter(activity);
+
+            tempExercicePraatResultsPath = ce.TempExPraatResultsPath;
         }
 
         private void SetChartLine(LineSeries frequency, LineSeries pitch, ICollection<DataLineItem> values)
