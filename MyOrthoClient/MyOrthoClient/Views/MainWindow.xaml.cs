@@ -48,7 +48,7 @@ namespace MyOrthoClient
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
-            /*string path = "";
+            string path = "";
             OpenFileDialog file = new OpenFileDialog();
             if (file.ShowDialog() != null)
             {
@@ -56,7 +56,7 @@ namespace MyOrthoClient
             }
 
             FileHelper.FileReader fileReader = new FileHelper.FileReader();
-            fileReader.zipToExerciceList(path);*/
+            fileReader.zipToExerciceList(path, activityListInstance);
 
             
             string currentDir = Environment.CurrentDirectory;
