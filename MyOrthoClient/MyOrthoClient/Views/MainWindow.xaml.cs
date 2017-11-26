@@ -57,41 +57,6 @@ namespace MyOrthoClient
 
             FileHelper.FileReader fileReader = new FileHelper.FileReader();
             fileReader.zipToExerciceList(path, activityListInstance);
-
-            /*
-            string currentDir = Environment.CurrentDirectory;
-            activityListInstance.ClearItems();
-
-            //TODO: Activities dummies import 
-            ActivityVM activityEx1 = new ActivityVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex1.wav",
-                Name = "Exercice 1",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40
-            };
-            ActivityVM activityEx2 = new ActivityVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex2.wav",
-                Name = "Exercice 2",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40
-            };
-            ActivityVM activityEx3 = new ActivityVM
-            {
-                Example_wav_path = currentDir + @"\Ressources\ex3.wav",
-                Name = "Exercice 3",
-                PitchMin = 70,
-                PitchMax = 800,
-                IntensityThreshold = 40
-            };
-            //
-
-            activityListInstance.Add(activityEx1);
-            activityListInstance.Add(activityEx2);
-            activityListInstance.Add(activityEx3);*/
         }
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
@@ -128,7 +93,13 @@ namespace MyOrthoClient
             {
                 //Update Text on the UI thread 
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Input,
-               new Action(() => { JitterTxt.Text = SelectedItemJitter; }));
+               new Action(() =>
+               {
+                   JitterTxt.Text = SelectedItemJitter;
+                   var currentActivityIndex = ListActivities.SelectedIndex;
+                   var activity = activityListInstance.GetActivity(currentActivityIndex);
+                   this.Results.Content = activity.Courbe_f0_exacteEvaluated? new Views.CurveResult(activity) : (System.Windows.Controls.UserControl)new Views.FlatResult(activity);
+               }));
             });
 
             BtnDemarrer.IsEnabled = true;
