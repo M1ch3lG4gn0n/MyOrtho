@@ -9,31 +9,32 @@ using System.Threading.Tasks;
 
 namespace MyOrthoOrtho.Controllers
 {
-    class PreparationExecuter
+    class CreationExecuter
     {
+        static string TEMP_PATH = Path.GetTempPath() + "MyOrtho";
         private WAVPlayerRecorder Player;
-        private PreparationVM CurrentActivity;
+        private CreationVM CurrentActivity;
         private PraatScripting scripting;
         private PraatConnector connector;
         private string lastExerciceWavPath;
-        private string exerciceFolderPath;
         private string currentExercicePath;
+        private string tempRecordingsLocation;
 
-        public PreparationExecuter(PreparationVM currentActivity)
+        public CreationExecuter(CreationVM currentActivity)
         {
             this.Player = new WAVPlayerRecorder();
             this.CurrentActivity = currentActivity;
             this.scripting = new PraatScripting(currentActivity.Name);
             this.connector = PraatConnector.GetConnector();
             this.currentExercicePath = CurrentActivity.Example_wav_path;
-            this.exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + this.CurrentActivity.Name + "\\";
-            if (!Directory.Exists(this.exerciceFolderPath))
+            this.tempRecordingsLocation = TEMP_PATH + "\\" + this.CurrentActivity.Name;
+            if (!Directory.Exists(this.tempRecordingsLocation))
             {
-                Directory.CreateDirectory(this.exerciceFolderPath);
+                Directory.CreateDirectory(this.tempRecordingsLocation);
             }
 
-            File.Copy(CurrentActivity.Example_wav_path, exerciceFolderPath + CurrentActivity.Name, true);
-            string currentExerciceFilePath = (this.exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+            //File.Copy(CurrentActivity.Example_wav_path, tempRecordingsLocation + CurrentActivity.Name, true);
+            string currentExerciceFilePath = (this.tempRecordingsLocation + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
 
             Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath));
         }
@@ -43,50 +44,12 @@ namespace MyOrthoOrtho.Controllers
             Player.StopPlayback();
             Player.StartPlayback(this.CurrentActivity.Example_wav_path);
         }
-
-        public void StartPlaybackResult()
-        {
-            Player.StopPlayback();
-            Player.StartPlayback(this.CurrentActivity.Result_wav_path);
-        }
-
+        
         public void StopPlayback()
         {
             Player.StopPlayback();
         }
-
-        public void StartRecord()
-        {
-            string currentExerciceFilePath = (this.exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
-            Player.StartRecord(currentExerciceFilePath);
-        }
-
-        public async void StopRecord()
-        {
-            string filename = (this.exerciceFolderPath + "resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
-            if (!Player.IsRecording)
-            {
-                return;
-            }
-           
-            var wavPath = lastExerciceWavPath = await Player.StopRecord();
-            CurrentActivity.Example_wav_path = wavPath;
-
-        }
-
-        public void StartLastExercicePlayblack()
-        {
-            if (string.IsNullOrEmpty(this.lastExerciceWavPath))
-            {
-                Player.StartPlayback(this.lastExerciceWavPath);
-            }
-        }
-
-        private async void AnalyzeSample(IEnumerable<DataLineItem> values)
-        {
-
-        }
-
+        
         private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath)
         {
             //var resultPath = currentExercicePath + ".txt";

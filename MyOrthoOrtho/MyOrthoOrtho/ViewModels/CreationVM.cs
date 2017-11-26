@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace MyOrthoOrtho.ViewModels
 {
-    class PreparationVM : VMBase
+    class CreationVM : VMBase
     {
         public ObservableCollection<Exercice> availableExercices;
         public ObservableCollection<Exercice> selectedExercices;
@@ -26,6 +26,7 @@ namespace MyOrthoOrtho.ViewModels
         public string Name { get; set; }
         public string Example_wav_path { get; set; }
         public string Result_wav_path { get; set; }
+        public string Date { get; set; }
         public int PitchMin { get; set; }
         public int PitchMax { get; set; }
         public int IntensityThreshold { get; set; }
@@ -81,7 +82,7 @@ namespace MyOrthoOrtho.ViewModels
             selectedExercices.Add(item);
         }
 
-        public PreparationVM() {
+        public CreationVM() {
             availableExercices = new ObservableCollection<Exercice>();
             selectedExercices = new ObservableCollection<Exercice>();
         }

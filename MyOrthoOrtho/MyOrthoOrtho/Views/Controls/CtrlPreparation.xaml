@@ -10,7 +10,7 @@
              d:DesignHeight="768" d:DesignWidth="1366">
     <Grid Height="738" Width="1336" Margin="0,0,-30,-5">
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="607" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="630"/>
-        <ListBox x:Name="ListAvailable" HorizontalAlignment="Left" Height="302" Margin="43,54,0,0" VerticalAlignment="Top" Width="191"  ItemsSource="{Binding activityInstance.availableExercices}" SelectionChanged="ListAvailable_OnSelectionChanged">
+        <ListBox x:Name="ListAvailable" HorizontalAlignment="Left" Height="273" Margin="36,83,0,0" VerticalAlignment="Top" Width="190"  ItemsSource="{Binding availableExercices}" SelectionChanged="ListAvailable_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -19,7 +19,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="ListSelected" HorizontalAlignment="Left" Height="302" Margin="311,54,0,0" VerticalAlignment="Top" Width="190"  ItemsSource="{Binding activityInstance.selectedExercices}" SelectionChanged="ListSelected_OnSelectionChanged">
+        <ListBox x:Name="ListSelected" HorizontalAlignment="Left" Height="302" Margin="311,54,0,0" VerticalAlignment="Top" Width="190"  ItemsSource="{Binding selectedExercices}" SelectionChanged="ListSelected_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -120,5 +120,6 @@
         <Button x:Name="btnAdd" Content="&gt;" HorizontalAlignment="Left" Margin="254,136,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55"/>
         <Button x:Name="btnRemove" Content="&lt;" HorizontalAlignment="Left" Margin="254,177,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55"/>
         <Button x:Name="btnExporter" Content="Exporter la sélection" HorizontalAlignment="Left" Margin="506,327,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
+        <Button x:Name="btnRefresh" Content="Rafraîchir la sélection" HorizontalAlignment="Left" Margin="36,54,0,0" VerticalAlignment="Top" Width="190" Height="29" Click="btnRefresh_Click"/>
     </Grid>
 </UserControl>

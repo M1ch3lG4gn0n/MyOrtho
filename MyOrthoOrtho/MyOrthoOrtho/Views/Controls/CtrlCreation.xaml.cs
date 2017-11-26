@@ -15,40 +15,39 @@ namespace MyOrthoOrtho.Views.Controls
     /// </summary>
     public partial class CtrlCreation : UserControl
     {
-        private PreparationExecuter pe;
+        private CreationExecuter ce;
         WAVPlayerRecorder RecordPlayer;
+        static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
+        static string TEMP_PATH = Path.GetTempPath() + "MyOrtho";
+
+        string currentExerciceFilePath;
+        string currentExerciceFileName;
+
+        string tempExerciceWavPath;
+        string tempExercicePraatPath;
 
         public CtrlCreation()
         {
             InitializeComponent();
+           
         }
 
         private void BtnCreerExercice_Click(object sender, RoutedEventArgs e)
         {
-            PreparationVM activity = new PreparationVM
-            {
-                Example_wav_path = txtFileName.Text,
-                Name = txtName.Text,
-                PitchMin = Convert.ToInt32(txtPitchMin.Text),
-                PitchMax = Convert.ToInt32(txtPitchMax.Text),
-                IntensityThreshold = Convert.ToInt32(txtIntensityThreshold.Text),
-                Duree_expected = Convert.ToInt32(txtDuration.Text)
-            };
+            //TODO: enregistrer le fichier comme exercice
 
-            activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
-            activity.SetResultValue(values => SetChartLine((LineSeries)PitchChart.Series[1], (LineSeries)IntensityChart.Series[1], values));
-            pe = new PreparationExecuter(activity);
+
         }
 
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
         {
-            pe.StartPlaybackExemple();
+            ce.StartPlaybackExemple();
 
         }
         private void BtnArreter_Click(object sender, RoutedEventArgs e)
         {
-            pe.StopPlayback();
+            ce.StopPlayback();
         }
 
         private void btnImporterExercice_Click(object sender, RoutedEventArgs e)
@@ -68,25 +67,46 @@ namespace MyOrthoOrtho.Views.Controls
         private void BtnDemarrer_Click(object sender, RoutedEventArgs e)
         {
             RecordPlayer = new WAVPlayerRecorder();
-            var exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\enregistrement\\";
-            if (!Directory.Exists(exerciceFolderPath))
+            if (!Directory.Exists(TEMP_PATH))
             {
-                Directory.CreateDirectory(exerciceFolderPath);
+                Directory.CreateDirectory(TEMP_PATH);
             }
-            string currentExerciceFilePath = (exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
+            currentExerciceFileName = "\\TempRecording_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            currentExerciceFilePath = (TEMP_PATH + currentExerciceFileName);
+            
+
             RecordPlayer.StartRecord(currentExerciceFilePath);
+            imgRec.Visibility = Visibility.Visible;
+
+            BtnDemarrer.IsEnabled = false;
+            BtnTerminer.IsEnabled = true;
         }
         private async void BtnTerminer_Click(object sender, RoutedEventArgs e)
         {
-            var exerciceFolderPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\enregistrement\\";
-            string filename = (exerciceFolderPath + "resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
-            if (!RecordPlayer.IsRecording)
-            {
-                return;
-            }
-
             var wavPath = await RecordPlayer.StopRecord();
             txtFileName.Text = wavPath;
+            imgRec.Visibility = Visibility.Hidden;
+            UpdateChartsAndActivity();
+
+            BtnTerminer.IsEnabled = false;
+            BtnDemarrer.IsEnabled = true;
+        }
+
+        private void UpdateChartsAndActivity()
+        {
+            CreationVM activity = new CreationVM
+            {
+                Example_wav_path = txtFileName.Text,
+                Date = DateTime.Now.ToString("yyyyMMddHHmmss"),
+                Name = txtName.Text,
+                PitchMin = Convert.ToInt32(txtPitchMin.Text),
+                PitchMax = Convert.ToInt32(txtPitchMax.Text),
+                IntensityThreshold = Convert.ToInt32(txtIntensityThreshold.Text),
+                Duree_expected = Convert.ToInt32(txtDuration.Text)
+            };
+
+            activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
+            ce = new CreationExecuter(activity);
         }
 
         private void SetChartLine(LineSeries frequency, LineSeries pitch, ICollection<DataLineItem> values)
@@ -105,14 +125,8 @@ namespace MyOrthoOrtho.Views.Controls
                 pitch.ItemsSource = pitchLineArray;
             });
         }
-        
 
-        private void ListAvailable_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ListSelected_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListActivities_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
