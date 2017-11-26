@@ -32,10 +32,10 @@ namespace MyOrthoOrtho.Controllers
                 Directory.CreateDirectory(this.exerciceFolderPath);
             }
 
-            File.Copy(CurrentActivity.Example_wav_path, exerciceFolderPath + CurrentActivity.Name, true);
+            /*File.Copy(CurrentActivity.Example_wav_path, exerciceFolderPath + CurrentActivity.Name, true);
             string currentExerciceFilePath = (this.exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
 
-            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath));
+            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath));*/
         }
 
         public void StartPlaybackExemple()
@@ -87,7 +87,7 @@ namespace MyOrthoOrtho.Controllers
 
         }
 
-        private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath)
+        private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath, string targetPath)
         {
             //var resultPath = currentExercicePath + ".txt";
 
@@ -99,7 +99,7 @@ namespace MyOrthoOrtho.Controllers
             {
                 File.WriteAllText(resultPath, string.Empty);
             }
-            var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath);
+            var scriptPath = this.scripting.WriteIntensityFrequencyScript(wavPath, this.CurrentActivity.PitchMin, this.CurrentActivity.PitchMax, this.CurrentActivity.IntensityThreshold, resultPath, targetPath);
 
             this.connector.GetResult(scriptPath);
 
