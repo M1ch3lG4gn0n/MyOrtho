@@ -58,7 +58,7 @@ namespace MyOrthoClient
             FileHelper.FileReader fileReader = new FileHelper.FileReader();
             fileReader.zipToExerciceList(path, activityListInstance);
 
-            
+            /*
             string currentDir = Environment.CurrentDirectory;
             activityListInstance.ClearItems();
 
@@ -91,7 +91,7 @@ namespace MyOrthoClient
 
             activityListInstance.Add(activityEx1);
             activityListInstance.Add(activityEx2);
-            activityListInstance.Add(activityEx3);
+            activityListInstance.Add(activityEx3);*/
         }
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
