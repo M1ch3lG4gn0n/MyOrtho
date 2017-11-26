@@ -35,8 +35,8 @@ namespace MyOrthoOrtho.Views.Controls
         public CtrlPreparation()
         {
             InitializeComponent();
-            ImportExistingExercices();
             DataContext = activityInstance;
+            ImportExistingExercices();
         }
         
         private void ImportExistingExercices()
