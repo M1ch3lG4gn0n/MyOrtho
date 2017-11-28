@@ -69,6 +69,7 @@
     <Compile Include="Models\ExerciceResultat.cs" />
     <Compile Include="Models\ListeResultatsModel.cs" />
     <Compile Include="ViewModels\ApplicationVM.cs" />
+    <Compile Include="ViewModels\ListPreparationVM.cs" />
     <Compile Include="ViewModels\ListSuiviVM.cs" />
     <Compile Include="ViewModels\CreationVM.cs" />
     <Compile Include="ViewModels\SuiviVM.cs" />

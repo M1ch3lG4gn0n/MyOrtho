@@ -11,9 +11,6 @@ namespace MyOrthoOrtho.ViewModels
 {
     class PreparationVM : VMBase
     {
-        public ObservableCollection<Exercice> availableExercices;
-        public ObservableCollection<Exercice> selectedExercices;
-
         private ICollection<DataLineItem> _exercice;
         private Action<ICollection<DataLineItem>> _setExercise;
         private ICollection<DataLineItem> _results;
@@ -66,26 +63,7 @@ namespace MyOrthoOrtho.ViewModels
                 this._setResult(value);
             }
         }
-
-        public void ClearAvailable()
-        {
-            availableExercices.Clear();
-        }
-
-        public void AddAvailable(Exercice item)
-        {
-            availableExercices.Add(item);
-        }
-        public void AddSelected(Exercice item)
-        {
-            selectedExercices.Add(item);
-        }
-
-        public PreparationVM() {
-            availableExercices = new ObservableCollection<Exercice>();
-            selectedExercices = new ObservableCollection<Exercice>();
-        }
-
+        
         public override string ToString()
         {
             return this.Name;

@@ -28,21 +28,21 @@ namespace MyOrthoOrtho.Views.Controls
     public partial class CtrlPreparation : UserControl
     {
         private PreparationExecuter pe;
-        PreparationVM activityInstance = new PreparationVM();
+        ListPreparationVM activityListInstance = new ListPreparationVM();
         WAVPlayerRecorder RecordPlayer;
         static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
 
         public CtrlPreparation()
         {
             InitializeComponent();
-            DataContext = activityInstance;
+            DataContext = activityListInstance;
             ImportExistingExercices();
         }
         
         private void ImportExistingExercices()
         {
-            
-            activityInstance.ClearAvailable();
+
+            activityListInstance.ClearItems();
             string data;
             if (Directory.Exists(EXERCICES_FOLDER))
             {
@@ -67,7 +67,13 @@ namespace MyOrthoOrtho.Views.Controls
                             exercice = (Exercice)serializer.Deserialize(reader);
                         }
 
-                        activityInstance.AddAvailable(exercice);
+                        PreparationVM prep = new PreparationVM
+                        {
+                            Name = exercice.Name,
+                            Example_wav_path = exercice.Exercice_wav_file_name,
+
+                        };
+                        activityListInstance.Add(prep);
 
                     }   
                 }
