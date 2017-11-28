@@ -119,7 +119,7 @@
         <Label Content="Sélection d'exercices" HorizontalAlignment="Left" Margin="273,10,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnAdd" Content="&gt;" HorizontalAlignment="Left" Margin="254,136,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55" Click="btnAdd_Click"/>
         <Button x:Name="btnRemove" Content="&lt;" HorizontalAlignment="Left" Margin="254,177,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55" Click="btnRemove_Click"/>
-        <Button x:Name="btnExporter" Content="Exporter la sélection" HorizontalAlignment="Left" Margin="506,327,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
+        <Button x:Name="btnExporter" Content="Exporter la sélection" HorizontalAlignment="Left" Margin="506,327,0,0" VerticalAlignment="Top" Width="120" Height="29" Click="btnExporter_Click"/>
         <Button x:Name="btnRefresh" Content="Rafraîchir la sélection" HorizontalAlignment="Left" Margin="36,54,0,0" VerticalAlignment="Top" Width="190" Height="29" Click="btnRefresh_Click"/>
     </Grid>
 </UserControl>
