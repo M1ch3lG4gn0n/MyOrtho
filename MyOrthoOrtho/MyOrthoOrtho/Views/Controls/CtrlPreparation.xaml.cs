@@ -29,6 +29,7 @@ namespace MyOrthoOrtho.Views.Controls
     {
         private PreparationExecuter pe;
         ListPreparationVM activityListInstance = new ListPreparationVM();
+        
         WAVPlayerRecorder RecordPlayer;
         static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
 
@@ -67,11 +68,12 @@ namespace MyOrthoOrtho.Views.Controls
                             exercice = (Exercice)serializer.Deserialize(reader);
                         }
 
+                        //TODO: ajouter le path du fichier praat
+
                         PreparationVM prep = new PreparationVM
                         {
                             Name = exercice.Name,
                             Example_wav_path = exercice.Exercice_wav_file_name,
-
                         };
                         activityListInstance.Add(prep);
 
@@ -130,17 +132,34 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void ListAvailable_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            //TODO: lire le fichier Praat et afficher/remplacer les graphiques
         }
 
         private void ListSelected_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            //TODO: lire le fichier Praat et afficher/remplacer les graphiques
         }
         
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             ImportExistingExercices();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            activityListInstance.AddSelection(ListAvailable.SelectedItem);
+            activityListInstance.Remove(ListAvailable.SelectedItem);
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            activityListInstance.Add(ListSelected.SelectedItem);
+            activityListInstance.RemoveSelection(ListSelected.SelectedItem);
+        }
+
+        private void btnExporter_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: exporter les exercices sélectionnées en incluant leur fichier xml, wav et txt, avec le xml les énumérant et le toute dans un zip.
         }
     }
 }

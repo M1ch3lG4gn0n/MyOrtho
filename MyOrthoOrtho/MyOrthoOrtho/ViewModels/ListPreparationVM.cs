@@ -17,14 +17,24 @@ namespace MyOrthoOrtho.ViewModels
             SelectedActivityList = new ObservableCollection<PreparationVM>();
         }
 
-        public void Add(PreparationVM activity)
+        public void Add(object activity)
         {
-            ActivityList.Add(activity);
+            ActivityList.Add((PreparationVM)activity);
         }
 
-        public void AddSelection(PreparationVM selectedActivity)
+        public void Remove(object activity)
         {
-            SelectedActivityList.Add(selectedActivity);
+            ActivityList.Remove((PreparationVM)activity);
+        }
+
+        public void AddSelection(object selectedActivity)
+        {
+            SelectedActivityList.Add((PreparationVM)selectedActivity);
+        }
+
+        public void RemoveSelection(object selectedActivity)
+        {
+            SelectedActivityList.Remove((PreparationVM)selectedActivity);
         }
 
         public PreparationVM GetActivity(int index)
