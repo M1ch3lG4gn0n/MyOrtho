@@ -48,7 +48,9 @@ namespace MyOrthoOrtho.Views.Controls
             string targetXMLPath = EXERCICES_FOLDER + "\\" + xmlFileName;
             string savedWavPath = EXERCICES_FOLDER + "\\" + wavFileName;
             string savedPraatResultsPath = EXERCICES_FOLDER + "\\" + txtFileName;
-            
+
+            string type = (bool)radTypeLigne.IsChecked ? "Droite" : "Courbe";
+
             int.TryParse(txtPitchMax.Text, out int pitchMax);
             int.TryParse(txtPitchMin.Text, out int pitchMin);
             int.TryParse(txtIntensityThreshold.Text, out int intensityThreshold);
@@ -62,12 +64,14 @@ namespace MyOrthoOrtho.Views.Controls
             File.Copy(tempExerciceWavPath, savedWavPath);
             File.Copy(tempExercicePraatResultsPath, savedPraatResultsPath);
 
+            
 
             XDocument doc =
                 new XDocument(
-                    new XElement("Exercice",
+                    new XElement("MYO_Exercice",
                         new XElement("Date", recordStartDate),
                         new XElement("Name", txtName.Text),
+                        new XElement("Type", type),
                         new XElement("Exercice_wav_file_name", wavFileName),
                         new XElement("Exercice_praat_file_name", txtFileName),
                         new XElement("Pitch_min", pitchMin),
@@ -196,6 +200,15 @@ namespace MyOrthoOrtho.Views.Controls
             {
                 string filename = fileDialog.FileName;
                 txtFileName.Text = filename;
+                recordStartDate = File.GetCreationTime(filename).ToString("yyyyMMddHHmmss");
+
+                string[] directories = filename.Split('\\');
+                currentExerciceFileName = directories[directories.Length - 1];
+                currentExerciceFilePath = filename;
+
+                UpdateChartsAndActivity();
+
+                BtnCreerExercice.IsEnabled = true;
             }
         }
 
@@ -210,7 +223,6 @@ namespace MyOrthoOrtho.Views.Controls
             currentExerciceFileName = "\\TempRecording_" + recordStartDate;
             currentExerciceFilePath = (TEMP_PATH + currentExerciceFileName);
             
-
             RecordPlayer.StartRecord(currentExerciceFilePath);
             imgRec.Visibility = Visibility.Visible;
 
@@ -227,6 +239,8 @@ namespace MyOrthoOrtho.Views.Controls
 
             BtnTerminer.IsEnabled = false;
             BtnDemarrer.IsEnabled = true;
+
+            BtnCreerExercice.IsEnabled = true;
         }
 
         private void UpdateChartsAndActivity()

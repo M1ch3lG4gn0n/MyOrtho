@@ -44,57 +44,7 @@ namespace MyOrthoOrtho.Views.Controls
             DataContext = activityListInstance;
             ImportExistingExercices();
         }
-        
-        private void ImportExistingExercicesSerialized()
-        {
-
-            activityListInstance.ClearItems();
-            string data;
-            if (Directory.Exists(EXERCICES_FOLDER))
-            {
-                foreach (string filePath in Directory.GetFiles(EXERCICES_FOLDER))
-                {
-                    if (System.IO.Path.GetExtension(filePath) == ".xml")
-                    {
-                        var streamReader = new StreamReader(filePath, Encoding.UTF8);
-                        //Trim and clean the read data to ease parsing
-                        data = streamReader.ReadToEnd();
-                        data.Trim();
-                        data = data.Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty);
-
-                        //create instance of our model
-                        Exercice exercice = new Exercice();
-
-                        //Setup our xml serializer and read xml data into our class
-                        var serializer = new XmlSerializer(typeof(Exercice));
-                        var stream = new StringReader(data);
-                        var reader = XmlReader.Create(stream);
-                        {
-                            exercice = (Exercice)serializer.Deserialize(reader);
-                        }
-
-                        //TODO: ajouter le path du fichier praat
-                        ICollection<DataLineItem> praatResultValues = DataExtractor.GetInstance().GetFileValues(EXERCICES_FOLDER + "\\" + exercice.Exercice_praat_file_name);
-                        ExerciceVM prep = new ExerciceVM
-                        {
-                            Name = exercice.Name,
-                            Example_wav_path = exercice.Exercice_wav_file_name,
-                            Exercice = praatResultValues,
-                            
-                        };
-                        activityListInstance.Add(prep);
-
-                    }   
-                }
-            }
-            else
-            {
-                //TODO: message indiquant qu'aucun exercice n'existe dans l'application
-            }
-            
-            
-        }
-
+       
         private void ImportExistingExercices()
         {
             ListAvailable.SelectedIndex = -1;
@@ -157,17 +107,49 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void ListAvailable_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ListAvailable.SelectedIndex == -1)
+            {
+                btnAdd.IsEnabled = false;
+                return;
+            }
+                
             var currentActivityIndex = ListAvailable.SelectedIndex;
             var activity = activityListInstance.GetActivity(currentActivityIndex);
+
+            btnAdd.IsEnabled = true;
+
+            ListSelected.SelectedIndex = -1;
+
+            lblNom.Content = activity.Name;
+            lblDate.Content = ActivityHelper.FormatDateString(activity.Date);
+            lblDuree.Content = activity.Duree_exacte;
+            lblType.Content = activity.Type;
+
             activity.SetExerciseValue(values => SetChartLine((LineSeries)IntensityChart.Series[0], (LineSeries)PitchChart.Series[0], values));
             updateDataGrid(activity);
+
             
         }
 
         private void ListSelected_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ListSelected.SelectedIndex == -1)
+            {
+                btnRemove.IsEnabled = false;
+                return;
+            }
             var currentActivityIndex = ListSelected.SelectedIndex;
             var activity = activityListInstance.GetSelectedActivity(currentActivityIndex);
+
+            btnRemove.IsEnabled = true;
+
+            ListAvailable.SelectedIndex = -1;
+
+            lblNom.Content = activity.Name;
+            lblDate.Content = ActivityHelper.FormatDateString(activity.Date);
+            lblDuree.Content = activity.Duree_exacte;
+            lblType.Content = activity.Type;
+
             activity.SetExerciseValue(values => SetChartLine((LineSeries)IntensityChart.Series[0], (LineSeries)PitchChart.Series[0], values));
             updateDataGrid(activity);
         }
@@ -254,14 +236,30 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            activityListInstance.AddSelection(ListAvailable.SelectedItem);
-            activityListInstance.Remove(ListAvailable.SelectedItem);
+            if(ListAvailable.SelectedIndex != -1)
+            {
+                activityListInstance.AddSelection(ListAvailable.SelectedItem);
+                activityListInstance.Remove(ListAvailable.SelectedItem);
+                ListSelected.SelectedIndex = ListSelected.Items.Count - 1;
+                btnExporter.IsEnabled = true;
+                
+            }
+            
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            activityListInstance.Add(ListSelected.SelectedItem);
-            activityListInstance.RemoveSelection(ListSelected.SelectedItem);
+            if (ListSelected.SelectedIndex != -1)
+            {
+                activityListInstance.Add(ListSelected.SelectedItem);
+                activityListInstance.RemoveSelection(ListSelected.SelectedItem);
+                ListAvailable.SelectedIndex = ListAvailable.Items.Count - 1;
+                if (activityListInstance.SelectedActivityList.Count() == 0)
+                {
+                    btnExporter.IsEnabled = false;
+                }
+
+            }
         }
 
         private void btnExporter_Click(object sender, RoutedEventArgs e)
@@ -289,6 +287,7 @@ namespace MyOrthoOrtho.Views.Controls
                         new XElement("Date", DateTime.Now.ToString("yyyyMMddHHmmss")),
                             activityListInstance.SelectedActivityList.Select(x => new XElement("Activity",
                                 new XElement("Name", x.Name),
+                                new XElement("Type", x.Type),
                                 new XElement("Exercice_wav_file_name", x.Example_wav_path),
                                 new XElement("Exercice_praat_file_name", x.Example_praat_path),
                                 new XElement("Pitch_min", x.PitchMin),

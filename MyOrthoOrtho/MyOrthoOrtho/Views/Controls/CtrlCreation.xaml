@@ -128,7 +128,7 @@
             </my:LineSeries>
         </my:Chart>
         <Button x:Name="BtnCreerExercice" Content="Sauvegarder l'exercice" HorizontalAlignment="left" Margin="1053,325,0,0" VerticalAlignment="Top" Width="180" Height="40"
-                Click="BtnCreerExercice_Click"/>
+                Click="BtnCreerExercice_Click" IsEnabled="False"/>
         <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="25,240,0,0" VerticalAlignment="Top" Width="150" Height="21"
                 Click="BtnLire_Click"/>
         <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="193,240,0,0" VerticalAlignment="Top" Width="150" Height="21"
@@ -245,10 +245,10 @@
         <TextBox x:Name="txtDurationBadMin"  HorizontalAlignment="Left" Height="22" Margin="894,314,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
         <Label Content="à" HorizontalAlignment="Left" Margin="874,314,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnDeleteExercice" Content="Supprimer" HorizontalAlignment="left" Margin="1137,271,0,0" VerticalAlignment="Top" Width="100" Height="25"
-            Click="BtnDeleteExercice_Click"/>
+            Click="BtnDeleteExercice_Click" IsEnabled="False"/>
         <Button x:Name="btnModifExercice" Content="Modifier" HorizontalAlignment="left" Margin="1137,238,0,0" VerticalAlignment="Top" Width="100" Height="25"
-            Click="BtnModifExercice_Click"/>
-        <RadioButton x:Name="radTypeLigne" Content="Ligne" HorizontalAlignment="Left" Margin="271,70,0,0" VerticalAlignment="Top" GroupName="typeExercice" IsChecked="True" Checked="RadTypeLigne_Checked"/>
+            Click="BtnModifExercice_Click" IsEnabled="False"/>
+        <RadioButton x:Name="radTypeLigne" Content="Droite" HorizontalAlignment="Left" Margin="271,70,0,0" VerticalAlignment="Top" GroupName="typeExercice" IsChecked="True" Checked="RadTypeLigne_Checked"/>
         <RadioButton x:Name="radTypeCourbe" Content="Courbe" HorizontalAlignment="Left" Margin="271,90,0,0" VerticalAlignment="Top" GroupName="typeExercice" Checked="RadTypeCourbe_Checked"/>
     </Grid>
 </UserControl>

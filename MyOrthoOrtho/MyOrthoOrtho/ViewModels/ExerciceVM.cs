@@ -22,6 +22,7 @@ namespace MyOrthoOrtho.ViewModels
         public string Result_wav_path { get; set; }
         public string Result_praat_path { get; set; }
         public string Date { get; set; }
+        public string Type { get; set; }
 
         public int PitchMin { get; set; }
         public int PitchMax { get; set; }
