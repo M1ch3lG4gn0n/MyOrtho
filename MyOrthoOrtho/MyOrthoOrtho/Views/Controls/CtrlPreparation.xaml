@@ -8,9 +8,16 @@
              xmlns:my="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              d:DesignHeight="768" d:DesignWidth="1366">
-    <Grid Height="738" Width="1336" Margin="0,0,-30,-5">
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="607" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="630"/>
-        <ListBox x:Name="ListAvailable" HorizontalAlignment="Left" Height="273" Margin="36,83,0,0" VerticalAlignment="Top" Width="190"  ItemsSource="{Binding ActivityList}" SelectionChanged="ListAvailable_OnSelectionChanged">
+    <Grid Height="738" Background="White">
+        <GroupBox Header="Détails de l'exercice sélectionné" Height="367" Margin="542,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="769">
+            <GroupBox Header="Données évaluées" HorizontalAlignment="Left" Height="210" Margin="10,123,0,0" VerticalAlignment="Top" Width="736">
+                <DataGrid x:Name="evaluatedDataGrid" HorizontalAlignment="Left" Height="172" Margin="10,10,0,0" VerticalAlignment="Top" Width="707" ItemsSource="{Binding ListOfEvaluatedParameters}" SelectionChanged="DataGrid_SelectionChanged">
+                    
+                </DataGrid>
+            </GroupBox>
+        </GroupBox>
+        <GroupBox Header="Sélection des exercices" HorizontalAlignment="Left" Height="367" Margin="27,10,0,0" VerticalAlignment="Top" Width="500"/>
+        <ListBox x:Name="ListAvailable" HorizontalAlignment="Left" Height="273" Margin="53,83,0,0" VerticalAlignment="Top" Width="190"  ItemsSource="{Binding ActivityList}" SelectionChanged="ListAvailable_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -19,7 +26,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="ListSelected" HorizontalAlignment="Left" Height="302" Margin="311,54,0,0" VerticalAlignment="Top" Width="190"  ItemsSource="{Binding SelectedActivityList}" SelectionChanged="ListSelected_OnSelectionChanged">
+        <ListBox x:Name="ListSelected" HorizontalAlignment="Left" Height="273" Margin="305,54,0,0" VerticalAlignment="Top" Width="190"  ItemsSource="{Binding SelectedActivityList}" SelectionChanged="ListSelected_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -31,9 +38,9 @@
         <my:Chart x:Name="PitchChart"
                                        Title="Pitch" 
                                        VerticalAlignment="Top" 
-                                       Margin="662,10,44,0" 
+                                       Margin="681,390,0,0" 
                                        Height="300"
-                                       Width="630"
+                                       Width="630" HorizontalAlignment="Left"
                   >
             <my:Chart.TitleStyle>
                 <Style TargetType="{x:Type datavis:Title}">
@@ -43,6 +50,11 @@
                     <Setter Property="Margin" Value="5, 5, 5, 5" />
                 </Style>
             </my:Chart.TitleStyle>
+            <my:Chart.LegendStyle>
+                <Style TargetType="{x:Type datavis:Legend}">
+                    <Setter Property="Width" Value="0" />
+                </Style>
+            </my:Chart.LegendStyle>
             <my:LineSeries x:Name="PitchAttendue"
                                                 Title="Attendue"  
                                                 DependentValuePath="Value" 
@@ -76,9 +88,9 @@
         <my:Chart x:Name="IntensityChart"
                                        Title="Intensité" 
                                        VerticalAlignment="Top" 
-                                       Margin="662,317,44,0" 
+                                       Margin="25,390,0,0" 
                                        Height="300"
-                                       Width="630">
+                                       Width="630" HorizontalAlignment="Left">
             <my:Chart.TitleStyle>
                 <Style TargetType="{x:Type datavis:Title}">
                     <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -87,6 +99,11 @@
                     <Setter Property="Margin" Value="5, 5, 5, 5" />
                 </Style>
             </my:Chart.TitleStyle>
+            <my:Chart.LegendStyle>
+                <Style TargetType="{x:Type datavis:Legend}">
+                    <Setter Property="Width" Value="0" />
+                </Style>
+            </my:Chart.LegendStyle>
             <my:LineSeries x:Name="IntensityAttendue"
                                                 Title="Attendue"  
                                                 DependentValuePath="Value" 
@@ -116,10 +133,17 @@
                 </my:LineSeries.DataPointStyle>
             </my:LineSeries>
         </my:Chart>
-        <Label Content="Sélection d'exercices" HorizontalAlignment="Left" Margin="273,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnAdd" Content="&gt;" HorizontalAlignment="Left" Margin="254,136,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55" Click="btnAdd_Click"/>
-        <Button x:Name="btnRemove" Content="&lt;" HorizontalAlignment="Left" Margin="254,177,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55" Click="btnRemove_Click"/>
-        <Button x:Name="btnExporter" Content="Exporter la sélection" HorizontalAlignment="Left" Margin="506,327,0,0" VerticalAlignment="Top" Width="120" Height="29" Click="btnExporter_Click"/>
-        <Button x:Name="btnRefresh" Content="Rafraîchir la sélection" HorizontalAlignment="Left" Margin="36,54,0,0" VerticalAlignment="Top" Width="190" Height="29" Click="btnRefresh_Click"/>
+        <Button x:Name="btnAdd" Content="&gt;" HorizontalAlignment="Left" Margin="265,171,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55" Click="btnAdd_Click"/>
+        <Button x:Name="btnRemove" Content="&lt;" HorizontalAlignment="Left" Margin="265,209,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="1.69,0.55" Click="btnRemove_Click"/>
+        <Button x:Name="btnExporter" Content="Exporter la sélection" HorizontalAlignment="Left" Margin="305,327,0,0" VerticalAlignment="Top" Width="190" Height="29" Click="btnExporter_Click"/>
+        <Button x:Name="btnRefresh" Content="Rafraîchir la sélection" HorizontalAlignment="Left" Margin="53,54,0,0" VerticalAlignment="Top" Width="190" Height="29" Click="btnRefresh_Click"/>
+        <Label Content="Type:" HorizontalAlignment="Left" Margin="560,88,0,0" VerticalAlignment="Top"/>
+        <Label Content="Date de création:" HorizontalAlignment="Left" Margin="560,62,0,0" VerticalAlignment="Top"/>
+        <Label Content="Nom:" HorizontalAlignment="Left" Margin="560,36,0,0" VerticalAlignment="Top"/>
+        <Label Content="Durée de l'enregistrement:" HorizontalAlignment="Left" Margin="560,114,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblNom" Content="lblNom" HorizontalAlignment="Left" Margin="763,36,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDate" Content="lblDate" HorizontalAlignment="Left" Margin="763,62,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblType" Content="lblType" HorizontalAlignment="Left" Margin="763,88,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDuree" Content="lblDuree" HorizontalAlignment="Left" Margin="763,114,0,0" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

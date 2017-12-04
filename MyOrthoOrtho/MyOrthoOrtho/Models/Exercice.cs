@@ -31,6 +31,21 @@ namespace MyOrthoOrtho.Models
         [XmlElement("Intensity_threshold")]
         public int IntensityThreshold { get; set; }
 
+        [XmlElement("F0_exacteEvaluated")]
+        public bool F0_exacte_evaluated { get; set; }
+        
+        [XmlElement("F0_stableEvaluated")]
+        public bool F0_stable_evaluated { get; set; }
+        
+        [XmlElement("Intensite_stableEvaluated")]
+        public bool Intensite_stable_evaluated { get; set; }
+
+        [XmlElement("Courbe_f0_exacteEvaluated")]
+        public bool F0_courbe_exact_evaluated { get; set; }
+
+        [XmlElement("Duree_exacteEvaluated")]
+        public bool Duree_exacte_evaluated { get; set; }
+
         public override string ToString()
         {
             return this.Name;

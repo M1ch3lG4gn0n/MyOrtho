@@ -12,14 +12,14 @@ namespace MyOrthoOrtho.Controllers
     class PreparationExecuter
     {
         private WAVPlayerRecorder Player;
-        private PreparationVM CurrentActivity;
+        private ExerciceVM CurrentActivity;
         private PraatScripting scripting;
         private PraatConnector connector;
         private string lastExerciceWavPath;
         private string exerciceFolderPath;
         private string currentExercicePath;
 
-        public PreparationExecuter(PreparationVM currentActivity)
+        public PreparationExecuter(ExerciceVM currentActivity)
         {
             this.Player = new WAVPlayerRecorder();
             this.CurrentActivity = currentActivity;
@@ -43,12 +43,7 @@ namespace MyOrthoOrtho.Controllers
             Player.StopPlayback();
             Player.StartPlayback(this.CurrentActivity.Example_wav_path);
         }
-
-        public void StartPlaybackResult()
-        {
-            Player.StopPlayback();
-            Player.StartPlayback(this.CurrentActivity.Result_wav_path);
-        }
+        
 
         public void StopPlayback()
         {

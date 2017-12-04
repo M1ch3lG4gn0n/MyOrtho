@@ -28,7 +28,7 @@ namespace MyOrthoOrtho.Views.Controls
     public partial class CtrlSuivi : UserControl
     {
         private SuiviExecuter ac;
-        ListSuiviVM activityListInstance = new ListSuiviVM();
+        SuiviVM activityListInstance = new SuiviVM();
 
 
         public CtrlSuivi()
@@ -76,7 +76,7 @@ namespace MyOrthoOrtho.Views.Controls
                 //create an object of type SuiviVM from the collected data
                foreach(ExerciceResultat ex in result.Liste_exercices_resultats)
                 {
-                    SuiviVM newSuiviVM = new SuiviVM
+                    ExerciceVM newExerciceVM = new ExerciceVM
                     {
                         Example_wav_path = currentDir + @"\Ressources\" + ex.Exercice_wav_file_name,
                         Result_wav_path = currentDir + @"\Ressources\" + ex.Resultat_wav_file_name,
@@ -86,7 +86,7 @@ namespace MyOrthoOrtho.Views.Controls
                         IntensityThreshold = ex.IntensityThreshold
                     };
 
-                    activityListInstance.Add(newSuiviVM);
+                    activityListInstance.Add(newExerciceVM);
                 }
 
             }

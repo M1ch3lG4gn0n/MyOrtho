@@ -12,14 +12,14 @@ namespace MyOrthoOrtho.Controllers
     class SuiviExecuter
     {
         private WAVPlayerRecorder Player;
-        private SuiviVM CurrentActivity;
+        private ExerciceVM CurrentActivity;
         private PraatScripting scripting;
         private PraatConnector connector;
         private string lastExerciceWavPath;
         private string exerciceFolderPath;
         //private string currentExercicePath;
 
-        public SuiviExecuter(SuiviVM currentActivity)
+        public SuiviExecuter(ExerciceVM currentActivity)
         {
             this.Player = new WAVPlayerRecorder();
             this.CurrentActivity = currentActivity;
