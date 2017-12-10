@@ -100,5 +100,6 @@
         <TextBox Name="JitterTxt" Text="{Binding SelectedItemJitter}" HorizontalAlignment="Left" Height="24" Margin="589,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
         <Image Name="feedbackGif" Margin="961,35,48,766" Stretch="Fill" gif:ImageBehavior.RepeatBehavior="Forever" />
         <ContentControl Name="Results" Margin="59,471,928,95"/>
+        <Button Content="Exporter les&#xD;&#xA;résultats" HorizontalAlignment="Left" Margin="756,35,0,0" VerticalAlignment="Top" Width="120" Height="50" Click="BtnExporter_Click"/>
     </Grid>
 </Window>

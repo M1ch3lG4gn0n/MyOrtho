@@ -10,6 +10,10 @@ using System.Windows.Threading;
 using WpfAnimatedGif;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using System.Xml.Linq;
+using System.IO;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Linq;
 
 namespace MyOrthoClient
 {
@@ -28,7 +32,8 @@ namespace MyOrthoClient
         }        
 
         private ActivityExecuter ac;
-        ListVM activityListInstance = new ListVM();        
+        ListVM activityListInstance = new ListVM();
+        static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
 
         public MainWindow()
         {
@@ -174,6 +179,59 @@ namespace MyOrthoClient
                 }
                 ImageBehavior.SetAnimatedSource(feedbackGif, image);
             })));
+        }
+
+        private void BtnExporter_Click(object sender, RoutedEventArgs e)
+        {
+
+            string targetDirectory = "";
+            CommonOpenFileDialog fd = new CommonOpenFileDialog();
+            fd.Title = "Exporter une série d'exercices";
+            fd.IsFolderPicker = true;
+            fd.InitialDirectory = EXERCICES_FOLDER;
+
+            if (fd.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                targetDirectory = fd.FileName;
+
+
+                if (!Directory.Exists(targetDirectory))
+                {
+                    Directory.CreateDirectory(targetDirectory);
+                }
+
+                XDocument doc =
+                    new XDocument(
+                        new XElement("Activities",
+                            new XElement("Date", DateTime.Now.ToString("yyyyMMddHHmmss")),
+                                activityListInstance.ActivityList.Select(x => new XElement("Activity",
+                                    new XElement("Name", x.Name),
+                                    new XElement("Exercice_wav_file_name", x.Example_wav_path),
+                                    new XElement("F0_exact", x.F0_exact),
+                                    new XElement("F0_stable", x.F0_stable),
+                                    new XElement("Intensite_stable", x.Intensite_stable),
+                                    new XElement("Courbe_f0_exacte", x.Courbe_f0_exacte),
+                                    new XElement("Duree_exacte", x.Duree_exacte),
+                                    new XElement("Jitter", x.Jitter),
+                                    x.Exercice?.Select(y => new XElement("Point",
+                                        new XElement("Time", y.Time),
+                                        new XElement("Intensity", y.Intensity),
+                                        new XElement("Pitch", y.Pitch)
+                                        )
+                                        ),
+                                    x.Results?.Select(y => new XElement("Point",
+                                        new XElement("Time", y.Time),
+                                        new XElement("Intensity", y.Intensity),
+                                        new XElement("Pitch", y.Pitch)
+                                        )
+                                        )
+                                    )
+                                )
+                            )
+                        );
+
+                doc.Save(targetDirectory + "\\" + "test.xml");
+            }
         }
     }
 }
