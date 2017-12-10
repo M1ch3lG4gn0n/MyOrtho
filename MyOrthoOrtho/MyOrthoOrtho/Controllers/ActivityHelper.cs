@@ -9,41 +9,68 @@ using MyOrthoOrtho.ViewModels;
 
 namespace MyOrthoOrtho.Controllers
 {
-    class ActivityHelper
+    public class ActivityHelper
     {
-        public async void PopulateActivityList(ListSuiviVM instance)
+       
+        public static string FormatDateString(string dateString)
         {
+            string formattedDate = "";
+            string year = dateString.Substring(0, 4);
+            string month = dateString.Substring(4, 2);
+            int day = int.Parse(dateString.Substring(6, 2));
+            int hour = int.Parse(dateString.Substring(8, 2));
+            string minute = dateString.Substring(10, 2);
+            string seconds = dateString.Substring(12, 2);
+            
 
-            /*FileHelper.FileReader fr = new FileHelper.FileReader();
-            var xmlDoc = XElement.Load(fr.ReadFile());
-            List<XElement> activityNodes = xmlDoc.Descendants().Where(x => x.Name.ToString().Equals("Activity")).ToList();
-            for (var i=0; i>activityNodes.Count; i++)
-            {
-                var activity = new SuiviVM();
-                activity.Name = activityNodes[i].Descendants("Name").ToString();
-                activity.Example_wav_path = activityNodes[i].Descendants("Example_wav_path").ToString();
-                activity.Pitch = Convert.ToInt32(activityNodes[i].Descendants("Pitch").ToString());
-                activity.PitchEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("PitchEvaluated").ToString());
-                activity.Intensity = Convert.ToInt32(activityNodes[i].Descendants("Intensity").ToString());
-                activity.IntensityEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("IntensityEvaluated").ToString());
-                activity.F0_exact = Convert.ToInt32(activityNodes[i].Descendants("F0_exact").ToString());
-                activity.F0_exactEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("F0_exactEvaluated").ToString());
-                activity.F0_stable = Convert.ToInt32(activityNodes[i].Descendants("F0_stable").ToString());
-                activity.F0_stableEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("F0_stableEvaluated").ToString());
-                activity.Intensite_stable = Convert.ToInt32(activityNodes[i].Descendants("Intensite_stable").ToString());
-                activity.Intensite_stableEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("Intensite_stableEvaluated").ToString());
-                activity.Courbe_f0_exacte = Convert.ToInt32(activityNodes[i].Descendants("Courbe_f0_exacte").ToString());
-                activity.Courbe_f0_exacteEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("Courbe_f0_exacteEvaluated").ToString());
-                activity.Duree_exacte = Convert.ToInt32(activityNodes[i].Descendants("Duree_exacte").ToString());
-                activity.Duree_exacteEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("Duree_exacteEvaluated").ToString());
-                activity.Jitter = Convert.ToInt32(activityNodes[i].Descendants("Jitter").ToString());
-                activity.JitterEvaluated = Convert.ToBoolean(activityNodes[i].Descendants("JitterEvaluated").ToString());
-
-                instance.Add(activity);            
-            }*/
-
+            formattedDate = "Le " + day.ToString() + " " + getMonth(month) + " " + year + " à " + hour.ToString() + "h" + minute;
+            return formattedDate;
         }
 
+        private static string getMonth(string number)
+        {
+            switch(number){
+                case "01":
+                    return "Janvier";
+                    break;
+                case "02":
+                    return "Février";
+                    break;
+                case "03":
+                    return "Mars";
+                    break;
+                case "04":
+                    return "Avril";
+                    break;
+                case "05":
+                    return "Mai";
+                    break;
+                case "06":
+                    return "Juin";
+                    break;
+                case "07":
+                    return "Juillet";
+                    break;
+                case "08":
+                    return "Août";
+                    break;
+                case "09":
+                    return "Septembre";
+                    break;
+                case "10":
+                    return "Octobre";
+                    break;
+                case "11":
+                    return "Novembre";
+                    break;
+                case "12":
+                    return "Décembre";
+                    break;
+                default:
+                    return "";
+                    break;
+            }
+        }
 
     }
 }

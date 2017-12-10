@@ -13,7 +13,7 @@ namespace MyOrthoOrtho.Controllers
     {
         static string TEMP_PATH = Path.GetTempPath() + "MyOrtho\\";
         private WAVPlayerRecorder Player;
-        private CreationVM CurrentActivity;
+        private ExerciceVM CurrentActivity;
         private PraatScripting scripting;
         private PraatConnector connector;
         private string tempRecordingsLocation;
@@ -22,7 +22,7 @@ namespace MyOrthoOrtho.Controllers
         public string TempExPraatResultsPath { get; set; }
         
 
-        public CreationExecuter(CreationVM currentActivity)
+        public CreationExecuter(ExerciceVM currentActivity)
         {
             this.Player = new WAVPlayerRecorder();
             this.CurrentActivity = currentActivity;

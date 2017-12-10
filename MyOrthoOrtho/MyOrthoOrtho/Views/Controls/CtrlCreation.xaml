@@ -8,17 +8,33 @@
              xmlns:my="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              d:DesignHeight="768" d:DesignWidth="1366">
-    <Grid Height="738" Width="1336" Margin="0,0,-30,-5">
+    <Grid Height="738" Background="White">
 
+        <GroupBox Header="Type" HorizontalAlignment="Left" Height="315" Margin="354,50,0,0" VerticalAlignment="Top" Width="600"/>
 
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="635" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="628"/>
+        <GroupBox Header="Exercices existants" Height="260" Margin="959,50,57,0" VerticalAlignment="Top">
+            <Button x:Name="btnDeleteExercice_Copy" Content="Supprimer" HorizontalAlignment="left" Margin="1140,275,-902,-62" VerticalAlignment="Top" Width="100" Height="25"
+                Click="BtnCreerExercice_Click"/>
+        </GroupBox>
+
+        <GroupBox Header="F0 exacte" HorizontalAlignment="Left" Height="140" Margin="364,70,0,0" VerticalAlignment="Top" Width="190"/>
+
+        <GroupBox Header="F0 stable" HorizontalAlignment="Left" Height="140" Margin="559,70,0,0" VerticalAlignment="Top" Width="190"/>
+        <GroupBox Header="Courbe F0 exacte" HorizontalAlignment="Left" Height="140" Margin="754,70,0,0" VerticalAlignment="Top" Width="190"/>
+        <GroupBox Header="Jitter" HorizontalAlignment="Left" Height="140" Margin="559,214,0,0" VerticalAlignment="Top" Width="190"/>
+        <GroupBox Header="Durée (secondes)" HorizontalAlignment="Left" Height="140" Margin="754,214,0,0" VerticalAlignment="Top" Width="190"/>
+
+        <GroupBox Header="Intensité stable" HorizontalAlignment="Left" Height="140" Margin="364,214,0,0" VerticalAlignment="Top" Width="190"/>
+
+        <GroupBox Header="Paramètres Praat" HorizontalAlignment="Left" Height="140" Margin="24,50,0,0" VerticalAlignment="Top" Width="230"/>
+
+        <GroupBox Header="Type" HorizontalAlignment="Left" Height="62" Margin="259,50,0,0" VerticalAlignment="Top" Width="90"/>
 
         <my:Chart x:Name="PitchChart"
                                        Title="Pitch" 
                                        VerticalAlignment="Top" 
-                                       Margin="643,10,63,0" 
-                                       Height="300"
-                                       Width="630"
+                                       Margin="681,390,0,0" 
+                                       Height="300" HorizontalAlignment="Left" Width="630"
                   >
             <my:Chart.TitleStyle>
                 <Style TargetType="{x:Type datavis:Title}">
@@ -28,6 +44,11 @@
                     <Setter Property="Margin" Value="5, 5, 5, 5" />
                 </Style>
             </my:Chart.TitleStyle>
+            <my:Chart.LegendStyle>
+                <Style TargetType="{x:Type datavis:Legend}">
+                    <Setter Property="Width" Value="0" />
+                </Style>
+            </my:Chart.LegendStyle>
             <my:LineSeries x:Name="PitchAttendue"
                                                 Title="Attendue"  
                                                 DependentValuePath="Value" 
@@ -61,9 +82,9 @@
         <my:Chart x:Name="IntensityChart"
                                        Title="Intensité" 
                                        VerticalAlignment="Top" 
-                                       Margin="643,315,63,0" 
+                                       Margin="25,390,0,0" 
                                        Height="300"
-                                       Width="630">
+                                       Width="630" HorizontalAlignment="Left">
             <my:Chart.TitleStyle>
                 <Style TargetType="{x:Type datavis:Title}">
                     <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -72,6 +93,11 @@
                     <Setter Property="Margin" Value="5, 5, 5, 5" />
                 </Style>
             </my:Chart.TitleStyle>
+            <my:Chart.LegendStyle>
+                <Style TargetType="{x:Type datavis:Legend}">
+                    <Setter Property="Width" Value="0" />
+                </Style>
+            </my:Chart.LegendStyle>
             <my:LineSeries x:Name="IntensityAttendue"
                                                 Title="Attendue"  
                                                 DependentValuePath="Value" 
@@ -101,37 +127,31 @@
                 </my:LineSeries.DataPointStyle>
             </my:LineSeries>
         </my:Chart>
-        <Button x:Name="BtnCreerExercice" Content="Ajouter l'exercice" HorizontalAlignment="left" Margin="472,315,0,0" VerticalAlignment="Top" Width="100" Height="22"
-                Click="BtnCreerExercice_Click"/>
-        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="472,198,0,0" VerticalAlignment="Top" Width="100" Height="21"
+        <Button x:Name="BtnCreerExercice" Content="Sauvegarder l'exercice" HorizontalAlignment="left" Margin="1053,325,0,0" VerticalAlignment="Top" Width="180" Height="40"
+                Click="BtnCreerExercice_Click" IsEnabled="False"/>
+        <Button x:Name="BtnLire" Content="Lire l'exercice" HorizontalAlignment="left" Margin="25,240,0,0" VerticalAlignment="Top" Width="150" Height="21"
                 Click="BtnLire_Click"/>
-        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="472,223,0,0" VerticalAlignment="Top" Width="100" Height="21"
+        <Button x:Name="BtnArreter" Content="Arrêter la lecture" HorizontalAlignment="left" Margin="193,240,0,0" VerticalAlignment="Top" Width="150" Height="21"
                 Click="BtnArreter_Click"/>
-        <TextBox x:Name="txtPitchMin"  HorizontalAlignment="Left" Height="22" Margin="74,144,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="txtPitchMax"  HorizontalAlignment="Left" Height="22" Margin="258,144,0,0" TextWrapping="Wrap" Text="800" VerticalAlignment="Top" Width="90"/>
-        <TextBox x:Name="txtIntensityThreshold"  HorizontalAlignment="Left" Height="22" Margin="74,206,0,0" TextWrapping="Wrap" Text="40" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="txtDuration"  HorizontalAlignment="Left" Height="22" Margin="258,206,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="90"/>
-        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="21" Margin="194,59,0,0" TextWrapping="Wrap" Text="Exercice 1" VerticalAlignment="Top" Width="154"/>
-        <Button Content="Importer un .WAV" Height="22" HorizontalAlignment="Left" Margin="472,135,0,0" x:Name="btnImporterExercice" VerticalAlignment="Top" Width="100" Click="btnImporterExercice_Click" RenderTransformOrigin="1.133,1.75" />
-        <TextBox IsReadOnly="True" Height="22" HorizontalAlignment="Left" Margin="74,315,0,0" x:Name="txtFileName" VerticalAlignment="Top" Width="350" />
-        <Button x:Name="BtnDemarrer" Content="Démarrer l'enregistrement" HorizontalAlignment="left" Margin="74,242,0,0" VerticalAlignment="Top" Width="154" Height="24"
+        <TextBox x:Name="txtPitchMin"  HorizontalAlignment="Left" Height="22" Margin="34,90,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="txtPitchMax"  HorizontalAlignment="Left" Height="22" Margin="149,90,0,0" TextWrapping="Wrap" Text="800" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="txtIntensityThreshold"  HorizontalAlignment="Left" Height="22" Margin="34,140,0,0" TextWrapping="Wrap" Text="40" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="txtDuration"  HorizontalAlignment="Left" Height="22" Margin="149,140,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="txtName"  HorizontalAlignment="Left" Height="21" Margin="153,23,0,0" TextWrapping="Wrap" Text="Exercice 1" VerticalAlignment="Top" Width="154" TextChanged="TxtName_TextChanged"/>
+        <Button Content="Importer un .WAV" Height="22" HorizontalAlignment="Left" Margin="25,332,0,0" x:Name="btnImporterExercice" VerticalAlignment="Top" Width="105" Click="btnImporterExercice_Click" RenderTransformOrigin="1.133,1.75" />
+        <TextBox IsReadOnly="True" Height="22" HorizontalAlignment="Left" Margin="25,296,0,0" x:Name="txtFileName" VerticalAlignment="Top" Width="314" />
+        <Button x:Name="BtnDemarrer" Content="Démarrer l'enregistrement" HorizontalAlignment="left" Margin="24,210,0,0" VerticalAlignment="Top" Width="150" Height="24"
             Click="BtnDemarrer_Click"/>
-        <Button x:Name="BtnTerminer" Content="Terminer l'enregistrement" HorizontalAlignment="left" Margin="245,242,0,0" VerticalAlignment="Top" Width="152" Height="24"
-            Click="BtnTerminer_Click" IsEnabled="False"/>
-        <Label Content="Chemin sur le disque:" HorizontalAlignment="Left" Margin="74,282,0,0" VerticalAlignment="Top" Width="164" Height="28"/>
-        <Label Content="Nom de l'exercice:" HorizontalAlignment="Left" Margin="74,55,0,0" VerticalAlignment="Top" Width="120" Height="28"/>
-        <Label Content="Créer un nouvel exercice" HorizontalAlignment="Left" Margin="284,10,0,0" VerticalAlignment="Top" Height="28"/>
-        <Label Content="Pitch min" HorizontalAlignment="Left" Margin="94,115,0,0" VerticalAlignment="Top"/>
-        <Label Content="Pitch max" HorizontalAlignment="Left" Margin="281,113,0,0" VerticalAlignment="Top"/>
-        <Label Content="Intensity threshold" HorizontalAlignment="Left" Margin="94,180,0,0" VerticalAlignment="Top"/>
-        <Label Content="Durée" HorizontalAlignment="Left" Margin="281,180,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="chkPitchMin" Content="" HorizontalAlignment="Left" Margin="74,119,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
-        <CheckBox x:Name="chkIntensity" Content="" HorizontalAlignment="Left" Margin="74,186,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
-        <CheckBox x:Name="chkvide" Content="" HorizontalAlignment="Left" Margin="258,185,0,0" VerticalAlignment="Top" Width="22"/>
-        <CheckBox x:Name="chkPitchMax" Content="" HorizontalAlignment="Left" Margin="258,119,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
-        <Image x:Name="imgRec" HorizontalAlignment="Left" Height="36" Margin="431,61,0,0" VerticalAlignment="Top" Width="36" Source="/MyOrthoOrtho;component/Ressources/Rec.png" Visibility="Hidden"/>
-        <Label Content="Données évaluées:" HorizontalAlignment="Left" Margin="74,88,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="229" Margin="74,384,0,0" VerticalAlignment="Top" Width="165" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
+        <Button x:Name="BtnTerminer" Content="Terminer l'enregistrement" HorizontalAlignment="left" Margin="193,210,0,0" VerticalAlignment="Top" Width="150" Height="24"
+            Click="BtnTerminer_Click" IsEnabled="False" RenderTransformOrigin="0.368,0.917"/>
+        <Label Content="Chemin sur le disque:" HorizontalAlignment="Left" Margin="25,268,0,0" VerticalAlignment="Top" Width="164" Height="28"/>
+        <Label Content="Nom de l'exercice:" HorizontalAlignment="Left" Margin="33,20,0,0" VerticalAlignment="Top" Width="120" Height="28"/>
+        <Label Content="Pitch min" HorizontalAlignment="Left" Margin="29,65,0,0" VerticalAlignment="Top"/>
+        <Label Content="Pitch max" HorizontalAlignment="Left" Margin="144,65,0,0" VerticalAlignment="Top"/>
+        <Label Content="Seuil d'intensité" HorizontalAlignment="Left" Margin="29,115,0,0" VerticalAlignment="Top"/>
+        <Label Content="Durée (secondes)" HorizontalAlignment="Left" Margin="144,115,0,0" VerticalAlignment="Top"/>
+        <Image x:Name="imgRec" HorizontalAlignment="Left" Height="36" Margin="287,138,0,0" VerticalAlignment="Top" Width="36" Source="/MyOrthoOrtho;component/Ressources/Rec.png" Visibility="Hidden"/>
+        <ListBox x:Name="ListActivities" HorizontalAlignment="Left" Height="229" Margin="967,70,0,0" VerticalAlignment="Top" Width="165" ItemsSource="{Binding ActivityList}" SelectionChanged="ListActivities_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -140,6 +160,95 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Exercices existants:" HorizontalAlignment="Left" Margin="74,353,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0ExactGoodMax"  HorizontalAlignment="Left" Height="22" Margin="436,110,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <Label Content="Évaluée" HorizontalAlignment="Left" Margin="369,85,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkF0ExacteEvaluated" Content="" HorizontalAlignment="Left" Margin="436,90,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
+        <Label Content="Bon" HorizontalAlignment="Left" Margin="369,110,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moyen" HorizontalAlignment="Left" Margin="369,140,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mauvais" HorizontalAlignment="Left" Margin="369,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0ExactGoodMin"  HorizontalAlignment="Left" Height="22" Margin="505,110,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="484,110,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0ExactOkayMax"  HorizontalAlignment="Left" Height="22" Margin="436,140,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtF0ExactOkayMin"  HorizontalAlignment="Left" Height="22" Margin="505,140,0,0" TextWrapping="Wrap" Text="0.70" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="484,140,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0ExactBadMax"  HorizontalAlignment="Left" Height="22" Margin="436,170,0,0" TextWrapping="Wrap" Text="0.70" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtF0ExactBadMin"  HorizontalAlignment="Left" Height="22" Margin="505,170,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="484,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0StableGoodMax"  HorizontalAlignment="Left" Height="22" Margin="629,110,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <Label Content="Évaluée" HorizontalAlignment="Left" Margin="564,85,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkF0StableEvaluated" Content="" HorizontalAlignment="Left" Margin="632,90,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
+        <Label Content="Bon" HorizontalAlignment="Left" Margin="564,110,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moyen" HorizontalAlignment="Left" Margin="564,140,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mauvais" HorizontalAlignment="Left" Margin="564,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0StableGoodMin"  HorizontalAlignment="Left" Height="22" Margin="699,110,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="679,110,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0StableOkayMax"  HorizontalAlignment="Left" Height="22" Margin="629,140,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtF0StableOkayMin"  HorizontalAlignment="Left" Height="22" Margin="699,140,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="679,140,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtF0StableBadMax"  HorizontalAlignment="Left" Height="22" Margin="629,170,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtF0StableBadMin"  HorizontalAlignment="Left" Height="22" Margin="699,170,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="679,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCourbeF0ExactGoodMax"  HorizontalAlignment="Left" Height="22" Margin="824,110,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <Label Content="Évaluée" HorizontalAlignment="Left" Margin="759,85,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkCourbeF0ExacteEvaluated" Content="" HorizontalAlignment="Left" Margin="829,90,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
+        <Label Content="Bon" HorizontalAlignment="Left" Margin="759,110,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moyen" HorizontalAlignment="Left" Margin="759,140,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mauvais" HorizontalAlignment="Left" Margin="759,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCourbeF0ExactGoodMin"  HorizontalAlignment="Left" Height="22" Margin="894,110,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="874,110,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCourbeF0ExactOkayMax"  HorizontalAlignment="Left" Height="22" Margin="824,140,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtCourbeF0ExactOkayMin"  HorizontalAlignment="Left" Height="22" Margin="894,140,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="874,140,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCourbeF0ExactBadMax"  HorizontalAlignment="Left" Height="22" Margin="824,170,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtCourbeF0ExactBadMin"  HorizontalAlignment="Left" Height="22" Margin="894,170,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="874,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtIntensiteStableGoodMax"  HorizontalAlignment="Left" Height="22" Margin="436,254,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <Label Content="Évaluée" HorizontalAlignment="Left" Margin="369,229,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkIntensiteStableEvaluated" Content="" HorizontalAlignment="Left" Margin="436,234,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
+        <Label Content="Bon" HorizontalAlignment="Left" Margin="369,254,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moyen" HorizontalAlignment="Left" Margin="369,284,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mauvais" HorizontalAlignment="Left" Margin="369,314,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtIntensiteStableGoodMin"  HorizontalAlignment="Left" Height="22" Margin="505,254,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="484,254,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtIntensiteStableOkayMax"  HorizontalAlignment="Left" Height="22" Margin="436,284,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtIntensiteStableOkayMin"  HorizontalAlignment="Left" Height="22" Margin="505,284,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="484,284,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtIntensiteStableBadMax"  HorizontalAlignment="Left" Height="22" Margin="436,314,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtIntensiteStableBadMin"  HorizontalAlignment="Left" Height="22" Margin="505,314,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="484,314,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtJitterGoodMax"  HorizontalAlignment="Left" Height="22" Margin="629,254,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <Label Content="Évaluée" HorizontalAlignment="Left" Margin="564,229,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkJitterEvaluated" Content="" HorizontalAlignment="Left" Margin="632,234,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
+        <Label Content="Bon" HorizontalAlignment="Left" Margin="564,254,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moyen" HorizontalAlignment="Left" Margin="564,284,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mauvais" HorizontalAlignment="Left" Margin="564,314,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtJitterGoodMin"  HorizontalAlignment="Left" Height="22" Margin="699,254,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="679,254,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtJitterOkayMax"  HorizontalAlignment="Left" Height="22" Margin="629,284,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtJitterOkayMin"  HorizontalAlignment="Left" Height="22" Margin="699,284,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="679,284,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtJitterBadMax"  HorizontalAlignment="Left" Height="22" Margin="629,314,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtJitterBadMin"  HorizontalAlignment="Left" Height="22" Margin="699,314,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="679,314,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDurationGoodMax"  HorizontalAlignment="Left" Height="22" Margin="824,254,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <Label Content="Évaluée" HorizontalAlignment="Left" Margin="759,229,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkDurationEvaluated" Content="" HorizontalAlignment="Left" Margin="829,234,0,0" VerticalAlignment="Top" Width="22" IsChecked="True"/>
+        <Label Content="Bon" HorizontalAlignment="Left" Margin="759,254,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moyen" HorizontalAlignment="Left" Margin="759,284,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mauvais" HorizontalAlignment="Left" Margin="759,314,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDurationGoodMin"  HorizontalAlignment="Left" Height="22" Margin="894,254,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="874,254,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDurationOkayMax"  HorizontalAlignment="Left" Height="22" Margin="824,284,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtDurationOkayMin"  HorizontalAlignment="Left" Height="22" Margin="894,284,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="874,284,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDurationBadMax"  HorizontalAlignment="Left" Height="22" Margin="824,314,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="43"/>
+        <TextBox x:Name="txtDurationBadMin"  HorizontalAlignment="Left" Height="22" Margin="894,314,0,0" TextWrapping="Wrap" Text="0.85" VerticalAlignment="Top" Width="43"/>
+        <Label Content="à" HorizontalAlignment="Left" Margin="874,314,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnDeleteExercice" Content="Supprimer" HorizontalAlignment="left" Margin="1137,271,0,0" VerticalAlignment="Top" Width="100" Height="25"
+            Click="BtnDeleteExercice_Click" IsEnabled="False"/>
+        <Button x:Name="btnModifExercice" Content="Modifier" HorizontalAlignment="left" Margin="1137,238,0,0" VerticalAlignment="Top" Width="100" Height="25"
+            Click="BtnModifExercice_Click" IsEnabled="False"/>
+        <RadioButton x:Name="radTypeLigne" Content="Droite" HorizontalAlignment="Left" Margin="271,70,0,0" VerticalAlignment="Top" GroupName="typeExercice" IsChecked="True" Checked="RadTypeLigne_Checked"/>
+        <RadioButton x:Name="radTypeCourbe" Content="Courbe" HorizontalAlignment="Left" Margin="271,90,0,0" VerticalAlignment="Top" GroupName="typeExercice" Checked="RadTypeCourbe_Checked"/>
     </Grid>
 </UserControl>

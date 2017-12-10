@@ -11,72 +11,81 @@ namespace MyOrthoOrtho.ViewModels
 {
     class PreparationVM : VMBase
     {
-        private ICollection<DataLineItem> _exercice;
-        private Action<ICollection<DataLineItem>> _setExercise;
-        private ICollection<DataLineItem> _results;
-        private Action<ICollection<DataLineItem>> _setResult;
-        private LineSeries _frequencyExpected;
-        private LineSeries _frequencyResult;
-        private LineSeries _pitchExpected;
-        private LineSeries _pitchResult;
-
-        public string Name { get; set; }
-        public string Example_wav_path { get; set; }
-        public string Result_wav_path { get; set; }
-        public int PitchMin { get; set; }
-        public int PitchMax { get; set; }
-        public int IntensityThreshold { get; set; }
-        public int F0_exact { get; set; }
-        public bool F0_exactEvaluated { get; set; }
-        public int F0_stable { get; set; }
-        public bool F0_stableEvaluated { get; set; }
-        public int Intensite_stable { get; set; }
-        public bool Intensite_stableEvaluated { get; set; }
-        public int Courbe_f0_exacte { get; set; }
-        public bool Courbe_f0_exacteEvaluated { get; set; }
-        public int Duree_exacte { get; set; }
-        public bool Duree_exacteEvaluated { get; set; }
-        public int Jitter { get; set; }
-        public bool JitterEvaluated { get; set; }
-        public int Duree_expected { get; set; }
-        public ICollection<DataLineItem> Exercice
+        public ObservableCollection<ExerciceVM> ActivityList { get; set; }
+        public ObservableCollection<ExerciceVM> SelectedActivityList { get; set; }
+        public ObservableCollection<ExerciseEvaluationGridRow> ListOfEvaluatedParameters { get; set; }
+        public PreparationVM()
         {
-            get
-            {
-                return this._exercice;
-            }
-            set
-            {
-                this._exercice = value;
-                this._setExercise(value);
-            }
-        }
-        public ICollection<DataLineItem> Results
-        {
-            get
-            {
-                return this._results;
-            }
-            set
-            {
-                this._results = value;
-                this._setResult(value);
-            }
-        }
-        
-        public override string ToString()
-        {
-            return this.Name;
+            ActivityList = new ObservableCollection<ExerciceVM>();
+            SelectedActivityList = new ObservableCollection<ExerciceVM>();
+            ListOfEvaluatedParameters = new ObservableCollection<ExerciseEvaluationGridRow>();
         }
 
-        public void SetExerciseValue(Action<ICollection<DataLineItem>> action)
+        public ObservableCollection<ExerciceVM> getActivityList()
         {
-            _setExercise = action;
+            return ActivityList;
+        }
+        public ObservableCollection<ExerciceVM> getSelectedActivityList()
+        {
+            return SelectedActivityList;
         }
 
-        public void SetResultValue(Action<ICollection<DataLineItem>> action)
+        public void Add(object activity)
         {
-            _setResult = action;
+            ActivityList.Add((ExerciceVM)activity);
         }
+
+        public void Remove(object activity)
+        {
+            ActivityList.Remove((ExerciceVM)activity);
+        }
+
+        public void AddSelection(object selectedActivity)
+        {
+            SelectedActivityList.Add((ExerciceVM)selectedActivity);
+        }
+
+        public void RemoveSelection(object selectedActivity)
+        {
+            SelectedActivityList.Remove((ExerciceVM)selectedActivity);
+        }
+
+        public void AddEvaluated(object evaluatedInformationRow)
+        {
+            ListOfEvaluatedParameters.Add((ExerciseEvaluationGridRow)evaluatedInformationRow);
+        }
+        public void ClearEvaluated()
+        {
+            ListOfEvaluatedParameters.Clear();
+        }
+
+        public ExerciceVM GetActivity(int index)
+        {
+            if(index < ActivityList.Count && index >= 0)
+            {
+                return ActivityList[index];
+            }
+            return new ExerciceVM();
+        }
+
+        public ExerciceVM GetSelectedActivity(int index)
+        {
+            if (index < SelectedActivityList.Count && index >= 0)
+            {
+                return SelectedActivityList[index];
+            }
+            return new ExerciceVM();
+        }
+
+        public void ClearItems()
+        {
+            ActivityList.Clear();
+        }
+
+        public void ClearSelectedItems()
+        {
+            ActivityList.Clear();
+        }
+
     }
 }

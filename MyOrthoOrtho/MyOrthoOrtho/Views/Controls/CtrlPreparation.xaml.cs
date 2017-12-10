@@ -1,24 +1,16 @@
-﻿using MyOrthoOrtho.Controllers;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using MyOrthoOrtho.Controllers;
 using MyOrthoOrtho.Models;
 using MyOrthoOrtho.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace MyOrthoOrtho.Views.Controls
 {
@@ -28,8 +20,9 @@ namespace MyOrthoOrtho.Views.Controls
     public partial class CtrlPreparation : UserControl
     {
         private PreparationExecuter pe;
-        ListPreparationVM activityListInstance = new ListPreparationVM();
-        
+        PreparationVM activityListInstance = new PreparationVM();
+        static string TEMP_PATH = Path.GetTempPath() + "MyOrtho\\Preparation";
+
         WAVPlayerRecorder RecordPlayer;
         static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
 
@@ -39,55 +32,36 @@ namespace MyOrthoOrtho.Views.Controls
             DataContext = activityListInstance;
             ImportExistingExercices();
         }
-        
+       
         private void ImportExistingExercices()
         {
+            ListAvailable.SelectedIndex = -1;
+            ListSelected.SelectedIndex = -1;
 
             activityListInstance.ClearItems();
-            string data;
+            activityListInstance.ClearSelectedItems();
+            
             if (Directory.Exists(EXERCICES_FOLDER))
             {
-                foreach (string filePath in Directory.GetFiles(EXERCICES_FOLDER))
+                FileHelper.FileReader fileReader = new FileHelper.FileReader();
+                fileReader.ReadAllExercicesIntoPreparationVMList(EXERCICES_FOLDER, activityListInstance.getActivityList());
+                if(activityListInstance.getActivityList().Count > 0)
                 {
-                    if (System.IO.Path.GetExtension(filePath) == ".xml")
-                    {
-                        var streamReader = new StreamReader(filePath, Encoding.UTF8);
-                        //Trim and clean the read data to ease parsing
-                        data = streamReader.ReadToEnd();
-                        data.Trim();
-                        data = data.Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty);
-
-                        //create instance of our model
-                        Exercice exercice = new Exercice();
-
-                        //Setup our xml serializer and read xml data into our class
-                        var serializer = new XmlSerializer(typeof(Exercice));
-                        var stream = new StringReader(data);
-                        var reader = XmlReader.Create(stream);
-                        {
-                            exercice = (Exercice)serializer.Deserialize(reader);
-                        }
-
-                        //TODO: ajouter le path du fichier praat
-
-                        PreparationVM prep = new PreparationVM
-                        {
-                            Name = exercice.Name,
-                            Example_wav_path = exercice.Exercice_wav_file_name,
-                        };
-                        activityListInstance.Add(prep);
-
-                    }   
+                    lblAucunExercice.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    lblAucunExercice.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                //TODO: message indiquand qu'aucun exercice n'existe dans l'application
+                lblAucunExercice.Visibility = Visibility.Visible;
+                //TODO: message indiquant qu'aucun exercice n'existe dans l'application
             }
-            
-            
-        }
 
+
+        }
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
         {
@@ -132,34 +106,304 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void ListAvailable_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //TODO: lire le fichier Praat et afficher/remplacer les graphiques
+            if (ListAvailable.SelectedIndex == -1)
+            {
+                btnAdd.IsEnabled = false;
+                return;
+            }
+                
+            var currentActivityIndex = ListAvailable.SelectedIndex;
+            var activity = activityListInstance.GetActivity(currentActivityIndex);
+
+            btnAdd.IsEnabled = true;
+
+            ListSelected.SelectedIndex = -1;
+
+            lblNom.Content = activity.Name;
+            lblDate.Content = ActivityHelper.FormatDateString(activity.Date);
+            lblDuree.Content = activity.Duree_exacte;
+            lblType.Content = activity.Type;
+
+            activity.SetExerciseValue(values => SetChartLine((LineSeries)IntensityChart.Series[0], (LineSeries)PitchChart.Series[0], values));
+            updateDataGrid(activity);
+
+            
         }
 
         private void ListSelected_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //TODO: lire le fichier Praat et afficher/remplacer les graphiques
+            if (ListSelected.SelectedIndex == -1)
+            {
+                btnRemove.IsEnabled = false;
+                return;
+            }
+            var currentActivityIndex = ListSelected.SelectedIndex;
+            var activity = activityListInstance.GetSelectedActivity(currentActivityIndex);
+
+            btnRemove.IsEnabled = true;
+
+            ListAvailable.SelectedIndex = -1;
+
+            lblNom.Content = activity.Name;
+            lblDate.Content = ActivityHelper.FormatDateString(activity.Date);
+            lblDuree.Content = activity.Duree_exacte;
+            lblType.Content = activity.Type;
+
+            activity.SetExerciseValue(values => SetChartLine((LineSeries)IntensityChart.Series[0], (LineSeries)PitchChart.Series[0], values));
+            updateDataGrid(activity);
         }
         
+
+        private void updateDataGrid(ExerciceVM selectedExercise)
+        {
+            activityListInstance.ClearEvaluated();
+
+            activityListInstance.AddEvaluated(new ExerciseEvaluationGridRow
+            {
+                Name = "F0 exact",
+                Evaluated = selectedExercise.F0_exactEvaluated.ToString(),
+                GoodMax = selectedExercise.F0_exact_good_max.ToString(),
+                GoodMin = selectedExercise.F0_exact_good_min.ToString(),
+                OkayMax = selectedExercise.F0_exact_okay_max.ToString(),
+                OkayMin = selectedExercise.F0_exact_okay_min.ToString(),
+                BadMax = selectedExercise.F0_exact_bad_max.ToString(),
+                BadMin = selectedExercise.F0_exact_bad_min.ToString()
+            });
+            activityListInstance.AddEvaluated(new ExerciseEvaluationGridRow
+            {
+                Name = "F0 stable",
+                Evaluated = selectedExercise.F0_stableEvaluated.ToString(),
+                GoodMax = selectedExercise.F0_stable_good_max.ToString(),
+                GoodMin = selectedExercise.F0_stable_good_min.ToString(),
+                OkayMax = selectedExercise.F0_stable_okay_max.ToString(),
+                OkayMin = selectedExercise.F0_stable_okay_min.ToString(),
+                BadMax = selectedExercise.F0_stable_bad_max.ToString(),
+                BadMin = selectedExercise.F0_stable_bad_min.ToString()
+            });
+            activityListInstance.AddEvaluated(new ExerciseEvaluationGridRow
+            {
+                Name = "Courbe F0 exact",
+                Evaluated = selectedExercise.Courbe_f0_exacteEvaluated.ToString(),
+                GoodMax = selectedExercise.Courbe_F0_exact_good_max.ToString(),
+                GoodMin = selectedExercise.Courbe_F0_exact_good_min.ToString(),
+                OkayMax = selectedExercise.Courbe_F0_exact_okay_max.ToString(),
+                OkayMin = selectedExercise.Courbe_F0_exact_okay_min.ToString(),
+                BadMax = selectedExercise.Courbe_F0_exact_bad_max.ToString(),
+                BadMin = selectedExercise.Courbe_F0_exact_bad_min.ToString()
+            });
+            activityListInstance.AddEvaluated(new ExerciseEvaluationGridRow
+            {
+                Name = "Intensité stable",
+                Evaluated = selectedExercise.Intensite_stableEvaluated.ToString(),
+                GoodMax = selectedExercise.Intensite_stable_good_max.ToString(),
+                GoodMin = selectedExercise.Intensite_stable_good_min.ToString(),
+                OkayMax = selectedExercise.Intensite_stable_okay_max.ToString(),
+                OkayMin = selectedExercise.Intensite_stable_okay_min .ToString(),
+                BadMax = selectedExercise.Intensite_stable_bad_max.ToString(),
+                BadMin = selectedExercise.Intensite_stable_bad_min.ToString()
+            });
+            activityListInstance.AddEvaluated(new ExerciseEvaluationGridRow
+            {
+                Name = "Durée exacte",
+                Evaluated = selectedExercise.Duree_exacteEvaluated.ToString(),
+                GoodMax = selectedExercise.Duree_good_max.ToString(),
+                GoodMin = selectedExercise.Duree_good_min.ToString(),
+                OkayMax = selectedExercise.Duree_okay_max.ToString(),
+                OkayMin = selectedExercise.Duree_okay_min.ToString(),
+                BadMax = selectedExercise.Duree_bad_max.ToString(),
+                BadMin = selectedExercise.Duree_bad_min.ToString()
+            });
+            activityListInstance.AddEvaluated(new ExerciseEvaluationGridRow
+            {
+                Name = "Jitter",
+                Evaluated = selectedExercise.JitterEvaluated.ToString(),
+                GoodMax = selectedExercise.Jitter_good_max.ToString(),
+                GoodMin = selectedExercise.Jitter_good_min.ToString(),
+                OkayMax = selectedExercise.Jitter_okay_max.ToString(),
+                OkayMin = selectedExercise.Jitter_okay_min.ToString(),
+                BadMax = selectedExercise.Jitter_bad_max.ToString(),
+                BadMin = selectedExercise.Jitter_bad_min.ToString()
+            });
+
+            //evaluatedDataGrid.ItemsSource = listOfEvaluatedParameters;
+        }
+
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             ImportExistingExercices();
+
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            activityListInstance.AddSelection(ListAvailable.SelectedItem);
-            activityListInstance.Remove(ListAvailable.SelectedItem);
+            if(ListAvailable.SelectedIndex != -1)
+            {
+                activityListInstance.AddSelection(ListAvailable.SelectedItem);
+                activityListInstance.Remove(ListAvailable.SelectedItem);
+                ListSelected.SelectedIndex = ListSelected.Items.Count - 1;
+                btnExporter.IsEnabled = true;
+                
+            }
+            
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            activityListInstance.Add(ListSelected.SelectedItem);
-            activityListInstance.RemoveSelection(ListSelected.SelectedItem);
+            if (ListSelected.SelectedIndex != -1)
+            {
+                activityListInstance.Add(ListSelected.SelectedItem);
+                activityListInstance.RemoveSelection(ListSelected.SelectedItem);
+                ListAvailable.SelectedIndex = ListAvailable.Items.Count - 1;
+                if (activityListInstance.SelectedActivityList.Count() == 0)
+                {
+                    btnExporter.IsEnabled = false;
+                }
+
+            }
         }
 
         private void btnExporter_Click(object sender, RoutedEventArgs e)
         {
             //TODO: exporter les exercices sélectionnées en incluant leur fichier xml, wav et txt, avec le xml les énumérant et le toute dans un zip.
+            string targetDirectory = "";
+            string dateExported = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string zipfolder = TEMP_PATH + "\\" + dateExported;
+            CommonOpenFileDialog fd = new CommonOpenFileDialog();
+            fd.Title = "Exporter une série d'exercices";
+            fd.IsFolderPicker = true;
+            fd.InitialDirectory = EXERCICES_FOLDER;
+
+            if (fd.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                targetDirectory = fd.FileName;
+                
+                Directory.CreateDirectory(targetDirectory);
+                Directory.CreateDirectory(zipfolder);
+
+                XDocument doc =
+                    new XDocument(
+                        new XElement("Activities",
+                            new XElement("Date", dateExported),
+                                activityListInstance.SelectedActivityList.Select(x => new XElement("Activity",
+                                    new XElement("Name", x.Name),
+                                    new XElement("Type", x.Type),
+                                    new XElement("Exercice_wav_file_name", x.Example_wav_path),
+                                    new XElement("Exercice_praat_file_name", x.Example_praat_path),
+                                    new XElement("Pitch_min", x.PitchMin),
+                                    new XElement("Pitch_max", x.PitchMax),
+                                    new XElement("Intensity_threshold", x.IntensityThreshold),
+                                    new XElement("Duree", x.Duree_exacte),
+                                    new XElement("F0_exactEvaluated", x.F0_exactEvaluated),
+                                    new XElement("F0_stableEvaluated", x.F0_stableEvaluated),
+                                    new XElement("Intensite_stableEvaluated", x.Intensite_stableEvaluated),
+                                    new XElement("Courbe_f0_exacteEvaluated", x.Courbe_f0_exacteEvaluated),
+                                    new XElement("Duree_exacteEvaluated", x.Duree_exacteEvaluated),
+                                    new XElement("JitterEvaluated", x.JitterEvaluated),
+                                    new XElement("F0_exacte_evaluation",
+                                        new XElement("Good",
+                                            new XElement("Max", x.F0_exact_good_max),
+                                            new XElement("Min", x.F0_exact_good_min)
+                                            ),
+                                        new XElement("Okay",
+                                            new XElement("Max", x.F0_exact_okay_max),
+                                            new XElement("Min", x.F0_exact_okay_min)
+                                            ),
+                                        new XElement("Bad",
+                                            new XElement("Max", x.F0_exact_bad_max),
+                                            new XElement("Min", x.F0_exact_bad_min)
+                                            )
+                                        ),
+                                    new XElement("F0_stable_evaluation",
+                                        new XElement("Good",
+                                            new XElement("Max", x.F0_stable_good_max),
+                                            new XElement("Min", x.F0_stable_good_min)
+                                            ),
+                                        new XElement("Okay",
+                                            new XElement("Max", x.F0_stable_okay_max),
+                                            new XElement("Min", x.F0_stable_okay_min)
+                                            ),
+                                        new XElement("Bad",
+                                            new XElement("Max", x.F0_stable_bad_max),
+                                            new XElement("Min", x.F0_stable_bad_min)
+                                            )
+                                        ),
+                                    new XElement("Intensite_stable_evaluation",
+                                        new XElement("Good",
+                                            new XElement("Max", x.Intensite_stable_good_max),
+                                            new XElement("Min", x.Intensite_stable_good_min)
+                                            ),
+                                        new XElement("Okay",
+                                            new XElement("Max", x.Intensite_stable_okay_max),
+                                            new XElement("Min", x.Intensite_stable_okay_min)
+                                            ),
+                                        new XElement("Bad",
+                                            new XElement("Max", x.Intensite_stable_bad_max),
+                                            new XElement("Min", x.Intensite_stable_bad_min)
+                                            )
+                                        ),
+                                    new XElement("Courbe_F0_exacte_evaluation",
+                                        new XElement("Good",
+                                            new XElement("Max", x.Courbe_F0_exact_good_max),
+                                            new XElement("Min", x.Courbe_F0_exact_good_min)
+                                            ),
+                                        new XElement("Okay",
+                                            new XElement("Max", x.Courbe_F0_exact_okay_max),
+                                            new XElement("Min", x.Courbe_F0_exact_okay_min)
+                                            ),
+                                        new XElement("Bad",
+                                            new XElement("Max", x.Courbe_F0_exact_bad_max),
+                                            new XElement("Min", x.Courbe_F0_exact_bad_min)
+                                            )
+                                        ),
+                                    new XElement("Duree_exacte_evaluation",
+                                        new XElement("Good",
+                                            new XElement("Max", x.Duree_good_max),
+                                            new XElement("Min", x.Duree_good_min)
+                                            ),
+                                        new XElement("Okay",
+                                            new XElement("Max", x.Duree_okay_max),
+                                            new XElement("Min", x.Duree_okay_min)
+                                            ),
+                                        new XElement("Bad",
+                                            new XElement("Max", x.Duree_bad_max),
+                                            new XElement("Min", x.Duree_bad_min)
+                                            )
+                                        ),
+                                    new XElement("Jitter_evaluation",
+                                        new XElement("Good",
+                                            new XElement("Max", x.Jitter_good_max),
+                                            new XElement("Min", x.Jitter_good_min)
+                                            ),
+                                        new XElement("Okay",
+                                            new XElement("Max", x.Jitter_okay_max),
+                                            new XElement("Min", x.Jitter_okay_min)
+                                            ),
+                                        new XElement("Bad",
+                                            new XElement("Max", x.Jitter_bad_max),
+                                            new XElement("Min", x.Jitter_bad_min)
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        );
+
+                doc.Save(zipfolder + "\\" + txtConfigName.Text + ".xml");
+
+                foreach (ExerciceVM selectedFile in ListSelected.Items)
+                {
+                    File.Copy(EXERCICES_FOLDER + "\\" + selectedFile.Example_wav_path, zipfolder + "\\" + selectedFile.Example_wav_path);
+                    File.Copy(EXERCICES_FOLDER + "\\" + selectedFile.Example_praat_path, zipfolder + "\\" + selectedFile.Example_praat_path);
+                }
+
+                ZipFile.CreateFromDirectory(zipfolder, targetDirectory + "\\" + txtConfigName.Text + ".zip");
+
+            }
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
