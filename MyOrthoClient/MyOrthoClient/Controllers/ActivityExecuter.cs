@@ -87,14 +87,11 @@ namespace MyOrthoClient.Controllers
             this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.LoadingGifPath);
 
             this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath);
-
-            this.AnalyzeSample(CurrentActivity.Exercice, CurrentActivity.Results);
-
-            this.EvaluateExercice(wavPath);
+            
+            this.EvaluateExercice(wavPath, analyser.CalculateCorrelation(CurrentActivity.Exercice, CurrentActivity.Results));
 
             this.setFeedback("");
-
-
+            
         }
 
         public void StartLastExercicePlayblack()
@@ -106,11 +103,6 @@ namespace MyOrthoClient.Controllers
                     Player.StartPlayback(this.lastExerciceWavPath);
                 });
             }
-        }
-
-        private void AnalyzeSample(ICollection<DataLineItem> baseline, ICollection<DataLineItem> values)
-        {
-            var correlation = analyser.CalculateCorrelation(baseline, values);
         }
 
         private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath)
@@ -167,7 +159,7 @@ namespace MyOrthoClient.Controllers
             return DataExtractor.GetInstance().GetTimeLengthValue(resultPath);
         }
 
-        private void EvaluateExercice(string wavPath)
+        private void EvaluateExercice(string wavPath, CorrelationModel correlation)
         {
             var score = 0;
             var random = new Random();
@@ -176,33 +168,29 @@ namespace MyOrthoClient.Controllers
             if (this.CurrentActivity.F0_exactEvaluated)
             {
                 count++;
-                var value = random.Next(0, 100);
-                this.CurrentActivity.F0_exact = value;
-                score += value;
+                this.CurrentActivity.F0_exact = correlation.PCC;
+                score += (int)(correlation.PCC * 100d);
             }
 
             if (this.CurrentActivity.F0_stableEvaluated)
             {
                 count++;
-                var value = random.Next(0, 100);
-                this.CurrentActivity.F0_stable = value;
-                score += value;
+                this.CurrentActivity.F0_exact = correlation.CCC;
+                score += (int)(correlation.CCC * 100d);
             }
 
             if (this.CurrentActivity.Intensite_stableEvaluated)
             {
                 count++;
-                var value = random.Next(0, 100);
-                this.CurrentActivity.Intensite_stable = value;
-                score += value;
+                this.CurrentActivity.F0_exact = correlation.CCCin;
+                score += (int)(correlation.CCCin * 100d);
             }
 
             if (this.CurrentActivity.Courbe_f0_exacteEvaluated)
             {
                 count++;
-                var value = random.Next(0, 100);
-                this.CurrentActivity.Courbe_f0_exacte = value;
-                score += value;
+                this.CurrentActivity.F0_exact = correlation.PCC;
+                score += (int)(correlation.PCC * 100d);
             }
 
             

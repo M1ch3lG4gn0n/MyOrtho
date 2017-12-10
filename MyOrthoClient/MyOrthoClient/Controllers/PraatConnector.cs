@@ -44,6 +44,8 @@ namespace MyOrthoClient.Controllers
             p.Start();
 
             p.WaitForExit();
+
+            File.Delete(script);
         }
     }
 }

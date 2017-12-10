@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using WpfAnimatedGif;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using System.Linq;
 
 namespace MyOrthoClient
 {
@@ -18,17 +19,9 @@ namespace MyOrthoClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string SelectedItemJitter
-        {
-            get
-            {
-                var value = activityListInstance.GetActivity(0)?.Jitter.ToString();
-                return value ?? string.Empty;
-            }
-        }        
-
         private ActivityExecuter ac;
-        ListVM activityListInstance = new ListVM();        
+        ListVM activityListInstance = new ListVM();
+        List<System.Windows.Controls.UserControl> activityScores = new List<UserControl>();
 
         public MainWindow()
         {
@@ -43,7 +36,6 @@ namespace MyOrthoClient
             BtnLire.IsEnabled = false;
             BtnTerminer.IsEnabled = false;
             BtnEcouter.IsEnabled = false;
-            JitterTxt.IsEnabled = false;
         }
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
@@ -57,6 +49,8 @@ namespace MyOrthoClient
 
             FileHelper.FileReader fileReader = new FileHelper.FileReader();
             fileReader.zipToExerciceList(path, activityListInstance);
+            activityScores.Clear();
+            activityListInstance.ActivityList.ToList().ForEach(_ => activityScores.Add(null));
         }
 
         private void BtnLire_Click(object sender, RoutedEventArgs e)
@@ -95,10 +89,10 @@ namespace MyOrthoClient
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Input,
                new Action(() =>
                {
-                   JitterTxt.Text = SelectedItemJitter;
                    var currentActivityIndex = ListActivities.SelectedIndex;
                    var activity = activityListInstance.GetActivity(currentActivityIndex);
-                   this.Results.Content = activity.Courbe_f0_exacteEvaluated? new Views.CurveResult(activity) : (System.Windows.Controls.UserControl)new Views.FlatResult(activity);
+                   activityScores[currentActivityIndex] = activity.Courbe_f0_exacteEvaluated ? new Views.CurveResult(activity) : (System.Windows.Controls.UserControl)new Views.FlatResult(activity);
+                   this.Results.Content = activityScores[currentActivityIndex];
                }));
             });
 
@@ -125,6 +119,7 @@ namespace MyOrthoClient
             activity.SetExerciseValue(values => SetChartLine((LineSeries)IntensityChart.Series[0], (LineSeries)PitchChart.Series[0], values));
             activity.SetResultValue(values => SetChartLine((LineSeries)IntensityChart.Series[1], (LineSeries)PitchChart.Series[1], values));
             ac = new ActivityExecuter(activity, OnPlayingEnablingButton, SetFeedbackGif);
+            this.Results.Content = activityScores[currentActivityIndex];
             BtnDemarrer.IsEnabled = true;
             BtnLire.IsEnabled = true;
         }
