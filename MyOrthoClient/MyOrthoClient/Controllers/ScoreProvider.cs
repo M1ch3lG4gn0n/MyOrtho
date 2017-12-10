@@ -17,6 +17,10 @@ namespace MyOrthoClient.Controllers
 
         public static int EvaluateTimeLength(double activityTime, double resultTime)
         {
+            if(Math.Abs(activityTime) <= 0.01 || activityTime < resultTime)
+            {
+                return 100;
+            }
             return (int)((resultTime * 100d) / (activityTime * 100d));
         }
 
