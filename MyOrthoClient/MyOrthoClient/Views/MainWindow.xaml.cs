@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Linq;
+using System.IO.Compression;
 
 namespace MyOrthoClient
 {
@@ -230,7 +231,14 @@ namespace MyOrthoClient
                             )
                         );
 
-                doc.Save(targetDirectory + "\\" + "test.xml");
+                doc.Save(targetDirectory + "\\" + "resultats.xml");
+
+                foreach (ActivityVM exercice in activityListInstance.ActivityList)
+                {
+                    File.Copy(exercice.Example_wav_path, targetDirectory + "\\" + exercice.Name + ".wav");
+                }
+
+                ZipFile.CreateFromDirectory(targetDirectory, targetDirectory + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".zip");
             }
         }
     }
