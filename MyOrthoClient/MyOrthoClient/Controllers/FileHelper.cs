@@ -21,6 +21,11 @@ namespace MyOrthoClient.Controllers
             {
 
             }
+
+            public void WriteExerciceToList()
+            {
+
+            }
         }
 
         public class FileReader
@@ -28,11 +33,6 @@ namespace MyOrthoClient.Controllers
             public FileReader()
             {
                 
-            }
-
-            public string ReadFile()
-            {
-                return string.Empty;
             }
 
             public void zipToExerciceList(string file, ListVM activityList)

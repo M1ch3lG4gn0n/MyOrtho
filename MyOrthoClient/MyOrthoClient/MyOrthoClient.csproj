@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdornedControl">
-      <HintPath>..\..\..\SimpleAdornedControlSample\AdornedControl\bin\Debug\AdornedControl.dll</HintPath>
-    </Reference>
     <Reference Include="CSCore, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CSCore.dll</HintPath>

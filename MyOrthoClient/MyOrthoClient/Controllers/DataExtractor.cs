@@ -56,6 +56,18 @@ namespace MyOrthoClient.Controllers
             return value;
         }
 
+        public double GetTimeLengthValue(string path)
+        {
+            var text = File.ReadAllText(path);
+            var result = ValidateValue(text);
+            double value = 0;
+            if (result != null && double.TryParse(text, out value))
+            {
+                return value;
+            }
+            return value;
+        }
+
         private string[] ValidateValue(string line)
         {
             //TODO Interpoler les valeurs

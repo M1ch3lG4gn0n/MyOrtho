@@ -15,6 +15,11 @@ namespace MyOrthoClient.Controllers
             return (int)((1d - score) * 100d);
         }
 
+        public static int EvaluateTimeLength(double activityTime, double resultTime)
+        {
+            return (int)((resultTime * 100d) / (activityTime * 100d));
+        }
+
         public static string ImageResult(int score)
         {
             var low = random.Next(0, 60);
