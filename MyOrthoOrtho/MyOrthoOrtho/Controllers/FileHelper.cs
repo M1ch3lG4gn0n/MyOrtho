@@ -29,7 +29,7 @@ namespace MyOrthoOrtho.Controllers
 
             }
 
-            public void ReadAllExercicesIntoPreparationVMList(string filePath, ObservableCollection<ExerciceVM> list)
+            public void ReadAllExercicesIntoExerciceVMList(string filePath, ObservableCollection<ExerciceVM> list)
             {
                 foreach (string file in Directory.GetFiles(filePath))
                 {

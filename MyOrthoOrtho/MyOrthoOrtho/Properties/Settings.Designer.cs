@@ -8,22 +8,594 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyOrthoOrtho.Properties
-{
-
-
+namespace MyOrthoOrtho.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Nouvel Exercice")]
+        public string name {
+            get {
+                return ((string)(this["name"]));
+            }
+            set {
+                this["name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("70")]
+        public int pitchMin {
+            get {
+                return ((int)(this["pitchMin"]));
+            }
+            set {
+                this["pitchMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public int pitchMax {
+            get {
+                return ((int)(this["pitchMax"]));
+            }
+            set {
+                this["pitchMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int intensityThreshold {
+            get {
+                return ((int)(this["intensityThreshold"]));
+            }
+            set {
+                this["intensityThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal duration {
+            get {
+                return ((decimal)(this["duration"]));
+            }
+            set {
+                this["duration"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Droite")]
+        public string type {
+            get {
+                return ((string)(this["type"]));
+            }
+            set {
+                this["type"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool f0ExacteEvaluated {
+            get {
+                return ((bool)(this["f0ExacteEvaluated"]));
+            }
+            set {
+                this["f0ExacteEvaluated"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool f0StableEvaluated {
+            get {
+                return ((bool)(this["f0StableEvaluated"]));
+            }
+            set {
+                this["f0StableEvaluated"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool courbeF0ExacteEvaluated {
+            get {
+                return ((bool)(this["courbeF0ExacteEvaluated"]));
+            }
+            set {
+                this["courbeF0ExacteEvaluated"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IntensiteStableEvaluated {
+            get {
+                return ((bool)(this["IntensiteStableEvaluated"]));
+            }
+            set {
+                this["IntensiteStableEvaluated"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool JitterEvaluated {
+            get {
+                return ((bool)(this["JitterEvaluated"]));
+            }
+            set {
+                this["JitterEvaluated"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DurationEvaluated {
+            get {
+                return ((bool)(this["DurationEvaluated"]));
+            }
+            set {
+                this["DurationEvaluated"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal f0ExacteGoodMax {
+            get {
+                return ((decimal)(this["f0ExacteGoodMax"]));
+            }
+            set {
+                this["f0ExacteGoodMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal f0ExacteGoodMin {
+            get {
+                return ((decimal)(this["f0ExacteGoodMin"]));
+            }
+            set {
+                this["f0ExacteGoodMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal f0ExacteOkayMax {
+            get {
+                return ((decimal)(this["f0ExacteOkayMax"]));
+            }
+            set {
+                this["f0ExacteOkayMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal f0ExacteOkayMin {
+            get {
+                return ((decimal)(this["f0ExacteOkayMin"]));
+            }
+            set {
+                this["f0ExacteOkayMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal f0ExacteBadMax {
+            get {
+                return ((decimal)(this["f0ExacteBadMax"]));
+            }
+            set {
+                this["f0ExacteBadMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal f0ExacteBadMin {
+            get {
+                return ((decimal)(this["f0ExacteBadMin"]));
+            }
+            set {
+                this["f0ExacteBadMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal f0StableGoodMax {
+            get {
+                return ((decimal)(this["f0StableGoodMax"]));
+            }
+            set {
+                this["f0StableGoodMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal f0StableGoodMin {
+            get {
+                return ((decimal)(this["f0StableGoodMin"]));
+            }
+            set {
+                this["f0StableGoodMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal f0StableOkayMax {
+            get {
+                return ((decimal)(this["f0StableOkayMax"]));
+            }
+            set {
+                this["f0StableOkayMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal f0StableOkayMin {
+            get {
+                return ((decimal)(this["f0StableOkayMin"]));
+            }
+            set {
+                this["f0StableOkayMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal f0StableBadMax {
+            get {
+                return ((decimal)(this["f0StableBadMax"]));
+            }
+            set {
+                this["f0StableBadMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal f0StableBadMin {
+            get {
+                return ((decimal)(this["f0StableBadMin"]));
+            }
+            set {
+                this["f0StableBadMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal courbeF0ExacteGoodMax {
+            get {
+                return ((decimal)(this["courbeF0ExacteGoodMax"]));
+            }
+            set {
+                this["courbeF0ExacteGoodMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal courbeF0ExacteGoodMin {
+            get {
+                return ((decimal)(this["courbeF0ExacteGoodMin"]));
+            }
+            set {
+                this["courbeF0ExacteGoodMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal courbeF0ExacteOkayMax {
+            get {
+                return ((decimal)(this["courbeF0ExacteOkayMax"]));
+            }
+            set {
+                this["courbeF0ExacteOkayMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal courbeF0ExacteOkayMin {
+            get {
+                return ((decimal)(this["courbeF0ExacteOkayMin"]));
+            }
+            set {
+                this["courbeF0ExacteOkayMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal courbeF0ExacteBadMax {
+            get {
+                return ((decimal)(this["courbeF0ExacteBadMax"]));
+            }
+            set {
+                this["courbeF0ExacteBadMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal courbeF0ExacteBadMin {
+            get {
+                return ((decimal)(this["courbeF0ExacteBadMin"]));
+            }
+            set {
+                this["courbeF0ExacteBadMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal IntensiteStableGoodMax {
+            get {
+                return ((decimal)(this["IntensiteStableGoodMax"]));
+            }
+            set {
+                this["IntensiteStableGoodMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal IntensiteStableGoodMin {
+            get {
+                return ((decimal)(this["IntensiteStableGoodMin"]));
+            }
+            set {
+                this["IntensiteStableGoodMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal IntensiteStableOkayMax {
+            get {
+                return ((decimal)(this["IntensiteStableOkayMax"]));
+            }
+            set {
+                this["IntensiteStableOkayMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal IntensiteStableOkayMin {
+            get {
+                return ((decimal)(this["IntensiteStableOkayMin"]));
+            }
+            set {
+                this["IntensiteStableOkayMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal IntensiteStableBadMax {
+            get {
+                return ((decimal)(this["IntensiteStableBadMax"]));
+            }
+            set {
+                this["IntensiteStableBadMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal IntensiteStableBadMin {
+            get {
+                return ((decimal)(this["IntensiteStableBadMin"]));
+            }
+            set {
+                this["IntensiteStableBadMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal JitterGoodMax {
+            get {
+                return ((decimal)(this["JitterGoodMax"]));
+            }
+            set {
+                this["JitterGoodMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal JitterGoodMin {
+            get {
+                return ((decimal)(this["JitterGoodMin"]));
+            }
+            set {
+                this["JitterGoodMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal JitterOkayMax {
+            get {
+                return ((decimal)(this["JitterOkayMax"]));
+            }
+            set {
+                this["JitterOkayMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal JitterOkayMin {
+            get {
+                return ((decimal)(this["JitterOkayMin"]));
+            }
+            set {
+                this["JitterOkayMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal JitterBadMax {
+            get {
+                return ((decimal)(this["JitterBadMax"]));
+            }
+            set {
+                this["JitterBadMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal JitterBadMin {
+            get {
+                return ((decimal)(this["JitterBadMin"]));
+            }
+            set {
+                this["JitterBadMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal DurationGoodMax {
+            get {
+                return ((decimal)(this["DurationGoodMax"]));
+            }
+            set {
+                this["DurationGoodMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal DurationGoodMin {
+            get {
+                return ((decimal)(this["DurationGoodMin"]));
+            }
+            set {
+                this["DurationGoodMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.85")]
+        public decimal DurationOkayMax {
+            get {
+                return ((decimal)(this["DurationOkayMax"]));
+            }
+            set {
+                this["DurationOkayMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal DurationOkayMin {
+            get {
+                return ((decimal)(this["DurationOkayMin"]));
+            }
+            set {
+                this["DurationOkayMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.70")]
+        public decimal DurationBadMax {
+            get {
+                return ((decimal)(this["DurationBadMax"]));
+            }
+            set {
+                this["DurationBadMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal DurationBadMin {
+            get {
+                return ((decimal)(this["DurationBadMin"]));
+            }
+            set {
+                this["DurationBadMin"] = value;
             }
         }
     }

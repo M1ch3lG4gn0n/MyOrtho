@@ -44,7 +44,7 @@ namespace MyOrthoOrtho.Views.Controls
             if (Directory.Exists(EXERCICES_FOLDER))
             {
                 FileHelper.FileReader fileReader = new FileHelper.FileReader();
-                fileReader.ReadAllExercicesIntoPreparationVMList(EXERCICES_FOLDER, activityListInstance.getActivityList());
+                fileReader.ReadAllExercicesIntoExerciceVMList(EXERCICES_FOLDER, activityListInstance.getActivityList());
                 if(activityListInstance.getActivityList().Count > 0)
                 {
                     lblAucunExercice.Visibility = Visibility.Hidden;
