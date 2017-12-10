@@ -165,6 +165,7 @@
         <Label x:Name="lblType" Content="" HorizontalAlignment="Left" Margin="763,88,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblDuree" Content="" HorizontalAlignment="Left" Margin="763,114,0,0" VerticalAlignment="Top"/>
         <Label Content="Nom du fichier de configuration :" HorizontalAlignment="Left" Margin="305,27,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="305,53,0,0" TextWrapping="Wrap" Text="Configuration1" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="txtConfigName" HorizontalAlignment="Left" Height="23" Margin="305,53,0,0" TextWrapping="Wrap" Text="Configuration1" VerticalAlignment="Top" Width="190"/>
+        <Label x:Name="lblAucunExercice" Content="Aucun exercice trouvé" HorizontalAlignment="Left" Margin="53,330,0,0" VerticalAlignment="Top" Width="190" Foreground="Red" FontWeight="Bold"/>
     </Grid>
 </UserControl>
