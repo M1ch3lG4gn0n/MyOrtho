@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MyOrthoClient.Models;
 using System.Windows;
@@ -45,13 +44,6 @@ namespace MyOrthoClient.Controllers
                 Directory.CreateDirectory(this.exerciceFolderPath);
             }
             currentExercicePath = this.exerciceFolderPath + DateTime.Now.ToString("yyyyMMddHHmmss");
-            /*
-            Task.Run(() =>
-            {
-                this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.LoadingGifPath);
-                this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path);
-                this.setFeedback("");
-            });*/
         }
 
         public void StartPlayback()
@@ -157,6 +149,24 @@ namespace MyOrthoClient.Controllers
             return DataExtractor.GetInstance().GetJitterValue(resultPath);
         }
 
+        private double CalculateTimeLength(string wavPath)
+        {
+            var resultPath = currentExercicePath + "TimeLength.txt";
+            if (!File.Exists(resultPath))
+            {
+                File.Create(resultPath).Close();
+            }
+            else
+            {
+                File.WriteAllText(resultPath, string.Empty);
+            }
+            var scriptPath = this.scripting.WriteTimeLengthScript(wavPath, this.CurrentActivity.PitchMin, resultPath);
+
+            this.connector.GetResult(scriptPath);
+
+            return DataExtractor.GetInstance().GetTimeLengthValue(resultPath);
+        }
+
         private void EvaluateExercice(string wavPath)
         {
             var score = 0;
@@ -199,9 +209,9 @@ namespace MyOrthoClient.Controllers
             if (this.CurrentActivity.Duree_exacteEvaluated)
             {
                 count++;
-                var value = random.Next(0, 100);
+                var value = CalculateTimeLength(wavPath);
                 this.CurrentActivity.Duree_exacte = value;
-                score += value;
+                score += ScoreProvider.EvaluateTimeLength(this.CurrentActivity.Duree_expected, value);
             }
             
             if (this.CurrentActivity.JitterEvaluated)

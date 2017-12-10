@@ -34,7 +34,7 @@ namespace MyOrthoClient.Views
             _F0ExacteImage = this.ConvertToBitMap(activity.F0_exact);
             _F0StableImage = this.ConvertToBitMap(activity.F0_stable);
             _IntensiteStableImage = this.ConvertToBitMap(activity.Intensite_stable);
-            _DureeExacteImage = this.ConvertToBitMap(activity.Duree_exacte);
+            _DureeExacteImage = this.ConvertToBitMap(ScoreProvider.EvaluateTimeLength(activity.Duree_expected, activity.Duree_exacte));
             _JitterImage = this.ConvertToBitMap(ScoreProvider.EvaluateJitter(activity.Jitter));
 
             InitializeComponent();

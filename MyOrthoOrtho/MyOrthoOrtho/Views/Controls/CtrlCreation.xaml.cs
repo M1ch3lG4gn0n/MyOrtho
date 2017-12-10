@@ -200,11 +200,13 @@ namespace MyOrthoOrtho.Views.Controls
             {
                 string filename = fileDialog.FileName;
                 txtFileName.Text = filename;
-                recordStartDate = File.GetCreationTime(filename).ToString("yyyyMMddHHmmss");
+                recordStartDate = DateTime.Now.ToString("yyyyMMddHHmmss");
 
                 string[] directories = filename.Split('\\');
                 currentExerciceFileName = directories[directories.Length - 1];
                 currentExerciceFilePath = filename;
+
+                tempExerciceWavPath = filename;
 
                 UpdateChartsAndActivity();
 

@@ -47,8 +47,8 @@ namespace MyOrthoOrtho.Controllers
                                     Date = exercice.Descendants("Date").First().Value,
                                     Name = exercice.Descendants("Name").First().Value,
                                     Type = exercice.Descendants("Type").First().Value,
-                                    Example_wav_path = filePath + "\\" + exercice.Descendants("Exercice_wav_file_name").First().Value,
-                                    Example_praat_path = filePath + "\\" + exercice.Descendants("Exercice_praat_file_name").First().Value,
+                                    Example_wav_path = exercice.Descendants("Exercice_wav_file_name").First().Value,
+                                    Example_praat_path = exercice.Descendants("Exercice_praat_file_name").First().Value,
 
                                     PitchMin = int.Parse(exercice.Descendants("Pitch_min").First().Value),
                                     PitchMax = int.Parse(exercice.Descendants("Pitch_max").First().Value),
@@ -105,7 +105,7 @@ namespace MyOrthoOrtho.Controllers
                                     Duree_bad_min = decimal.Parse(exercice.Descendants("Duree_exacte_evaluation").First().Descendants("Bad").Descendants("Min").First().Value),
                             
                                 };
-                                newExercice.Exercice = DataExtractor.GetInstance().GetFileValues(newExercice.Example_praat_path);
+                                newExercice.Exercice = DataExtractor.GetInstance().GetFileValues(filePath + "\\" + newExercice.Example_praat_path);
                         
                                 list.Add(newExercice);
                             
