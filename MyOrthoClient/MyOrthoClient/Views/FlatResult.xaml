@@ -16,7 +16,6 @@
         <Label Margin="0,210,0,-0" >Durée exacte</Label>
         <Image Name="DureeExacteResult" Margin="20,235,85,70" Stretch="Fill" Source="{Binding DureeExacteImage}"/>
         <Label Margin="0,280,0,-0" >Jitter</Label>
-        <TextBox Name="JitterTxt" Text="{Binding Path=Jitter, Mode=TwoWay}" HorizontalAlignment="Left" Height="15" Margin="40,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" IsEnabled="False"/>
         <Image Name="JitterResult" Margin="20,305,85,0" Stretch="Fill" Source="{Binding JitterImage}"/>
     </Grid>
 </UserControl>
