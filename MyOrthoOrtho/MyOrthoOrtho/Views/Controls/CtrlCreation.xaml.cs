@@ -18,6 +18,7 @@ namespace MyOrthoOrtho.Views.Controls
     {
         private CreationExecuter ce;
         WAVPlayerRecorder RecordPlayer;
+        CreationVM ActivityListInstance = new CreationVM();
         static string EXERCICES_FOLDER = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\SavedExercices";
         static string TEMP_PATH = Path.GetTempPath() + "MyOrtho";
 
@@ -32,7 +33,25 @@ namespace MyOrthoOrtho.Views.Controls
         public CtrlCreation()
         {
             InitializeComponent();
-           
+            DataContext = ActivityListInstance;
+            ImportExistingExercices();
+        }
+
+        private void ImportExistingExercices()
+        {
+            ListActivities.SelectedIndex = -1;
+
+            ActivityListInstance.ClearItems();
+
+            if (Directory.Exists(EXERCICES_FOLDER))
+            {
+                FileHelper.FileReader fileReader = new FileHelper.FileReader();
+                fileReader.ReadAllExercicesIntoExerciceVMList(EXERCICES_FOLDER, ActivityListInstance.getActivityList());
+                
+            }
+            
+
+
         }
 
         private void BtnCreerExercice_Click(object sender, RoutedEventArgs e)
@@ -174,8 +193,10 @@ namespace MyOrthoOrtho.Views.Controls
 
             doc.Save(targetXMLPath);
 
-
-
+            ImportExistingExercices();
+            ActivityListInstance.SetDefaultExerciceValues();
+            DataContext = null;
+            DataContext = ActivityListInstance;
         }
 
 
@@ -221,6 +242,7 @@ namespace MyOrthoOrtho.Views.Controls
             {
                 Directory.CreateDirectory(TEMP_PATH);
             }
+            
             recordStartDate = DateTime.Now.ToString("yyyyMMddHHmmss");
             currentExerciceFileName = "\\TempRecording_" + recordStartDate;
             currentExerciceFilePath = (TEMP_PATH + currentExerciceFileName);
@@ -247,7 +269,11 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void UpdateChartsAndActivity()
         {
-            ExerciceVM activity = new ExerciceVM
+            ExerciceVM activity = ActivityListInstance.CurrentExercice;
+            activity.Date = recordStartDate;
+            activity.Example_wav_path = txtFileName.Text;
+
+            /*ExerciceVM activity = new ExerciceVM
             {
                 Example_wav_path = txtFileName.Text,
                 Date = recordStartDate,
@@ -256,7 +282,7 @@ namespace MyOrthoOrtho.Views.Controls
                 PitchMax = Convert.ToInt32(txtPitchMax.Text),
                 IntensityThreshold = Convert.ToInt32(txtIntensityThreshold.Text),
                 Duree_exacte = Convert.ToInt32(txtDuration.Text)
-            };
+            };*/
 
             activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
             ce = new CreationExecuter(activity);
@@ -283,7 +309,15 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void ListActivities_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if(ListActivities.SelectedIndex == -1)
+            {
+                btnDeleteExercice.IsEnabled = false;
+                btnModifExercice.IsEnabled = false;
+                return;
+            }
+            
+            btnDeleteExercice.IsEnabled = true;
+            btnModifExercice.IsEnabled = true;
         }
 
         private void TxtName_TextChanged(object sender, TextChangedEventArgs e)
@@ -357,6 +391,15 @@ namespace MyOrthoOrtho.Views.Controls
         private void BtnModifExercice_Click(object sender, RoutedEventArgs e)
         {
 
+            var currentActivityIndex = ListActivities.SelectedIndex;
+            var activity = ActivityListInstance.GetActivity(currentActivityIndex);
+            
+            ActivityListInstance.UpdateActivity(activity);
+
+            ActivityListInstance.CurrentExercice.SetExerciseValue(values => SetChartLine((LineSeries)IntensityChart.Series[0], (LineSeries)PitchChart.Series[0], values));
+            DataContext = null;
+            DataContext = ActivityListInstance;
+            //ce = new CreationExecuter(activity);
         }
     }
 }

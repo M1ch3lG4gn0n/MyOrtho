@@ -20,13 +20,13 @@ namespace MyOrthoClient.Models
         public int PitchMin { get; set; }
         public int PitchMax { get; set; }
         public int IntensityThreshold { get; set; }
-        public int F0_exact { get; set; }
+        public double F0_exact { get; set; }
         public bool F0_exactEvaluated { get; set; }
-        public int F0_stable { get; set; }
+        public double F0_stable { get; set; }
         public bool F0_stableEvaluated { get; set; }
-        public int Intensite_stable { get; set; }
+        public double Intensite_stable { get; set; }
         public bool Intensite_stableEvaluated { get; set; }
-        public int Courbe_f0_exacte { get; set; }
+        public double Courbe_f0_exacte { get; set; }
         public bool Courbe_f0_exacteEvaluated { get; set; }
         public double Duree_expected { get; set; }
         public double Duree_exacte { get; set; }
@@ -62,7 +62,7 @@ namespace MyOrthoClient.Models
                     this._setResult(value);
                 }
             }
-        }      
+        }
 
         public ActivityVM() { }
 

@@ -1,7 +1,150 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MyOrthoOrtho.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Nouvel Exercice</Value>
+    </Setting>
+    <Setting Name="pitchMin" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">70</Value>
+    </Setting>
+    <Setting Name="pitchMax" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="intensityThreshold" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
+    <Setting Name="duration" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="type" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Droite</Value>
+    </Setting>
+    <Setting Name="f0ExacteEvaluated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="f0StableEvaluated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="courbeF0ExacteEvaluated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IntensiteStableEvaluated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="JitterEvaluated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DurationEvaluated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="f0ExacteGoodMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="f0ExacteGoodMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="f0ExacteOkayMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="f0ExacteOkayMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="f0ExacteBadMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="f0ExacteBadMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="f0StableGoodMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="f0StableGoodMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="f0StableOkayMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="f0StableOkayMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="f0StableBadMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="f0StableBadMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="courbeF0ExacteGoodMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="courbeF0ExacteGoodMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="courbeF0ExacteOkayMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="courbeF0ExacteOkayMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="courbeF0ExacteBadMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="courbeF0ExacteBadMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="IntensiteStableGoodMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="IntensiteStableGoodMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="IntensiteStableOkayMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="IntensiteStableOkayMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="IntensiteStableBadMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="IntensiteStableBadMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="JitterGoodMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="JitterGoodMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="JitterOkayMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="JitterOkayMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="JitterBadMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="JitterBadMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DurationGoodMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="DurationGoodMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="DurationOkayMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.85</Value>
+    </Setting>
+    <Setting Name="DurationOkayMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="DurationBadMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.70</Value>
+    </Setting>
+    <Setting Name="DurationBadMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

@@ -34,7 +34,7 @@ namespace MyOrthoClient.Views
 
             this.activity = activity;
 
-            _CourbeF0ExacteImage = this.ConvertToBitMap(activity.Courbe_f0_exacte);
+            _CourbeF0ExacteImage = this.ConvertToBitMap((int)(activity.Courbe_f0_exacte * 100d));
 
             InitializeComponent();
 
