@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
 using System.IO;
 using System.Xml.Linq;
+using System.Xml;
+using System.Linq;
 
 namespace MyOrthoOrtho.Views.Controls
 {
@@ -70,10 +72,14 @@ namespace MyOrthoOrtho.Views.Controls
 
             string type = (bool)radTypeLigne.IsChecked ? "Droite" : "Courbe";
 
-            int.TryParse(txtPitchMax.Text, out int pitchMax);
-            int.TryParse(txtPitchMin.Text, out int pitchMin);
-            int.TryParse(txtIntensityThreshold.Text, out int intensityThreshold);
-            int.TryParse(txtDuration.Text, out int duree);
+            int pitchMax;
+            int pitchMin;
+            int intensityThreshold;
+            int duree;
+            int.TryParse(txtPitchMax.Text, out pitchMax);
+            int.TryParse(txtPitchMin.Text, out pitchMin);
+            int.TryParse(txtIntensityThreshold.Text, out intensityThreshold);
+            int.TryParse(txtDuration.Text, out duree);
 
             if (!Directory.Exists(EXERCICES_FOLDER))
             {
@@ -83,116 +89,101 @@ namespace MyOrthoOrtho.Views.Controls
             File.Copy(tempExerciceWavPath, savedWavPath);
             File.Copy(tempExercicePraatResultsPath, savedPraatResultsPath);
 
+            var configFile = new XmlHelper(false);
+            XmlElement activity = configFile.AddToRoot("Activity", string.Empty);
+
+            configFile.AppendToNode(activity, "Name", txtName.Text);
+            configFile.AppendToNode(activity, "Exercice_wav_file_name", wavFileName);
+            var exerciceResults = configFile.AppendToNode(activity, "Exercice_praat_results", string.Empty);
+
+            XmlElement pointNode;
+            foreach(var point in ce.EnumerateCurrentPoints())
+            {
+                pointNode = configFile.AppendToNode(exerciceResults, "point", string.Empty);
+                configFile.AppendToNode(pointNode, "time", point.time.ToString("F2"));
+                configFile.AppendToNode(pointNode, "frequency", point.frequency.ToString("F2"));
+                configFile.AppendToNode(pointNode, "pitch", point.pitch.ToString("F2"));
+            }
+
+            configFile.AppendToNode(activity, "Pitch_min", pitchMin.ToString());
+            configFile.AppendToNode(activity, "Pitch_max", pitchMax.ToString());
+            configFile.AppendToNode(activity, "Intensity_threshold", intensityThreshold.ToString());
+            configFile.AppendToNode(activity, "F0_exactEvaluated", chkF0ExacteEvaluated.IsChecked.ToString());
+            configFile.AppendToNode(activity, "Courbe_f0_exacteEvaluated", chkCourbeF0ExacteEvaluated.IsChecked.ToString());
+            configFile.AppendToNode(activity, "F0_stableEvaluated", chkF0StableEvaluated.IsChecked.ToString());
+            configFile.AppendToNode(activity, "Intensite_stableEvaluated", chkIntensiteStableEvaluated.IsChecked.ToString());
+            configFile.AppendToNode(activity, "Duree_exacteEvaluated", chkDurationEvaluated.IsChecked.ToString());
+            configFile.AppendToNode(activity, "Duree_exacte", duree.ToString());
+            configFile.AppendToNode(activity, "JitterEvaluated", chkJitterEvaluated.IsChecked.ToString());
+
+            var f0_exacte_evaluation = configFile.AppendToNode(activity, "F0_exacte_evaluation", string.Empty);
+            var good = configFile.AppendToNode(f0_exacte_evaluation, "Good", string.Empty);
+            configFile.AppendToNode(good, "Max", txtF0ExactGoodMax.Text);
+            configFile.AppendToNode(good, "Min", txtF0ExactGoodMin.Text);
+            var okay = configFile.AppendToNode(f0_exacte_evaluation, "Okay", string.Empty);
+            configFile.AppendToNode(okay, "Max", txtF0ExactOkayMax.Text);
+            configFile.AppendToNode(okay, "Min", txtF0ExactOkayMin.Text);
+            var bad = configFile.AppendToNode(f0_exacte_evaluation, "Bad", string.Empty);
+            configFile.AppendToNode(bad, "Max", txtF0ExactBadMax.Text);
+            configFile.AppendToNode(bad, "Min", txtF0ExactBadMin.Text);
+
+            var f0_stable_evaluation = configFile.AppendToNode(activity, "F0_stable_evaluation", string.Empty);
+            good = configFile.AppendToNode(f0_stable_evaluation, "Good", string.Empty);
+            configFile.AppendToNode(good,  "Max", txtF0StableGoodMax.Text);
+            configFile.AppendToNode(good,  "Min", txtF0StableGoodMin.Text);
+            okay = configFile.AppendToNode(f0_stable_evaluation, "Okay", string.Empty);
+            configFile.AppendToNode(okay,  "Max", txtF0StableOkayMax.Text);
+            configFile.AppendToNode(okay,  "Min", txtF0StableOkayMin.Text);
+            bad = configFile.AppendToNode( f0_stable_evaluation, "Bad", string.Empty);
+            configFile.AppendToNode(bad,   "Max", txtF0StableBadMax.Text);
+            configFile.AppendToNode(bad,   "Min", txtF0StableBadMin.Text);
+
+             var intensite_stable_evaluation = configFile.AppendToNode(activity, "Intensite_stable_evaluation", string.Empty);
+            good = configFile.AppendToNode(intensite_stable_evaluation, "Good", string.Empty);
+            configFile.AppendToNode(good,  "Max", txtIntensiteStableGoodMax.Text);
+            configFile.AppendToNode(good,  "Min", txtIntensiteStableGoodMin.Text);
+            okay = configFile.AppendToNode(intensite_stable_evaluation, "Okay", string.Empty);
+            configFile.AppendToNode(okay,  "Max", txtIntensiteStableOkayMax.Text);
+            configFile.AppendToNode(okay,  "Min", txtIntensiteStableOkayMin.Text);
+            bad = configFile.AppendToNode(intensite_stable_evaluation, "Bad", string.Empty);
+            configFile.AppendToNode(bad,   "Max", txtIntensiteStableBadMax.Text);
+            configFile.AppendToNode(bad, "Min", txtIntensiteStableBadMin.Text);
+
+             var courbe_F0_exacte_evaluation = configFile.AppendToNode(activity, "Courbe_F0_exacte_evaluation", string.Empty);
+            good = configFile.AppendToNode(courbe_F0_exacte_evaluation, "Good", string.Empty);
+            configFile.AppendToNode(good,  "Max", txtCourbeF0ExactGoodMax.Text);
+            configFile.AppendToNode(good,  "Min", txtCourbeF0ExactGoodMin.Text);
+            okay = configFile.AppendToNode(courbe_F0_exacte_evaluation, "Okay", string.Empty);
+            configFile.AppendToNode(okay,  "Max", txtCourbeF0ExactOkayMax.Text);
+            configFile.AppendToNode(okay,  "Min", txtCourbeF0ExactOkayMin.Text);
+            bad = configFile.AppendToNode(courbe_F0_exacte_evaluation, "Bad", string.Empty);
+            configFile.AppendToNode(bad,   "Max", txtCourbeF0ExactBadMax.Text);
+            configFile.AppendToNode(bad, "Min", txtCourbeF0ExactBadMin.Text);
+
+             var duree_exacte_evaluation = configFile.AppendToNode(activity, "Duree_exacte_evaluation", string.Empty);
+            good = configFile.AppendToNode(duree_exacte_evaluation, "Good", string.Empty);
+            configFile.AppendToNode(good,  "Max", txtDurationGoodMax.Text);
+            configFile.AppendToNode(good,  "Min", txtDurationGoodMin.Text);
+            okay = configFile.AppendToNode(duree_exacte_evaluation ,"Okay", string.Empty);
+            configFile.AppendToNode(okay,  "Max", txtDurationOkayMax.Text);
+            configFile.AppendToNode(okay,  "Min", txtDurationOkayMin.Text);
+            bad = configFile.AppendToNode(duree_exacte_evaluation,  "Bad", string.Empty);
+            configFile.AppendToNode(bad,   "Max", txtDurationBadMax.Text);
+            configFile.AppendToNode(bad, "Min", txtDurationBadMin.Text);
+
+            var jitter_evaluation = configFile.AppendToNode(activity, "Jitter_evaluation", string.Empty);
+            good = configFile.AppendToNode(jitter_evaluation,"Good", string.Empty);
+            configFile.AppendToNode(good,  "Max", txtJitterGoodMax.Text);
+            configFile.AppendToNode(good,  "Min", txtJitterGoodMin.Text);
+            okay = configFile.AppendToNode(jitter_evaluation,"Okay", string.Empty);
+            configFile.AppendToNode(okay,  "Max", txtJitterOkayMax.Text);
+            configFile.AppendToNode(okay,  "Min", txtJitterOkayMin.Text);
+            bad = configFile.AppendToNode(jitter_evaluation, "Bad", string.Empty);
+            configFile.AppendToNode(bad,   "Max", txtJitterBadMax.Text);
+            configFile.AppendToNode(bad, "Min", txtJitterBadMin.Text);
+
+            configFile.Save(targetXMLPath);
             
-
-            XDocument doc =
-                new XDocument(
-                    new XElement("MYO_Exercice",
-                        new XElement("Date", recordStartDate),
-                        new XElement("Name", txtName.Text),
-                        new XElement("Type", type),
-                        new XElement("Exercice_wav_file_name", wavFileName),
-                        new XElement("Exercice_praat_file_name", txtFileName),
-                        new XElement("Pitch_min", pitchMin),
-                        new XElement("Pitch_max", pitchMax),
-                        new XElement("Intensity_threshold", intensityThreshold),
-                        new XElement("Duree", duree),
-                        new XElement("F0_exactEvaluated", chkF0ExacteEvaluated.IsChecked.ToString()),
-                        new XElement("F0_stableEvaluated", chkF0StableEvaluated.IsChecked.ToString()),
-                        new XElement("Intensite_stableEvaluated", chkIntensiteStableEvaluated.IsChecked.ToString()),
-                        new XElement("Courbe_f0_exacteEvaluated", chkCourbeF0ExacteEvaluated.IsChecked.ToString()),
-                        new XElement("Duree_exacteEvaluated", chkDurationEvaluated.IsChecked.ToString()),
-                        new XElement("JitterEvaluated", chkJitterEvaluated.IsChecked.ToString()),
-                        new XElement("F0_exacte_evaluation",
-                            new XElement("Good", 
-                                new XElement("Max", txtF0ExactGoodMax.Text),
-                                new XElement("Min", txtF0ExactGoodMin.Text)
-                                ),
-                            new XElement("Okay",
-                                new XElement("Max", txtF0ExactOkayMax.Text),
-                                new XElement("Min", txtF0ExactOkayMin.Text)
-                                ),
-                            new XElement("Bad",
-                                new XElement("Max", txtF0ExactBadMax.Text),
-                                new XElement("Min", txtF0ExactBadMin.Text)
-                                )
-                            ),
-                        new XElement("F0_stable_evaluation",
-                            new XElement("Good",
-                                new XElement("Max", txtF0StableGoodMax.Text),
-                                new XElement("Min", txtF0StableGoodMin.Text)
-                                ),
-                            new XElement("Okay",
-                                new XElement("Max", txtF0StableOkayMax.Text),
-                                new XElement("Min", txtF0StableOkayMin.Text)
-                                ),
-                            new XElement("Bad",
-                                new XElement("Max", txtF0StableBadMax.Text),
-                                new XElement("Min", txtF0StableBadMin.Text)
-                                )
-                            ),
-                        new XElement("Intensite_stable_evaluation",
-                            new XElement("Good",
-                                new XElement("Max", txtIntensiteStableGoodMax.Text),
-                                new XElement("Min", txtIntensiteStableGoodMin.Text)
-                                ),
-                            new XElement("Okay",
-                                new XElement("Max", txtIntensiteStableOkayMax.Text),
-                                new XElement("Min", txtIntensiteStableOkayMin.Text)
-                                ),
-                            new XElement("Bad",
-                                new XElement("Max", txtIntensiteStableBadMax.Text),
-                                new XElement("Min", txtIntensiteStableBadMin.Text)
-                                )
-                            ),
-                        new XElement("Courbe_F0_exacte_evaluation",
-                            new XElement("Good",
-                                new XElement("Max", txtCourbeF0ExactGoodMax.Text),
-                                new XElement("Min", txtCourbeF0ExactGoodMin.Text)
-                                ),
-                            new XElement("Okay",
-                                new XElement("Max", txtCourbeF0ExactOkayMax.Text),
-                                new XElement("Min", txtCourbeF0ExactOkayMin.Text)
-                                ),
-                            new XElement("Bad",
-                                new XElement("Max", txtCourbeF0ExactBadMax.Text),
-                                new XElement("Min", txtCourbeF0ExactBadMin.Text)
-                                )
-                            ),
-                        new XElement("Duree_exacte_evaluation",
-                            new XElement("Good",
-                                new XElement("Max", txtDurationGoodMax.Text),
-                                new XElement("Min", txtDurationGoodMin.Text)
-                                ),
-                            new XElement("Okay",
-                                new XElement("Max", txtDurationOkayMax.Text),
-                                new XElement("Min", txtDurationOkayMin.Text)
-                                ),
-                            new XElement("Bad",
-                                new XElement("Max", txtDurationBadMax.Text),
-                                new XElement("Min", txtDurationBadMin.Text)
-                                )
-                            ),
-                        new XElement("Jitter_evaluation",
-                            new XElement("Good",
-                                new XElement("Max", txtJitterGoodMax.Text),
-                                new XElement("Min", txtJitterGoodMin.Text)
-                                ),
-                            new XElement("Okay",
-                                new XElement("Max", txtJitterOkayMax.Text),
-                                new XElement("Min", txtJitterOkayMin.Text)
-                                ),
-                            new XElement("Bad",
-                                new XElement("Max", txtJitterBadMax.Text),
-                                new XElement("Min", txtJitterBadMin.Text)
-                                )
-                            )
-
-                        )
-        );
-
-            doc.Save(targetXMLPath);
-
             ImportExistingExercices();
             ActivityListInstance.SetDefaultExerciceValues();
             DataContext = null;

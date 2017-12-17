@@ -80,6 +80,7 @@
     <Compile Include="Controllers\CreationExecuter.cs" />
     <Compile Include="Controllers\PreparationExecuter.cs" />
     <Compile Include="Controllers\SuiviExecuter.cs" />
+    <Compile Include="Controllers\XmlHelper.cs" />
     <Compile Include="Models\ConfigurationFileModel.cs" />
     <Compile Include="Models\Exercice.cs" />
     <Compile Include="Models\ExerciceResultat.cs" />

@@ -56,6 +56,11 @@ namespace MyOrthoOrtho.Controllers
         {
             Player.StopPlayback();
         }
+
+        public IEnumerable<DataLineItem> EnumerateCurrentPoints()
+        {
+            return this.CurrentActivity.Exercice;
+        }
         
         private ICollection<DataLineItem> CalculateIntensityAndFrequency(string wavPath, string resultPath, string targetPath)
         {
