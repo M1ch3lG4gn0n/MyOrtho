@@ -233,7 +233,8 @@ namespace MyOrthoClient
 
                 foreach (ActivityVM exercice in activityListInstance.ActivityList)
                 {
-                    File.Copy(exercice.Example_wav_path, tempPath + "\\" + exercice.Name + ".wav");
+                    if(!String.IsNullOrEmpty(exercice.Resultat_wav_path))
+                        File.Copy(exercice.Resultat_wav_path, tempPath + "\\" + exercice.Name + ".wav");
                 }
 
                 ZipFile.CreateFromDirectory(tempPath, targetDirectory + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".zip");
@@ -241,5 +242,6 @@ namespace MyOrthoClient
                 Directory.Delete(tempPath,true);
             }
         }
+        
     }
 }
