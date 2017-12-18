@@ -225,14 +225,20 @@ namespace MyOrthoClient
                             )
                         );
 
-                doc.Save(targetDirectory + "\\" + "resultats.xml");
+                string tempPath = Directory.GetCurrentDirectory();
+                Directory.CreateDirectory(tempPath + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss"));
+                tempPath += "\\" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                doc.Save(tempPath + "\\" + "resultats.xml");
 
                 foreach (ActivityVM exercice in activityListInstance.ActivityList)
                 {
-                    File.Copy(exercice.Example_wav_path, targetDirectory + "\\" + exercice.Name + ".wav");
+                    File.Copy(exercice.Example_wav_path, tempPath + "\\" + exercice.Name + ".wav");
                 }
 
-                ZipFile.CreateFromDirectory(targetDirectory, targetDirectory + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".zip");
+                ZipFile.CreateFromDirectory(tempPath, targetDirectory + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".zip");
+
+                Directory.Delete(tempPath,true);
             }
         }
     }

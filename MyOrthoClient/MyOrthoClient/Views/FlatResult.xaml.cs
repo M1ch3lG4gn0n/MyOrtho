@@ -21,15 +21,8 @@ namespace MyOrthoClient.Views
         public BitmapImage DureeExacteImage { get { return _DureeExacteImage; } }
         private BitmapImage _JitterImage;
         public BitmapImage JitterImage { get { return _JitterImage; } }
-        public string Jitter
-        {
-            get
-            {
-                var value = activity?.Jitter.ToString();
-                return value ?? string.Empty;
-            }
-            set { }
-        }
+        public string Jitter { get; set; }
+        
 
         public FlatResult(ActivityVM activity)
         {
@@ -45,6 +38,8 @@ namespace MyOrthoClient.Views
             _IntensiteStableImage = this.ConvertToBitMap((int)(activity.Intensite_stable * 100d));
             _DureeExacteImage = this.ConvertToBitMap(ScoreProvider.EvaluateTimeLength(activity.Duree_expected, activity.Duree_exacte));
             _JitterImage = this.ConvertToBitMap(ScoreProvider.EvaluateJitter(activity.Jitter));
+
+            Jitter = activity.Jitter.ToString();
 
             InitializeComponent();
 
