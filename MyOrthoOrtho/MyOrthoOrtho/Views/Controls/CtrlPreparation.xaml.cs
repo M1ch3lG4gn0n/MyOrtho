@@ -120,7 +120,6 @@ namespace MyOrthoOrtho.Views.Controls
             ListSelected.SelectedIndex = -1;
 
             lblNom.Content = activity.Name;
-            lblDate.Content = ActivityHelper.FormatDateString(activity.Date);
             lblDuree.Content = activity.Duree_exacte;
             lblType.Content = activity.Type;
 
@@ -145,7 +144,6 @@ namespace MyOrthoOrtho.Views.Controls
             ListAvailable.SelectedIndex = -1;
 
             lblNom.Content = activity.Name;
-            lblDate.Content = ActivityHelper.FormatDateString(activity.Date);
             lblDuree.Content = activity.Duree_exacte;
             lblType.Content = activity.Type;
 
@@ -231,7 +229,6 @@ namespace MyOrthoOrtho.Views.Controls
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             ImportExistingExercices();
-
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -280,120 +277,18 @@ namespace MyOrthoOrtho.Views.Controls
                 Directory.CreateDirectory(targetDirectory);
                 Directory.CreateDirectory(zipfolder);
 
-                XDocument doc =
-                    new XDocument(
-                        new XElement("Activities",
-                            new XElement("Date", dateExported),
-                                activityListInstance.SelectedActivityList.Select(x => new XElement("Activity",
-                                    new XElement("Name", x.Name),
-                                    new XElement("Type", x.Type),
-                                    new XElement("Exercice_wav_file_name", x.Example_wav_path),
-                                    new XElement("Exercice_praat_file_name", x.Example_praat_path),
-                                    new XElement("Pitch_min", x.PitchMin),
-                                    new XElement("Pitch_max", x.PitchMax),
-                                    new XElement("Intensity_threshold", x.IntensityThreshold),
-                                    new XElement("Duree", x.Duree_exacte),
-                                    new XElement("F0_exactEvaluated", x.F0_exactEvaluated),
-                                    new XElement("F0_stableEvaluated", x.F0_stableEvaluated),
-                                    new XElement("Intensite_stableEvaluated", x.Intensite_stableEvaluated),
-                                    new XElement("Courbe_f0_exacteEvaluated", x.Courbe_f0_exacteEvaluated),
-                                    new XElement("Duree_exacteEvaluated", x.Duree_exacteEvaluated),
-                                    new XElement("JitterEvaluated", x.JitterEvaluated),
-                                    new XElement("F0_exacte_evaluation",
-                                        new XElement("Good",
-                                            new XElement("Max", x.F0_exact_good_max),
-                                            new XElement("Min", x.F0_exact_good_min)
-                                            ),
-                                        new XElement("Okay",
-                                            new XElement("Max", x.F0_exact_okay_max),
-                                            new XElement("Min", x.F0_exact_okay_min)
-                                            ),
-                                        new XElement("Bad",
-                                            new XElement("Max", x.F0_exact_bad_max),
-                                            new XElement("Min", x.F0_exact_bad_min)
-                                            )
-                                        ),
-                                    new XElement("F0_stable_evaluation",
-                                        new XElement("Good",
-                                            new XElement("Max", x.F0_stable_good_max),
-                                            new XElement("Min", x.F0_stable_good_min)
-                                            ),
-                                        new XElement("Okay",
-                                            new XElement("Max", x.F0_stable_okay_max),
-                                            new XElement("Min", x.F0_stable_okay_min)
-                                            ),
-                                        new XElement("Bad",
-                                            new XElement("Max", x.F0_stable_bad_max),
-                                            new XElement("Min", x.F0_stable_bad_min)
-                                            )
-                                        ),
-                                    new XElement("Intensite_stable_evaluation",
-                                        new XElement("Good",
-                                            new XElement("Max", x.Intensite_stable_good_max),
-                                            new XElement("Min", x.Intensite_stable_good_min)
-                                            ),
-                                        new XElement("Okay",
-                                            new XElement("Max", x.Intensite_stable_okay_max),
-                                            new XElement("Min", x.Intensite_stable_okay_min)
-                                            ),
-                                        new XElement("Bad",
-                                            new XElement("Max", x.Intensite_stable_bad_max),
-                                            new XElement("Min", x.Intensite_stable_bad_min)
-                                            )
-                                        ),
-                                    new XElement("Courbe_F0_exacte_evaluation",
-                                        new XElement("Good",
-                                            new XElement("Max", x.Courbe_F0_exact_good_max),
-                                            new XElement("Min", x.Courbe_F0_exact_good_min)
-                                            ),
-                                        new XElement("Okay",
-                                            new XElement("Max", x.Courbe_F0_exact_okay_max),
-                                            new XElement("Min", x.Courbe_F0_exact_okay_min)
-                                            ),
-                                        new XElement("Bad",
-                                            new XElement("Max", x.Courbe_F0_exact_bad_max),
-                                            new XElement("Min", x.Courbe_F0_exact_bad_min)
-                                            )
-                                        ),
-                                    new XElement("Duree_exacte_evaluation",
-                                        new XElement("Good",
-                                            new XElement("Max", x.Duree_good_max),
-                                            new XElement("Min", x.Duree_good_min)
-                                            ),
-                                        new XElement("Okay",
-                                            new XElement("Max", x.Duree_okay_max),
-                                            new XElement("Min", x.Duree_okay_min)
-                                            ),
-                                        new XElement("Bad",
-                                            new XElement("Max", x.Duree_bad_max),
-                                            new XElement("Min", x.Duree_bad_min)
-                                            )
-                                        ),
-                                    new XElement("Jitter_evaluation",
-                                        new XElement("Good",
-                                            new XElement("Max", x.Jitter_good_max),
-                                            new XElement("Min", x.Jitter_good_min)
-                                            ),
-                                        new XElement("Okay",
-                                            new XElement("Max", x.Jitter_okay_max),
-                                            new XElement("Min", x.Jitter_okay_min)
-                                            ),
-                                        new XElement("Bad",
-                                            new XElement("Max", x.Jitter_bad_max),
-                                            new XElement("Min", x.Jitter_bad_min)
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        );
-
-                doc.Save(zipfolder + "\\" + txtConfigName.Text + ".xml");
-
+                var activitiesConfig = new XmlHelper(false);
+                var root = activitiesConfig.AddToRoot("Activities", string.Empty);
+                activitiesConfig.AppendToNode(root, "Date", dateExported);
+                foreach(var activity in activityListInstance.SelectedActivityList)
+                {
+                    activitiesConfig.ImportNode(root, XmlHelper.MakeActivityNode(activity));
+                }
+                activitiesConfig.Save(zipfolder + "\\config.xml");
+                
                 foreach (ExerciceVM selectedFile in ListSelected.Items)
                 {
                     File.Copy(EXERCICES_FOLDER + "\\" + selectedFile.Example_wav_path, zipfolder + "\\" + selectedFile.Example_wav_path);
-                    File.Copy(EXERCICES_FOLDER + "\\" + selectedFile.Example_praat_path, zipfolder + "\\" + selectedFile.Example_praat_path);
                 }
 
                 ZipFile.CreateFromDirectory(zipfolder, targetDirectory + "\\" + txtConfigName.Text + ".zip");

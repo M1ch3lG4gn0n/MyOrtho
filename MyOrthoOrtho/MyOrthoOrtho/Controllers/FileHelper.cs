@@ -1,4 +1,5 @@
 ﻿using MyOrthoOrtho.ViewModels;
+using MyOrthoOrtho.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,23 +38,20 @@ namespace MyOrthoOrtho.Controllers
                     {
                         XDocument xml = XDocument.Load(file);
 
-                        var exercice = xml.Descendants("MYO_Exercice");
+                        var exercice = xml.Descendants("Activity");
                         var isMyotype = exercice.Count();//Vérifie si le .xml est un exercice MyOrtho
 
                         if(isMyotype > 0)
                         {
                             ExerciceVM newExercice = new ExerciceVM
                                 {
-                                    Date = exercice.Descendants("Date").First().Value,
                                     Name = exercice.Descendants("Name").First().Value,
-                                    Type = exercice.Descendants("Type").First().Value,
                                     Example_wav_path = exercice.Descendants("Exercice_wav_file_name").First().Value,
-                                    Example_praat_path = exercice.Descendants("Exercice_praat_file_name").First().Value,
 
                                     PitchMin = int.Parse(exercice.Descendants("Pitch_min").First().Value),
                                     PitchMax = int.Parse(exercice.Descendants("Pitch_max").First().Value),
                                     IntensityThreshold = int.Parse(exercice.Descendants("Intensity_threshold").First().Value),
-                                    Duree_exacte = int.Parse(exercice.Descendants("Duree").First().Value),
+                                    Duree_exacte = int.Parse(exercice.Descendants("Duree_exacte").First().Value),
 
                                     F0_exactEvaluated = exercice.Descendants("F0_exactEvaluated").First().Value == "True"?true : false,
                                     F0_stableEvaluated = exercice.Descendants("F0_stableEvaluated").First().Value == "True" ? true : false,
@@ -105,7 +103,7 @@ namespace MyOrthoOrtho.Controllers
                                     Duree_bad_min = decimal.Parse(exercice.Descendants("Duree_exacte_evaluation").First().Descendants("Bad").Descendants("Min").First().Value),
                             
                                 };
-                                newExercice.Exercice = DataExtractor.GetInstance().GetFileValues(filePath + "\\" + newExercice.Example_praat_path);
+                                newExercice.Exercice = exercice.Descendants("Exercice_praat_results").First().Descendants("point").Select(x => new DataLineItem {time = double.Parse(x.Descendants("time").First().Value), pitch = double.Parse(x.Descendants("pitch").First().Value), frequency = double.Parse(x.Descendants("frequency").First().Value) }).ToList();
                         
                                 list.Add(newExercice);
                             

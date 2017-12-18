@@ -57,7 +57,7 @@ namespace MyOrthoOrtho.Controllers
             Player.StopPlayback();
         }
 
-        public IEnumerable<DataLineItem> EnumerateCurrentPoints()
+        public ICollection<DataLineItem> EnumerateCurrentPoints()
         {
             return this.CurrentActivity.Exercice;
         }

@@ -89,98 +89,62 @@ namespace MyOrthoOrtho.Views.Controls
             File.Copy(tempExerciceWavPath, savedWavPath);
             File.Copy(tempExercicePraatResultsPath, savedPraatResultsPath);
 
-            var configFile = new XmlHelper(false);
-            XmlElement activity = configFile.AddToRoot("Activity", string.Empty);
-
-            configFile.AppendToNode(activity, "Name", txtName.Text);
-            configFile.AppendToNode(activity, "Exercice_wav_file_name", wavFileName);
-            var exerciceResults = configFile.AppendToNode(activity, "Exercice_praat_results", string.Empty);
-
-            XmlElement pointNode;
-            foreach(var point in ce.EnumerateCurrentPoints())
+            var activityVM = new ExerciceVM
             {
-                pointNode = configFile.AppendToNode(exerciceResults, "point", string.Empty);
-                configFile.AppendToNode(pointNode, "time", point.time.ToString("F2"));
-                configFile.AppendToNode(pointNode, "frequency", point.frequency.ToString("F2"));
-                configFile.AppendToNode(pointNode, "pitch", point.pitch.ToString("F2"));
-            }
+                Name = txtName.Text,
+                Example_wav_path = wavFileName,
+                Exercice = ce.EnumerateCurrentPoints(),
+                PitchMin = pitchMin,
+                PitchMax = pitchMax,
+                IntensityThreshold = intensityThreshold,
+                F0_exactEvaluated = chkF0ExacteEvaluated.IsChecked.Value,
+                Courbe_f0_exacteEvaluated = chkCourbeF0ExacteEvaluated.IsChecked.Value,
+                F0_stableEvaluated = chkF0StableEvaluated.IsChecked.Value,
+                Intensite_stableEvaluated = chkIntensiteStableEvaluated.IsChecked.Value,
+                Duree_exacteEvaluated = chkDurationEvaluated.IsChecked.Value,
+                Duree_exacte = duree,
+                JitterEvaluated = chkJitterEvaluated.IsChecked.Value,
+                F0_exact_good_max = decimal.Parse(txtF0ExactGoodMax.Text),
+                F0_exact_good_min = decimal.Parse(txtF0ExactGoodMin.Text),
+                F0_exact_okay_max = decimal.Parse(txtF0ExactOkayMax.Text),
+                F0_exact_okay_min = decimal.Parse(txtF0ExactOkayMin.Text),
+                F0_exact_bad_max = decimal.Parse(txtF0ExactBadMax.Text),
+                F0_exact_bad_min = decimal.Parse(txtF0ExactBadMin.Text),
+                F0_stable_good_max = decimal.Parse(txtF0StableGoodMax.Text),
+                F0_stable_good_min = decimal.Parse(txtF0StableGoodMin.Text),
+                F0_stable_okay_max = decimal.Parse(txtF0StableOkayMax.Text),
+                F0_stable_okay_min = decimal.Parse(txtF0StableOkayMin.Text),
+                F0_stable_bad_max = decimal.Parse(txtF0StableBadMax.Text),
+                F0_stable_bad_min = decimal.Parse(txtF0StableBadMin.Text),
+                Intensite_stable_good_max = decimal.Parse(txtIntensiteStableGoodMax.Text),
+                Intensite_stable_good_min = decimal.Parse(txtIntensiteStableGoodMin.Text),
+                Intensite_stable_okay_max = decimal.Parse(txtIntensiteStableOkayMax.Text),
+                Intensite_stable_okay_min = decimal.Parse(txtIntensiteStableOkayMin.Text),
+                Intensite_stable_bad_max = decimal.Parse(txtIntensiteStableBadMax.Text),
+                Intensite_stable_bad_min = decimal.Parse(txtIntensiteStableBadMin.Text),
+                Courbe_F0_exact_good_max = decimal.Parse(txtCourbeF0ExactGoodMax.Text),
+                Courbe_F0_exact_good_min = decimal.Parse(txtCourbeF0ExactGoodMin.Text),
+                Courbe_F0_exact_okay_max = decimal.Parse(txtCourbeF0ExactOkayMax.Text),
+                Courbe_F0_exact_okay_min = decimal.Parse(txtCourbeF0ExactOkayMin.Text),
+                Courbe_F0_exact_bad_max = decimal.Parse(txtCourbeF0ExactBadMax.Text),
+                Courbe_F0_exact_bad_min = decimal.Parse(txtCourbeF0ExactBadMin.Text),
+                Duree_good_max = decimal.Parse(txtDurationGoodMax.Text),
+                Duree_good_min = decimal.Parse(txtDurationGoodMin.Text),
+                Duree_okay_max = decimal.Parse(txtDurationOkayMax.Text),
+                Duree_okay_min = decimal.Parse(txtDurationOkayMin.Text),
+                Duree_bad_max = decimal.Parse(txtDurationBadMax.Text),
+                Duree_bad_min = decimal.Parse(txtDurationBadMin.Text),
+                Jitter_good_max = decimal.Parse(txtJitterGoodMax.Text),
+                Jitter_good_min = decimal.Parse(txtJitterGoodMin.Text),
+                Jitter_okay_max = decimal.Parse(txtJitterOkayMax.Text),
+                Jitter_okay_min = decimal.Parse(txtJitterOkayMin.Text),
+                Jitter_bad_max = decimal.Parse(txtJitterBadMax.Text),
+                Jitter_bad_min = decimal.Parse(txtJitterBadMin.Text)
+            };
 
-            configFile.AppendToNode(activity, "Pitch_min", pitchMin.ToString());
-            configFile.AppendToNode(activity, "Pitch_max", pitchMax.ToString());
-            configFile.AppendToNode(activity, "Intensity_threshold", intensityThreshold.ToString());
-            configFile.AppendToNode(activity, "F0_exactEvaluated", chkF0ExacteEvaluated.IsChecked.ToString());
-            configFile.AppendToNode(activity, "Courbe_f0_exacteEvaluated", chkCourbeF0ExacteEvaluated.IsChecked.ToString());
-            configFile.AppendToNode(activity, "F0_stableEvaluated", chkF0StableEvaluated.IsChecked.ToString());
-            configFile.AppendToNode(activity, "Intensite_stableEvaluated", chkIntensiteStableEvaluated.IsChecked.ToString());
-            configFile.AppendToNode(activity, "Duree_exacteEvaluated", chkDurationEvaluated.IsChecked.ToString());
-            configFile.AppendToNode(activity, "Duree_exacte", duree.ToString());
-            configFile.AppendToNode(activity, "JitterEvaluated", chkJitterEvaluated.IsChecked.ToString());
+            var configFile = new XmlHelper(false);
 
-            var f0_exacte_evaluation = configFile.AppendToNode(activity, "F0_exacte_evaluation", string.Empty);
-            var good = configFile.AppendToNode(f0_exacte_evaluation, "Good", string.Empty);
-            configFile.AppendToNode(good, "Max", txtF0ExactGoodMax.Text);
-            configFile.AppendToNode(good, "Min", txtF0ExactGoodMin.Text);
-            var okay = configFile.AppendToNode(f0_exacte_evaluation, "Okay", string.Empty);
-            configFile.AppendToNode(okay, "Max", txtF0ExactOkayMax.Text);
-            configFile.AppendToNode(okay, "Min", txtF0ExactOkayMin.Text);
-            var bad = configFile.AppendToNode(f0_exacte_evaluation, "Bad", string.Empty);
-            configFile.AppendToNode(bad, "Max", txtF0ExactBadMax.Text);
-            configFile.AppendToNode(bad, "Min", txtF0ExactBadMin.Text);
-
-            var f0_stable_evaluation = configFile.AppendToNode(activity, "F0_stable_evaluation", string.Empty);
-            good = configFile.AppendToNode(f0_stable_evaluation, "Good", string.Empty);
-            configFile.AppendToNode(good,  "Max", txtF0StableGoodMax.Text);
-            configFile.AppendToNode(good,  "Min", txtF0StableGoodMin.Text);
-            okay = configFile.AppendToNode(f0_stable_evaluation, "Okay", string.Empty);
-            configFile.AppendToNode(okay,  "Max", txtF0StableOkayMax.Text);
-            configFile.AppendToNode(okay,  "Min", txtF0StableOkayMin.Text);
-            bad = configFile.AppendToNode( f0_stable_evaluation, "Bad", string.Empty);
-            configFile.AppendToNode(bad,   "Max", txtF0StableBadMax.Text);
-            configFile.AppendToNode(bad,   "Min", txtF0StableBadMin.Text);
-
-             var intensite_stable_evaluation = configFile.AppendToNode(activity, "Intensite_stable_evaluation", string.Empty);
-            good = configFile.AppendToNode(intensite_stable_evaluation, "Good", string.Empty);
-            configFile.AppendToNode(good,  "Max", txtIntensiteStableGoodMax.Text);
-            configFile.AppendToNode(good,  "Min", txtIntensiteStableGoodMin.Text);
-            okay = configFile.AppendToNode(intensite_stable_evaluation, "Okay", string.Empty);
-            configFile.AppendToNode(okay,  "Max", txtIntensiteStableOkayMax.Text);
-            configFile.AppendToNode(okay,  "Min", txtIntensiteStableOkayMin.Text);
-            bad = configFile.AppendToNode(intensite_stable_evaluation, "Bad", string.Empty);
-            configFile.AppendToNode(bad,   "Max", txtIntensiteStableBadMax.Text);
-            configFile.AppendToNode(bad, "Min", txtIntensiteStableBadMin.Text);
-
-             var courbe_F0_exacte_evaluation = configFile.AppendToNode(activity, "Courbe_F0_exacte_evaluation", string.Empty);
-            good = configFile.AppendToNode(courbe_F0_exacte_evaluation, "Good", string.Empty);
-            configFile.AppendToNode(good,  "Max", txtCourbeF0ExactGoodMax.Text);
-            configFile.AppendToNode(good,  "Min", txtCourbeF0ExactGoodMin.Text);
-            okay = configFile.AppendToNode(courbe_F0_exacte_evaluation, "Okay", string.Empty);
-            configFile.AppendToNode(okay,  "Max", txtCourbeF0ExactOkayMax.Text);
-            configFile.AppendToNode(okay,  "Min", txtCourbeF0ExactOkayMin.Text);
-            bad = configFile.AppendToNode(courbe_F0_exacte_evaluation, "Bad", string.Empty);
-            configFile.AppendToNode(bad,   "Max", txtCourbeF0ExactBadMax.Text);
-            configFile.AppendToNode(bad, "Min", txtCourbeF0ExactBadMin.Text);
-
-             var duree_exacte_evaluation = configFile.AppendToNode(activity, "Duree_exacte_evaluation", string.Empty);
-            good = configFile.AppendToNode(duree_exacte_evaluation, "Good", string.Empty);
-            configFile.AppendToNode(good,  "Max", txtDurationGoodMax.Text);
-            configFile.AppendToNode(good,  "Min", txtDurationGoodMin.Text);
-            okay = configFile.AppendToNode(duree_exacte_evaluation ,"Okay", string.Empty);
-            configFile.AppendToNode(okay,  "Max", txtDurationOkayMax.Text);
-            configFile.AppendToNode(okay,  "Min", txtDurationOkayMin.Text);
-            bad = configFile.AppendToNode(duree_exacte_evaluation,  "Bad", string.Empty);
-            configFile.AppendToNode(bad,   "Max", txtDurationBadMax.Text);
-            configFile.AppendToNode(bad, "Min", txtDurationBadMin.Text);
-
-            var jitter_evaluation = configFile.AppendToNode(activity, "Jitter_evaluation", string.Empty);
-            good = configFile.AppendToNode(jitter_evaluation,"Good", string.Empty);
-            configFile.AppendToNode(good,  "Max", txtJitterGoodMax.Text);
-            configFile.AppendToNode(good,  "Min", txtJitterGoodMin.Text);
-            okay = configFile.AppendToNode(jitter_evaluation,"Okay", string.Empty);
-            configFile.AppendToNode(okay,  "Max", txtJitterOkayMax.Text);
-            configFile.AppendToNode(okay,  "Min", txtJitterOkayMin.Text);
-            bad = configFile.AppendToNode(jitter_evaluation, "Bad", string.Empty);
-            configFile.AppendToNode(bad,   "Max", txtJitterBadMax.Text);
-            configFile.AppendToNode(bad, "Min", txtJitterBadMin.Text);
+            configFile.ImportNode(configFile.GetRoot() ,XmlHelper.MakeActivityNode(activityVM));
 
             configFile.Save(targetXMLPath);
             

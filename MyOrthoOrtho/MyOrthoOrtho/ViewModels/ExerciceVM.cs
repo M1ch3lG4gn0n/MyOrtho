@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace MyOrthoOrtho.ViewModels
 {
-    class ExerciceVM : VMBase
+    public class ExerciceVM : VMBase
     {
         private ICollection<DataLineItem> _exercice;
         private Action<ICollection<DataLineItem>> _setExercise;
