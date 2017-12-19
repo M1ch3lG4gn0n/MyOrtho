@@ -208,13 +208,13 @@ namespace MyOrthoClient
                                     new XElement("Courbe_f0_exacte", x.Courbe_f0_exacte),
                                     new XElement("Duree_exacte", x.Duree_exacte),
                                     new XElement("Jitter", x.Jitter),
-                                    x.Exercice?.Select(y => new XElement("Point",
+                                    x.Exercice?.Select(y => new XElement("PointExercice",
                                         new XElement("Time", y.Time),
                                         new XElement("Intensity", y.Intensity),
                                         new XElement("Pitch", y.Pitch)
                                         )
                                         ),
-                                    x.Results?.Select(y => new XElement("Point",
+                                    x.Results?.Select(y => new XElement("PointResultat",
                                         new XElement("Time", y.Time),
                                         new XElement("Intensity", y.Intensity),
                                         new XElement("Pitch", y.Pitch)
@@ -233,7 +233,10 @@ namespace MyOrthoClient
 
                 foreach (ActivityVM exercice in activityListInstance.ActivityList)
                 {
-                    File.Copy(exercice.Example_wav_path, tempPath + "\\" + exercice.Name + ".wav");
+                    if (!String.IsNullOrEmpty(exercice.Resultat_wav_path)) { 
+                        File.Copy(exercice.Resultat_wav_path, tempPath + "\\" + exercice.Name + "Resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".wav");
+                        File.Copy(exercice.Example_wav_path, tempPath + "\\" + exercice.Name + "Exemple" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".wav");
+                    }
                 }
 
                 ZipFile.CreateFromDirectory(tempPath, targetDirectory + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".zip");
@@ -241,5 +244,6 @@ namespace MyOrthoClient
                 Directory.Delete(tempPath,true);
             }
         }
+        
     }
 }

@@ -83,11 +83,13 @@ namespace MyOrthoClient.Controllers
             }
 
             var wavPath = lastExerciceWavPath = Player.StopRecord();
+            this.CurrentActivity.Resultat_wav_path = wavPath;
 
             this.setFeedback(Environment.CurrentDirectory + "\\" + RessourceService.LoadingGifPath);
 
             this.CurrentActivity.Results = CalculateIntensityAndFrequency(wavPath);
-            
+
+
             this.EvaluateExercice(wavPath, analyser.CalculateCorrelation(CurrentActivity.Exercice, CurrentActivity.Results));
 
             this.setFeedback("");
