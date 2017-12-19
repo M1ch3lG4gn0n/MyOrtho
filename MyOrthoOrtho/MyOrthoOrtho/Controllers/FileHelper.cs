@@ -66,12 +66,12 @@ namespace MyOrthoOrtho.Controllers
                         Duree_exacteEvaluated = Convert.ToBoolean(activity.Descendants("Duree_exacteEvaluated").First().Value),
                         JitterEvaluated = Convert.ToBoolean(activity.Descendants("JitterEvaluated").First().Value),*/
 
-                        F0_exact = Decimal.Parse(activity.Descendants("F0_exact").First().Value, CultureInfo.InvariantCulture),
-                        F0_stable = Decimal.Parse(activity.Descendants("F0_stable").First().Value, CultureInfo.InvariantCulture),
-                        Intensite_stable = Decimal.Parse(activity.Descendants("Intensite_stable").First().Value, CultureInfo.InvariantCulture),
-                        Courbe_f0_exacte = Decimal.Parse(activity.Descendants("Courbe_f0_exacte").First().Value, CultureInfo.InvariantCulture),
-                        Duree_exacte = Decimal.Parse(activity.Descendants("Duree_exacte").First().Value, CultureInfo.InvariantCulture),
-                        Jitter = Decimal.Parse(activity.Descendants("Jitter").First().Value, CultureInfo.InvariantCulture)
+                        F0_exact = Decimal.Parse(activity.Descendants("F0_exact").First().Value, System.Globalization.NumberStyles.Float),
+                        F0_stable = Decimal.Parse(activity.Descendants("F0_stable").First().Value, System.Globalization.NumberStyles.Float),
+                        Intensite_stable = Decimal.Parse(activity.Descendants("Intensite_stable").First().Value, System.Globalization.NumberStyles.Float),
+                        Courbe_f0_exacte = Decimal.Parse(activity.Descendants("Courbe_f0_exacte").First().Value, System.Globalization.NumberStyles.Float),
+                        Duree_exacte = Decimal.Parse(activity.Descendants("Duree_exacte").First().Value, System.Globalization.NumberStyles.Float),
+                        Jitter = Decimal.Parse(activity.Descendants("Jitter").First().Value, System.Globalization.NumberStyles.Float)
                     };
                     ICollection<DataLineItem> points = activity.Descendants("PointExercice").Select(x => new DataLineItem { Time = double.Parse(x.Descendants("Time").First().Value), Intensity = double.Parse(x.Descendants("Intensity").First().Value), Pitch = double.Parse(x.Descendants("Pitch").First().Value) }).ToList();
                     newExerciceResult.Exercice = points;
