@@ -202,6 +202,7 @@ namespace MyOrthoClient
                                 activityListInstance.ActivityList.Select(x => new XElement("Activity",
                                     new XElement("Name", x.Name),
                                     new XElement("Exercice_wav_file_name", x.Example_wav_path.Split(new char[] { '\\'}).Last()),
+                                    new XElement("Result_wav_filename", x.Resultat_wav_path.Split(new char[] { '\\' }).Last()),
                                     new XElement("F0_exact", x.F0_exact),
                                     new XElement("F0_stable", x.F0_stable),
                                     new XElement("Intensite_stable", x.Intensite_stable),
@@ -234,8 +235,8 @@ namespace MyOrthoClient
                 foreach (ActivityVM exercice in activityListInstance.ActivityList)
                 {
                     if (!String.IsNullOrEmpty(exercice.Resultat_wav_path)) { 
-                        File.Copy(exercice.Resultat_wav_path, tempPath + "\\" + exercice.Name + "Resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".wav");
-                        File.Copy(exercice.Example_wav_path, tempPath + "\\" + exercice.Name + "Exemple" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".wav");
+                        File.Copy(exercice.Resultat_wav_path, tempPath + "\\" + exercice.Resultat_wav_path.Split(new char[] { '\\' }).Last());
+                        File.Copy(exercice.Example_wav_path, tempPath + "\\" + exercice.Example_wav_path.Split(new char[] { '\\' }).Last());
                     }
                 }
 
