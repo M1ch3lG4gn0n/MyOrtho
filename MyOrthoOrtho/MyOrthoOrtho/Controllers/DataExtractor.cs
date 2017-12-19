@@ -49,9 +49,9 @@ namespace MyOrthoOrtho.Controllers
 
             return new DataLineItem()
             {
-                time = double.Parse(values[0]),
-                frequency = double.Parse(values[1]),
-                pitch = double.Parse(values[2])
+                Time = double.Parse(values[0]),
+                Intensity = double.Parse(values[1]),
+                Pitch = double.Parse(values[2])
             };
         }
     }

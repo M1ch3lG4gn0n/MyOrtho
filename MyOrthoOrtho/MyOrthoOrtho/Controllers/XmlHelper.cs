@@ -82,9 +82,9 @@ namespace MyOrthoOrtho.Controllers
             foreach (var point in activity.Exercice)
             {
                 pointNode = configFile.AppendToNode(exerciceResults, "point", string.Empty);
-                configFile.AppendToNode(pointNode, "time", point.time.ToString("F2"));
-                configFile.AppendToNode(pointNode, "frequency", point.frequency.ToString("F2"));
-                configFile.AppendToNode(pointNode, "pitch", point.pitch.ToString("F2"));
+                configFile.AppendToNode(pointNode, "time", point.Time.ToString("F2"));
+                configFile.AppendToNode(pointNode, "frequency", point.Intensity.ToString("F2"));
+                configFile.AppendToNode(pointNode, "pitch", point.Pitch.ToString("F2"));
             }
 
             configFile.AppendToNode(activityNode, "Pitch_min", activity.PitchMin.ToString());

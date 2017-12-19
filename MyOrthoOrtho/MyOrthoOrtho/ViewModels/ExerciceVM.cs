@@ -18,9 +18,7 @@ namespace MyOrthoOrtho.ViewModels
         
         public string Name { get; set; }
         public string Example_wav_path { get; set; }
-        public string Example_praat_path { get; set; }
         public string Result_wav_path { get; set; }
-        public string Result_praat_path { get; set; }
         public string Date { get; set; }
         public string Type { get; set; }
 
@@ -28,6 +26,13 @@ namespace MyOrthoOrtho.ViewModels
         public int PitchMax { get; set; }
         public int IntensityThreshold { get; set; }
         public decimal Duree_exacte { get; set; }
+
+        public decimal F0_exact { get; set; }
+        public decimal F0_stable { get; set; }
+        public decimal Intensite_stable { get; set; }
+        public decimal Courbe_f0_exacte { get; set; }
+        public decimal Duree { get; set; }
+        public decimal Jitter { get; set; }
 
         public bool F0_exactEvaluated { get; set; }
         public bool F0_stableEvaluated { get; set; }

@@ -99,7 +99,6 @@ namespace MyOrthoOrtho.ViewModels
             CurrentExercice.Exercice = activity.Exercice;
             CurrentExercice.Name = activity.Name;
             CurrentExercice.Example_wav_path = activity.Example_wav_path;
-            CurrentExercice.Example_praat_path = activity.Example_praat_path;
 
             CurrentExercice.F0_exactEvaluated = activity.F0_exactEvaluated;
             CurrentExercice.F0_stableEvaluated = activity.F0_stableEvaluated;

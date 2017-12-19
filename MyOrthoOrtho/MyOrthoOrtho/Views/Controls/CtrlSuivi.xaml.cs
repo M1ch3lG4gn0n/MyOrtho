@@ -1,4 +1,5 @@
-﻿using MyOrthoOrtho.Controllers;
+﻿using Microsoft.Win32;
+using MyOrthoOrtho.Controllers;
 using MyOrthoOrtho.Models;
 using MyOrthoOrtho.ViewModels;
 using System;
@@ -39,6 +40,20 @@ namespace MyOrthoOrtho.Views.Controls
 
         private void BtnImporter_Click(object sender, RoutedEventArgs e)
         {
+            
+                string path = "";
+                OpenFileDialog file = new OpenFileDialog();
+                if (file.ShowDialog() != null)
+                {
+                    path = file.FileName;
+                }
+
+                FileHelper.FileReader fileReader = new FileHelper.FileReader();
+                fileReader.zipToExerciceList(path, activityListInstance);
+            
+
+/*
+
             string currentDir = Environment.CurrentDirectory;
             activityListInstance.ClearItems();
 
@@ -90,7 +105,7 @@ namespace MyOrthoOrtho.Views.Controls
                 }
 
             }
-
+            */
             
         }
 
@@ -129,8 +144,8 @@ namespace MyOrthoOrtho.Views.Controls
             int i = 0;
             foreach (var lineItem in values)
             {
-                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.frequency);
-                pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.time, lineItem.pitch);
+                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.Time, lineItem.Intensity);
+                pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.Time, lineItem.Pitch);
             }
             this.Dispatcher.Invoke(() =>
             {

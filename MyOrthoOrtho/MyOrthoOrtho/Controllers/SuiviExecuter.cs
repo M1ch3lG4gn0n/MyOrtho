@@ -35,8 +35,8 @@ namespace MyOrthoOrtho.Controllers
             string currentExerciceFilePath = (this.exerciceFolderPath + "exercice" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
             string currentResultFilePath = (this.exerciceFolderPath + "resultat" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt");
 
-            Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath));
-            Task.Run(() => this.CurrentActivity.Results = CalculateIntensityAndFrequency(this.CurrentActivity.Result_wav_path, currentResultFilePath));
+            //Task.Run(() => this.CurrentActivity.Exercice = CalculateIntensityAndFrequency(this.CurrentActivity.Example_wav_path, currentExerciceFilePath));
+            //Task.Run(() => this.CurrentActivity.Results = CalculateIntensityAndFrequency(this.CurrentActivity.Result_wav_path, currentResultFilePath));
         }
 
         public void StartPlaybackExemple()

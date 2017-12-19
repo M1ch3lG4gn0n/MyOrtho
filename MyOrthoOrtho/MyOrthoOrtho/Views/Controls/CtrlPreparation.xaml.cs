@@ -93,8 +93,8 @@ namespace MyOrthoOrtho.Views.Controls
             int i = 0;
             foreach (var lineItem in values)
             {
-                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.time, lineItem.frequency);
-                pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.time, lineItem.pitch);
+                frequencyLineArray[i] = new KeyValuePair<double, double>(lineItem.Time, lineItem.Intensity);
+                pitchLineArray[i++] = new KeyValuePair<double, double>(lineItem.Time, lineItem.Pitch);
             }
             this.Dispatcher.Invoke(() =>
             {

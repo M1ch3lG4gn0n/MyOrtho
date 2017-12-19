@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.IO.Compression;
+using System.Globalization;
 
 namespace MyOrthoOrtho.Controllers
 {
@@ -28,6 +30,56 @@ namespace MyOrthoOrtho.Controllers
                 
 
 
+            }
+
+            public void zipToExerciceList(string file, SuiviVM list)
+            {
+                string zipPath = file;
+                string extractPath = Environment.GetEnvironmentVariable("LocalAppData") + "\\MyOrtho\\" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                if (!String.IsNullOrEmpty(zipPath))
+                {
+                    ZipFile.ExtractToDirectory(zipPath, extractPath);
+                    populateResultsList(extractPath, list);
+                }
+            }
+
+            private void populateResultsList(string path, SuiviVM activityList)
+            {
+                XDocument xml = XDocument.Load(path + "\\resultats.xml");
+                var activities = xml.Descendants("Activity");
+
+                foreach (XElement activity in activities)
+                {
+                    ExerciceVM newExerciceResult = new ExerciceVM
+                    {
+                        Name = activity.Descendants("Name").First().Value,
+                        Example_wav_path = path + "\\" + activity.Descendants("Exercice_wav_file_name").First().Value,
+                        Result_wav_path = path + "\\" + activity.Descendants("Result_wav_filename").First().Value,
+                        /*PitchMin = Convert.ToInt32(activity.Descendants("Pitch_min").First().Value),
+                        PitchMax = Convert.ToInt32(activity.Descendants("Pitch_max").First().Value),
+                        IntensityThreshold = Convert.ToInt32(activity.Descendants("Intensity_threshold").First().Value),
+                        F0_exactEvaluated = Convert.ToBoolean(activity.Descendants("F0_exactEvaluated").First().Value),
+                        F0_stableEvaluated = Convert.ToBoolean(activity.Descendants("F0_stableEvaluated").First().Value),
+                        Intensite_stableEvaluated = Convert.ToBoolean(activity.Descendants("Intensite_stableEvaluated").First().Value),
+                        Courbe_f0_exacteEvaluated = Convert.ToBoolean(activity.Descendants("Courbe_f0_exacteEvaluated").First().Value),
+                        Duree_exacteEvaluated = Convert.ToBoolean(activity.Descendants("Duree_exacteEvaluated").First().Value),
+                        JitterEvaluated = Convert.ToBoolean(activity.Descendants("JitterEvaluated").First().Value),*/
+
+                        F0_exact = Decimal.Parse(activity.Descendants("F0_exact").First().Value, CultureInfo.InvariantCulture),
+                        F0_stable = Decimal.Parse(activity.Descendants("F0_stable").First().Value, CultureInfo.InvariantCulture),
+                        Intensite_stable = Decimal.Parse(activity.Descendants("Intensite_stable").First().Value, CultureInfo.InvariantCulture),
+                        Courbe_f0_exacte = Decimal.Parse(activity.Descendants("Courbe_f0_exacte").First().Value, CultureInfo.InvariantCulture),
+                        Duree_exacte = Decimal.Parse(activity.Descendants("Duree_exacte").First().Value, CultureInfo.InvariantCulture),
+                        Jitter = Decimal.Parse(activity.Descendants("Jitter").First().Value, CultureInfo.InvariantCulture)
+                    };
+                    ICollection<DataLineItem> points = activity.Descendants("PointExercice").Select(x => new DataLineItem { Time = double.Parse(x.Descendants("Time").First().Value), Intensity = double.Parse(x.Descendants("Intensity").First().Value), Pitch = double.Parse(x.Descendants("Pitch").First().Value) }).ToList();
+                    newExerciceResult.Exercice = points;
+                    ICollection<DataLineItem> resultsPoints = activity.Descendants("PointResultat").Select(x => new DataLineItem { Time = double.Parse(x.Descendants("Time").First().Value), Intensity = double.Parse(x.Descendants("Intensity").First().Value), Pitch = double.Parse(x.Descendants("Pitch").First().Value) }).ToList();
+                    newExerciceResult.Results = resultsPoints;
+
+                    activityList.Add(newExerciceResult);
+                }
             }
 
             public void ReadAllExercicesIntoExerciceVMList(string filePath, ObservableCollection<ExerciceVM> list)
@@ -103,7 +155,7 @@ namespace MyOrthoOrtho.Controllers
                                     Duree_bad_min = decimal.Parse(exercice.Descendants("Duree_exacte_evaluation").First().Descendants("Bad").Descendants("Min").First().Value),
                             
                                 };
-                                newExercice.Exercice = exercice.Descendants("Exercice_praat_results").First().Descendants("point").Select(x => new DataLineItem {time = double.Parse(x.Descendants("time").First().Value), pitch = double.Parse(x.Descendants("pitch").First().Value), frequency = double.Parse(x.Descendants("frequency").First().Value) }).ToList();
+                                newExercice.Exercice = exercice.Descendants("Exercice_praat_results").First().Descendants("point").Select(x => new DataLineItem {Time = double.Parse(x.Descendants("time").First().Value), Pitch = double.Parse(x.Descendants("pitch").First().Value), Intensity = double.Parse(x.Descendants("frequency").First().Value) }).ToList();
                         
                                 list.Add(newExercice);
                             
