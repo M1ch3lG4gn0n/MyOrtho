@@ -201,7 +201,7 @@ namespace MyOrthoClient
                             new XElement("Date", DateTime.Now.ToString("yyyyMMddHHmmss")),
                                 activityListInstance.ActivityList.Select(x => new XElement("Activity",
                                     new XElement("Name", x.Name),
-                                    new XElement("Exercice_wav_file_name", x.Example_wav_path),
+                                    new XElement("Exercice_wav_file_name", x.Example_wav_path.Split(new char[] { '\\'}).Last()),
                                     new XElement("F0_exact", x.F0_exact),
                                     new XElement("F0_stable", x.F0_stable),
                                     new XElement("Intensite_stable", x.Intensite_stable),
