@@ -132,6 +132,14 @@ namespace MyOrthoOrtho.Views.Controls
         {
             var currentActivityIndex = ListActivities.SelectedIndex;
             var activity = activityListInstance.GetActivity(currentActivityIndex);
+
+            lblCourbeF0Exacte.Content = activity.Courbe_f0_exacte;
+            lblF0Exact.Content = activity.F0_exact;
+            lblF0Stable.Content = activity.F0_stable;
+            lblIntensiteStable.Content = activity.Intensite_stable;
+            lblJitter.Content = activity.Jitter;
+            lblDuree.Content = activity.Duree_exacte;
+
             activity.SetExerciseValue(values => SetChartLine((LineSeries)PitchChart.Series[0], (LineSeries)IntensityChart.Series[0], values));
             activity.SetResultValue(values => SetChartLine((LineSeries)PitchChart.Series[1], (LineSeries)IntensityChart.Series[1], values));
             ac = new SuiviExecuter(activity);
