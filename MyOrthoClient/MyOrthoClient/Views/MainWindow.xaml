@@ -101,7 +101,7 @@
         </ListBox>
         <Button x:Name="BtnEcouter" Click="BtnEcouter_Click" Content="Écouter mon enregistrement" HorizontalAlignment="Left" Margin="449,35,0,0" VerticalAlignment="Top" Width="180" Height="30"/>
         <Image x:Name="feedbackGif" Margin="961,35,48,766" Stretch="Fill" gif:ImageBehavior.RepeatBehavior="Forever" />
-        <ContentControl x:Name="Results" Margin="1125,35,48,375"/>
+        <ContentControl x:Name="Results" Margin="899,33,328,377"/>
         <Button Content="Exporter les données" HorizontalAlignment="Left" Margin="654,89,0,0" VerticalAlignment="Top" Width="180" Height="30" Click="BtnExporter_Click"/>
     </Grid>
 </Window>
